@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Segments | Sungen — Centrales C&I, Batterie & Centrales au Sol</title>
+    <meta name="description" content="Sungen intervient sur 3 segments photovoltaïques : C&I 100 kWc à 1 MWc (avec/sans batterie), C&I 36-100 kWc avec batterie, et centrales au sol < 1 MWc. Ingénierie indépendante.">
+    <meta name="keywords" content="centrale photovoltaïque C&I, batterie stockage solaire, centrale au sol, 100 kWc, 1 MWc, photovoltaïque tertiaire, ombrière solaire, BESS, ingénierie solaire France">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.sungen.fr/segments.html">
+
+    <meta property="og:title" content="Nos Segments | Sungen — C&I, Batterie & Centrales au Sol">
+    <meta property="og:description" content="Trois segments d'excellence : C&I toiture, C&I + batterie et centrales au sol < 1 MWc.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.sungen.fr/segments.html">
+    <meta property="og:image" content="https://www.sungen.fr/img/photo-panneaux-montagne-2.jpeg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bleu: #4387a6; --bleu-dark: #2c6f90; --bleu-light: #5da2c2;
+            --jaune: #f8be00; --jaune-light: #ffd23f;
+            --gris: #9d9d9c; --gris-light: #e8e8e8; --gris-dark: #4a4a4a;
+            --rouge: #eb5b56; --blanc: #ffffff; --noir: #1a1a2e;
+            --bg-cream: #f7f5f2;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: 'Raleway', sans-serif; color: var(--noir); background: var(--blanc); line-height: 1.7; overflow-x: hidden; }
+        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+        /* NAV */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(26,26,46,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); transition: var(--transition); }
+        .navbar.scrolled { background: rgba(26,26,46,0.98); box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .nav-logo img { height: 38px; width: auto; }
+        .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+        .nav-links a { color: rgba(255,255,255,0.75); font-weight: 500; font-size: 0.9rem; letter-spacing: 0.03em; transition: var(--transition); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--jaune); transition: var(--transition); }
+        .nav-links a:hover, .nav-links a.active { color: var(--blanc); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-cta { background: var(--jaune) !important; color: var(--noir) !important; padding: 0.65rem 1.5rem; border-radius: 6px; font-weight: 700; font-size: 0.85rem; transition: var(--transition); }
+        .nav-cta:hover { background: var(--jaune-light) !important; transform: translateY(-1px); }
+        .nav-cta::after { display: none !important; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+        .hamburger span { width: 26px; height: 2px; background: var(--blanc); transition: var(--transition); }
+
+        /* PAGE HERO */
+        .page-hero { padding: 10rem 0 5rem; background: var(--noir); position: relative; overflow: hidden; }
+        .page-hero::before { content: ''; position: absolute; top: -200px; right: -100px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(248,190,0,0.1) 0%, transparent 70%); }
+        .page-hero-content { position: relative; z-index: 2; }
+        .page-hero .breadcrumb { font-size: 0.82rem; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; font-weight: 500; }
+        .page-hero .breadcrumb a { color: rgba(255,255,255,0.6); transition: var(--transition); }
+        .page-hero .breadcrumb a:hover { color: var(--jaune); }
+        .page-hero h1 { font-size: 3rem; font-weight: 800; color: var(--blanc); line-height: 1.15; margin-bottom: 1.2rem; max-width: 700px; }
+        .page-hero h1 em { font-style: normal; color: var(--jaune); }
+        .page-hero p { font-size: 1.15rem; color: rgba(255,255,255,0.65); max-width: 600px; line-height: 1.8; }
+
+        .section-label { display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--bleu); background: rgba(67,135,166,0.08); padding: 0.4rem 1rem; border-radius: 20px; margin-bottom: 1rem; }
+
+        /* SEGMENT DETAIL */
+        .segment-detail { padding: 6rem 0; }
+        .segment-detail:nth-child(even) { background: var(--bg-cream); }
+
+        .segment-hero-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-radius: 20px;
+            overflow: hidden;
+            background: var(--blanc);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+            margin-bottom: 3rem;
+        }
+
+        .segment-hero-img {
+            position: relative;
+            min-height: 450px;
+        }
+        .segment-hero-img img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .segment-hero-content {
+            padding: 3.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .segment-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--jaune);
+            color: var(--noir);
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            width: fit-content;
+        }
+
+        .segment-hero-content h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--noir);
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .segment-power-range {
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: var(--bleu);
+            margin-bottom: 1.5rem;
+        }
+
+        .segment-hero-content p {
+            font-size: 1rem;
+            color: var(--gris-dark);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .segment-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .seg-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--gris-dark);
+        }
+
+        .seg-feature-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            min-width: 8px;
+        }
+        .seg-feature-dot.blue { background: var(--bleu); }
+        .seg-feature-dot.yellow { background: var(--jaune); }
+        .seg-feature-dot.red { background: var(--rouge); }
+
+        /* SEGMENT SPECS */
+        .segment-specs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .spec-card {
+            background: var(--blanc);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid var(--gris-light);
+            transition: var(--transition);
+        }
+
+        .spec-card:hover {
+            border-color: var(--bleu);
+            box-shadow: 0 8px 25px rgba(67,135,166,0.1);
+        }
+
+        .spec-card h4 {
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--bleu);
+            margin-bottom: 0.8rem;
+        }
+
+        .spec-card .spec-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--noir);
+            margin-bottom: 0.4rem;
+            line-height: 1.1;
+        }
+
+        .spec-card p {
+            font-size: 0.85rem;
+            color: var(--gris-dark);
+            line-height: 1.5;
+        }
+
+        /* COMPARISON TABLE */
+        .comparison-section {
+            padding: 6rem 0;
+            background: var(--noir);
+        }
+        .comparison-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .comparison-header .section-label { background: rgba(248,190,0,0.12); color: var(--jaune); }
+        .comparison-header h2 { font-size: 2rem; font-weight: 800; color: var(--blanc); margin-bottom: 0.8rem; }
+        .comparison-header p { color: rgba(255,255,255,0.6); max-width: 550px; margin: 0 auto; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .comparison-table thead th {
+            background: rgba(255,255,255,0.06);
+            color: var(--blanc);
+            padding: 1.2rem 1.5rem;
+            text-align: left;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .comparison-table thead th:first-child {
+            width: 30%;
+        }
+
+        .comparison-table tbody td {
+            padding: 1rem 1.5rem;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            vertical-align: top;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tbody td:first-child {
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .check-yes {
+            color: var(--jaune);
+            font-weight: 700;
+        }
+
+        .check-optional {
+            color: var(--bleu-light);
+            font-weight: 500;
+        }
+
+        /* WHY SUNGEN */
+        .why-section {
+            padding: 6rem 0;
+            background: var(--bg-cream);
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .why-card {
+            background: var(--blanc);
+            border-radius: 14px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: var(--transition);
+        }
+
+        .why-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+        }
+
+        .why-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+        }
+        .why-icon.blue { background: rgba(67,135,166,0.1); color: var(--bleu); }
+        .why-icon.yellow { background: rgba(248,190,0,0.1); color: #c49600; }
+        .why-icon.red { background: rgba(235,91,86,0.1); color: var(--rouge); }
+
+        .why-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .why-card p {
+            font-size: 0.92rem;
+            color: var(--gris-dark);
+            line-height: 1.7;
+        }
+
+        /* CTA */
+        .cta-section { padding: 5rem 0; }
+        .cta-inner { background: linear-gradient(135deg, var(--bleu) 0%, var(--bleu-dark) 100%); border-radius: 20px; padding: 4rem; text-align: center; position: relative; overflow: hidden; }
+        .cta-inner::before { content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; border-radius: 50%; background: rgba(248,190,0,0.1); }
+        .cta-inner h2 { font-size: 2.2rem; font-weight: 800; color: var(--blanc); margin-bottom: 1rem; position: relative; z-index: 2; }
+        .cta-inner p { color: rgba(255,255,255,0.75); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; position: relative; z-index: 2; }
+        .btn-primary { background: var(--jaune); color: var(--noir); padding: 1rem 2.2rem; border-radius: 6px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); display: inline-flex; align-items: center; gap: 0.5rem; border: none; cursor: pointer; position: relative; z-index: 2; }
+        .btn-primary:hover { background: var(--jaune-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(248,190,0,0.3); }
+
+        /* FOOTER */
+        .footer { background: var(--noir); color: rgba(255,255,255,0.6); padding: 4rem 0 2rem; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+        .footer-brand img { height: 36px; margin-bottom: 1rem; }
+        .footer-brand p { font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .footer h4 { color: var(--blanc); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1.2rem; }
+        .footer ul li { margin-bottom: 0.6rem; }
+        .footer ul li a { font-size: 0.9rem; transition: var(--transition); }
+        .footer ul li a:hover { color: var(--jaune); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
+        .footer-certifs { display: flex; gap: 1.5rem; }
+        .footer-certifs span { background: rgba(255,255,255,0.06); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.5); }
+
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 1024px) {
+            .segment-hero-card { grid-template-columns: 1fr; }
+            .segment-hero-img { min-height: 300px; }
+            .segment-specs { grid-template-columns: 1fr 1fr; }
+            .why-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(26,26,46,0.98); flex-direction: column; padding: 2rem; gap: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+            .nav-links.open { display: flex; }
+            .page-hero h1 { font-size: 2rem; }
+            .segment-hero-content { padding: 2rem; }
+            .segment-hero-content h2 { font-size: 1.6rem; }
+            .segment-specs { grid-template-columns: 1fr; }
+            .segment-features { grid-template-columns: 1fr; }
+            .comparison-table { font-size: 0.82rem; }
+            .comparison-table thead th, .comparison-table tbody td { padding: 0.8rem; }
+            .why-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+            .cta-inner { padding: 2.5rem 1.5rem; }
+        }
+        @media (max-width: 480px) {
+            .page-hero h1 { font-size: 1.7rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="Navigation principale">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo"><img src="img/Logo_Sungen_white_sans_fond.png" alt="Sungen" width="140" height="38"></a>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Accueil</a>
+            <a href="expertise.html">Notre Expertise</a>
+            <a href="segments.html" class="active">Nos Segments</a>
+            <a href="contact.html" class="nav-cta">Nous Contacter</a>
+        </div>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+</nav>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+    <div class="container">
+        <div class="page-hero-content">
+            <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> / <span>Nos Segments</span></nav>
+            <h1>Trois segments, <em>une expertise ciblée</em></h1>
+            <p>Nous concentrons notre savoir-faire sur les segments où notre ingénierie crée le plus de valeur pour nos clients donneurs d'ordre.</p>
+        </div>
+    </div>
+</header>
+
+<!-- SEGMENT 1: C&I 100 kWc - 1 MWc -->
+<section class="segment-detail" id="ci-100-1mwc" aria-labelledby="seg1-title">
+    <div class="container">
+        <div class="segment-hero-card fade-up">
+            <div class="segment-hero-img">
+                <img src="img/photo-panneaux-montagne-2.jpeg" alt="Centrale photovoltaïque C&I en toiture tertiaire" width="600" height="450" loading="lazy">
+            </div>
+            <div class="segment-hero-content">
+                <span class="segment-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    Segment principal
+                </span>
+                <h2 id="seg1-title">Centrales C&I — Toiture & Ombrière</h2>
+                <div class="segment-power-range">100 kWc à 1 MWc</div>
+                <p>Nous concevons et dimensionnons des centrales photovoltaïques pour les bâtiments tertiaires, industriels et agricoles. Toitures plates ou inclinées, ombrières de parking — chaque projet est optimisé selon la consommation du site et les objectifs d'autoconsommation.</p>
+                <p>Ce segment peut intégrer ou non un système de stockage par batterie, selon l'analyse économique du projet.</p>
+                <div class="segment-features">
+                    <div class="seg-feature"><span class="seg-feature-dot blue"></span>Toiture tertiaire & industrielle</div>
+                    <div class="seg-feature"><span class="seg-feature-dot blue"></span>Ombrières de parking</div>
+                    <div class="seg-feature"><span class="seg-feature-dot yellow"></span>Avec ou sans batterie</div>
+                    <div class="seg-feature"><span class="seg-feature-dot yellow"></span>Autoconsommation + surplus</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="segment-specs fade-up">
+            <div class="spec-card">
+                <h4>Puissance</h4>
+                <div class="spec-value">100 kWc — 1 MWc</div>
+                <p>Centrales de moyenne puissance adaptées aux grandes toitures C&I</p>
+            </div>
+            <div class="spec-card">
+                <h4>Batterie</h4>
+                <div class="spec-value">Optionnelle</div>
+                <p>Intégration BESS selon analyse coût-bénéfice et profil de consommation</p>
+            </div>
+            <div class="spec-card">
+                <h4>Applications</h4>
+                <div class="spec-value">Tertiaire · Industrie</div>
+                <p>Entrepôts, bureaux, centres commerciaux, exploitations agricoles</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEGMENT 2: C&I + Batterie 36-100 kWc -->
+<section class="segment-detail" id="ci-batterie" aria-labelledby="seg2-title">
+    <div class="container">
+        <div class="segment-hero-card fade-up">
+            <div class="segment-hero-img">
+                <img src="img/photo-batteries.jpeg" alt="Installation batteries de stockage solaire" width="600" height="450" loading="lazy">
+            </div>
+            <div class="segment-hero-content">
+                <span class="segment-badge" style="background: var(--bleu); color: var(--blanc);">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg>
+                    Batterie intégrée
+                </span>
+                <h2 id="seg2-title">C&I + Stockage Batterie</h2>
+                <div class="segment-power-range">36 à 100 kWc</div>
+                <p>Sur ce segment de puissance plus compacte, l'intégration d'un système de stockage par batterie est systématique. L'objectif : maximiser le taux d'autoconsommation et réduire la dépendance au réseau.</p>
+                <p>Nous dimensionnons conjointement la centrale PV et le système BESS pour atteindre le meilleur retour sur investissement.</p>
+                <div class="segment-features">
+                    <div class="seg-feature"><span class="seg-feature-dot red"></span>Batterie obligatoire</div>
+                    <div class="seg-feature"><span class="seg-feature-dot red"></span>Autoconsommation maximisée</div>
+                    <div class="seg-feature"><span class="seg-feature-dot blue"></span>Petites et moyennes toitures</div>
+                    <div class="seg-feature"><span class="seg-feature-dot blue"></span>PME, commerces, agricole</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="segment-specs fade-up">
+            <div class="spec-card">
+                <h4>Puissance</h4>
+                <div class="spec-value">36 — 100 kWc</div>
+                <p>Segment adapté aux PME et bâtiments tertiaires de taille moyenne</p>
+            </div>
+            <div class="spec-card">
+                <h4>Batterie</h4>
+                <div class="spec-value">Obligatoire</div>
+                <p>Stockage BESS dimensionné pour un taux d'autoconsommation supérieur à 80%</p>
+            </div>
+            <div class="spec-card">
+                <h4>Objectif</h4>
+                <div class="spec-value">Autoconsommation</div>
+                <p>Réduction maximale de la dépendance réseau et optimisation du ROI</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEGMENT 3: Centrale au sol -->
+<section class="segment-detail" id="centrale-sol" aria-labelledby="seg3-title">
+    <div class="container">
+        <div class="segment-hero-card fade-up">
+            <div class="segment-hero-img">
+                <img src="img/photo-panneaux-montagne.jpeg" alt="Centrale photovoltaïque au sol en montagne" width="600" height="450" loading="lazy">
+            </div>
+            <div class="segment-hero-content">
+                <span class="segment-badge" style="background: var(--noir); color: var(--blanc);">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+                    Centrale au sol
+                </span>
+                <h2 id="seg3-title">Centrales Photovoltaïques au Sol</h2>
+                <div class="segment-power-range">< 1 MWc</div>
+                <p>Nous accompagnons la conception et l'ingénierie de centrales au sol de puissance inférieure à 1 MWc. Études d'implantation, dimensionnement technique, raccordement réseau et optimisation du productible font partie de notre périmètre.</p>
+                <p>Une expertise technique pointue pour des projets nécessitant une maîtrise complète de la chaîne de valeur.</p>
+                <div class="segment-features">
+                    <div class="seg-feature"><span class="seg-feature-dot blue"></span>Structures fixes au sol</div>
+                    <div class="seg-feature"><span class="seg-feature-dot blue"></span>Étude raccordement réseau</div>
+                    <div class="seg-feature"><span class="seg-feature-dot yellow"></span>Optimisation productible</div>
+                    <div class="seg-feature"><span class="seg-feature-dot yellow"></span>Puissance < 1 MWc</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="segment-specs fade-up">
+            <div class="spec-card">
+                <h4>Puissance</h4>
+                <div class="spec-value">< 1 MWc</div>
+                <p>Centrales au sol de puissance inférieure à 1 MWc sur foncier dédié</p>
+            </div>
+            <div class="spec-card">
+                <h4>Type</h4>
+                <div class="spec-value">Sol · Structure fixe</div>
+                <p>Conception optimisée selon le terrain, l'orientation et les contraintes locales</p>
+            </div>
+            <div class="spec-card">
+                <h4>Raccordement</h4>
+                <div class="spec-value">BT / HTA</div>
+                <p>Études de raccordement et coordination avec les opérateurs réseau</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="comparison-section" aria-labelledby="comp-title">
+    <div class="container">
+        <div class="comparison-header fade-up">
+            <span class="section-label">Comparatif</span>
+            <h2 id="comp-title">Vue d'ensemble de nos segments</h2>
+            <p>Chaque segment a ses spécificités techniques et économiques.</p>
+        </div>
+        <div style="overflow-x: auto;" class="fade-up">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Critère</th>
+                        <th>C&I 100 kWc — 1 MWc</th>
+                        <th>C&I + Batterie 36 — 100 kWc</th>
+                        <th>Centrale au sol < 1 MWc</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Puissance</td>
+                        <td>100 kWc à 1 MWc</td>
+                        <td>36 à 100 kWc</td>
+                        <td>< 1 MWc</td>
+                    </tr>
+                    <tr>
+                        <td>Type d'implantation</td>
+                        <td>Toiture, Ombrière</td>
+                        <td>Toiture</td>
+                        <td>Au sol</td>
+                    </tr>
+                    <tr>
+                        <td>Stockage batterie</td>
+                        <td><span class="check-optional">Optionnel</span></td>
+                        <td><span class="check-yes">Obligatoire ✓</span></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>Cible</td>
+                        <td>Industrie, Tertiaire, Agriculture</td>
+                        <td>PME, Commerces, Agriculture</td>
+                        <td>Investisseurs, Développeurs</td>
+                    </tr>
+                    <tr>
+                        <td>Raccordement</td>
+                        <td>BT / HTA</td>
+                        <td>BT</td>
+                        <td>BT / HTA</td>
+                    </tr>
+                    <tr>
+                        <td>Modèle économique</td>
+                        <td>Autoconsom. + Surplus</td>
+                        <td>Autoconsommation max.</td>
+                        <td>Vente totale / PPA</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- WHY SUNGEN -->
+<section class="why-section" aria-labelledby="why-title">
+    <div class="container">
+        <div class="fade-up" style="text-align: center;">
+            <span class="section-label">Nos atouts</span>
+            <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;" id="why-title">Pourquoi choisir Sungen ?</h2>
+            <p style="color: var(--gris-dark); max-width: 550px; margin: 0 auto;">Notre positionnement unique nous permet d'apporter une valeur ajoutée différenciante à chaque projet.</p>
+        </div>
+        <div class="why-grid fade-up">
+            <div class="why-card">
+                <div class="why-icon blue">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3>Indépendance totale</h3>
+                <p>Aucune affiliation avec des fabricants ou installateurs. Nos recommandations sont 100% objectives et orientées performance client.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon yellow">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <h3>Expertise ciblée</h3>
+                <p>Nous ne dispersons pas notre énergie. Notre focus sur 3 segments nous permet de maîtriser chaque paramètre technique et économique.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon red">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <h3>Rigueur & Exigence</h3>
+                <p>Chaque livrable est soumis à un contrôle qualité rigoureux. Nos méthodes éprouvées garantissent fiabilité et performance sur chaque mission.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-inner fade-up">
+            <h2>Votre projet correspond à l'un de nos segments ?</h2>
+            <p>Échangeons sur vos besoins et définissons ensemble le périmètre d'intervention Sungen.</p>
+            <a href="contact.html" class="btn-primary">Demander un rendez-vous →</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="img/Logo_Sungen_white_sans_fond.png" alt="Logo Sungen" width="140" height="38" loading="lazy">
+                <p>Cabinet de conseil en Photovoltaïque. Conception, dimensionnement et pilotage de centrales solaires pour donneurs d'ordre.</p>
+            </div>
+            <div><h4>Expertise</h4><ul><li><a href="expertise.html">Étude & Conception</a></li><li><a href="expertise.html">Dimensionnement</a></li><li><a href="expertise.html">Assistance à Consultation</a></li><li><a href="expertise.html">Pilotage de Projet</a></li></ul></div>
+            <div><h4>Segments</h4><ul><li><a href="segments.html">C&I 100 kWc — 1 MWc</a></li><li><a href="segments.html">C&I + Batterie 36 — 100 kWc</a></li><li><a href="segments.html">Centrales au sol < 1 MWc</a></li></ul></div>
+            <div><h4>Contact</h4><ul><li><a href="contact.html">Formulaire de contact</a></li><li><a href="mailto:contact@sungen.fr">contact@sungen.fr</a></li><li><a href="tel:+33000000000">+33 (0)0 00 00 00 00</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Sungen — Tous droits réservés. <a href="#" style="color:var(--jaune);">Mentions légales</a> · <a href="#" style="color:var(--jaune);">Politique de confidentialité</a></span>
+        </div>
+    </div>
+</footer>
+
+<script>
+    document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('open'); });
+    window.addEventListener('scroll', () => { document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50); });
+    const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

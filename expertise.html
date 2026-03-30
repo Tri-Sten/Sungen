@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notre Expertise | Sungen — Ingénierie & Consulting Photovoltaïque</title>
+    <meta name="description" content="Découvrez l'expertise Sungen en ingénierie photovoltaïque : conception, dimensionnement PVsyst, assistance à consultation, négociation EPC, pilotage de projet et intégration batterie BESS.">
+    <meta name="keywords" content="expertise photovoltaïque, conception solaire, dimensionnement PVsyst, AMO photovoltaïque, pilotage projet solaire, BESS batterie, consulting solaire France">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.sungen.fr/expertise.html">
+
+    <meta property="og:title" content="Notre Expertise | Sungen Ingénierie Photovoltaïque">
+    <meta property="og:description" content="Conception, dimensionnement, consultation et pilotage de centrales photovoltaïques C&I et au sol.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.sungen.fr/expertise.html">
+    <meta property="og:image" content="https://www.sungen.fr/img/photo-techniciens.jpeg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bleu: #4387a6; --bleu-dark: #2c6f90; --bleu-light: #5da2c2;
+            --jaune: #f8be00; --jaune-light: #ffd23f;
+            --gris: #9d9d9c; --gris-light: #e8e8e8; --gris-dark: #4a4a4a;
+            --rouge: #eb5b56; --blanc: #ffffff; --noir: #1a1a2e;
+            --bg-cream: #f7f5f2;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: 'Raleway', sans-serif; color: var(--noir); background: var(--blanc); line-height: 1.7; overflow-x: hidden; }
+        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+        /* NAV (same as index) */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(26,26,46,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); transition: var(--transition); }
+        .navbar.scrolled { background: rgba(26,26,46,0.98); box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .nav-logo img { height: 38px; width: auto; }
+        .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+        .nav-links a { color: rgba(255,255,255,0.75); font-weight: 500; font-size: 0.9rem; letter-spacing: 0.03em; transition: var(--transition); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--jaune); transition: var(--transition); }
+        .nav-links a:hover, .nav-links a.active { color: var(--blanc); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-cta { background: var(--jaune) !important; color: var(--noir) !important; padding: 0.65rem 1.5rem; border-radius: 6px; font-weight: 700; font-size: 0.85rem; transition: var(--transition); }
+        .nav-cta:hover { background: var(--jaune-light) !important; transform: translateY(-1px); }
+        .nav-cta::after { display: none !important; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+        .hamburger span { width: 26px; height: 2px; background: var(--blanc); transition: var(--transition); }
+
+        /* PAGE HERO */
+        .page-hero {
+            padding: 10rem 0 5rem;
+            background: var(--noir);
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -100px;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(67,135,166,0.15) 0%, transparent 70%);
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -50px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(248,190,0,0.08) 0%, transparent 70%);
+        }
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .page-hero .breadcrumb {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        .page-hero .breadcrumb a { color: rgba(255,255,255,0.6); transition: var(--transition); }
+        .page-hero .breadcrumb a:hover { color: var(--jaune); }
+        .page-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--blanc);
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+            max-width: 700px;
+        }
+        .page-hero h1 em {
+            font-style: normal;
+            color: var(--jaune);
+        }
+        .page-hero p {
+            font-size: 1.15rem;
+            color: rgba(255,255,255,0.65);
+            max-width: 600px;
+            line-height: 1.8;
+        }
+
+        /* EXPERTISE DETAIL SECTIONS */
+        .expertise-section {
+            padding: 6rem 0;
+        }
+        .expertise-section:nth-child(even) {
+            background: var(--bg-cream);
+        }
+        .expertise-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        .expertise-row.reverse .expertise-visual { order: 2; }
+        .expertise-row.reverse .expertise-text { order: 1; }
+
+        .section-label {
+            display: inline-block; font-size: 0.78rem; font-weight: 700;
+            letter-spacing: 0.15em; text-transform: uppercase; color: var(--bleu);
+            background: rgba(67,135,166,0.08); padding: 0.4rem 1rem; border-radius: 20px; margin-bottom: 1rem;
+        }
+        .expertise-text h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--noir);
+            line-height: 1.2;
+            margin-bottom: 1.2rem;
+        }
+        .expertise-text p {
+            font-size: 1rem;
+            color: var(--gris-dark);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .expertise-list {
+            margin-top: 1.5rem;
+        }
+        .expertise-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: var(--gris-dark);
+            line-height: 1.5;
+        }
+        .expertise-list li svg {
+            min-width: 20px;
+            margin-top: 2px;
+            color: var(--bleu);
+        }
+        .expertise-visual {
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+        .expertise-visual img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        .expertise-visual-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(26,26,46,0.7) 0%, transparent 100%);
+            padding: 2rem;
+        }
+        .expertise-visual-overlay span {
+            color: var(--jaune);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* KEY FIGURES */
+        .key-figures {
+            background: linear-gradient(135deg, var(--bleu) 0%, var(--bleu-dark) 100%);
+            padding: 5rem 0;
+        }
+        .figures-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+        .figure-item .fig-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--jaune);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .figure-item .fig-label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.75);
+            font-weight: 500;
+        }
+
+        /* TOOLS & TECH */
+        .tools-section {
+            padding: 6rem 0;
+            background: var(--noir);
+        }
+        .tools-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .tools-header .section-label { background: rgba(248,190,0,0.12); color: var(--jaune); }
+        .tools-header h2 { font-size: 2rem; font-weight: 800; color: var(--blanc); margin-bottom: 0.8rem; }
+        .tools-header p { color: rgba(255,255,255,0.6); max-width: 550px; margin: 0 auto; }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        .tool-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .tool-card:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-3px);
+        }
+        .tool-card .tool-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: rgba(67,135,166,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.3rem;
+            color: var(--bleu-light);
+        }
+        .tool-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--blanc);
+            margin-bottom: 0.5rem;
+        }
+        .tool-card p {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.5;
+        }
+
+        /* CTA */
+        .cta-section {
+            background: var(--bg-cream);
+            padding: 5rem 0;
+        }
+        .cta-inner {
+            background: linear-gradient(135deg, var(--bleu) 0%, var(--bleu-dark) 100%);
+            border-radius: 20px;
+            padding: 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-inner::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(248,190,0,0.1);
+        }
+        .cta-inner h2 { font-size: 2.2rem; font-weight: 800; color: var(--blanc); margin-bottom: 1rem; position: relative; z-index: 2; }
+        .cta-inner p { color: rgba(255,255,255,0.75); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; position: relative; z-index: 2; }
+        .btn-primary { background: var(--jaune); color: var(--noir); padding: 1rem 2.2rem; border-radius: 6px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); display: inline-flex; align-items: center; gap: 0.5rem; border: none; cursor: pointer; position: relative; z-index: 2; }
+        .btn-primary:hover { background: var(--jaune-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(248,190,0,0.3); }
+
+        /* FOOTER */
+        .footer { background: var(--noir); color: rgba(255,255,255,0.6); padding: 4rem 0 2rem; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+        .footer-brand img { height: 36px; margin-bottom: 1rem; }
+        .footer-brand p { font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .footer h4 { color: var(--blanc); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1.2rem; }
+        .footer ul li { margin-bottom: 0.6rem; }
+        .footer ul li a { font-size: 0.9rem; transition: var(--transition); }
+        .footer ul li a:hover { color: var(--jaune); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
+        .footer-certifs { display: flex; gap: 1.5rem; }
+        .footer-certifs span { background: rgba(255,255,255,0.06); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.5); }
+
+        /* ANIMATIONS */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .expertise-row { grid-template-columns: 1fr; gap: 2.5rem; }
+            .expertise-row.reverse .expertise-visual { order: 0; }
+            .expertise-row.reverse .expertise-text { order: 0; }
+            .figures-grid { grid-template-columns: repeat(2, 1fr); }
+            .tools-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(26,26,46,0.98); flex-direction: column; padding: 2rem; gap: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+            .nav-links.open { display: flex; }
+            .page-hero h1 { font-size: 2rem; }
+            .expertise-text h2 { font-size: 1.6rem; }
+            .figures-grid { grid-template-columns: 1fr 1fr; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+            .cta-inner { padding: 2.5rem 1.5rem; }
+        }
+        @media (max-width: 480px) {
+            .page-hero h1 { font-size: 1.7rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="Navigation principale">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo" aria-label="Sungen - Accueil">
+            <img src="img/Logo_Sungen_white_sans_fond.png" alt="Sungen — Ingénierie Photovoltaïque" width="140" height="38">
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Accueil</a>
+            <a href="expertise.html" class="active">Notre Expertise</a>
+            <a href="segments.html">Nos Segments</a>
+            <a href="contact.html" class="nav-cta">Nous Contacter</a>
+        </div>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+</nav>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+    <div class="container">
+        <div class="page-hero-content">
+            <nav class="breadcrumb" aria-label="Fil d'Ariane">
+                <a href="index.html">Accueil</a> / <span>Notre Expertise</span>
+            </nav>
+            <h1>L'ingénierie au cœur de la <em>performance solaire</em></h1>
+            <p>De l'étude de faisabilité au commissionnement, nous apportons une expertise technique indépendante à chaque étape de votre projet photovoltaïque.</p>
+        </div>
+    </div>
+</header>
+
+<!-- EXPERTISE 1: Conception -->
+<section class="expertise-section" aria-labelledby="exp-conception">
+    <div class="container">
+        <div class="expertise-row fade-up">
+            <div class="expertise-text">
+                <span class="section-label">Phase 1</span>
+                <h2 id="exp-conception">Étude de faisabilité & Conception technique</h2>
+                <p>Chaque projet débute par une analyse rigoureuse du site, de la ressource solaire et des contraintes techniques. Notre bureau d'études réalise la conception complète de votre centrale, depuis le choix d'implantation jusqu'aux schémas électriques détaillés.</p>
+                <p>Notre objectif : maximiser le productible tout en garantissant la faisabilité technique et économique du projet.</p>
+                <ul class="expertise-list">
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Analyse du potentiel solaire et étude d'ombrage
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Plan d'implantation optimisé et calepinage
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Schémas unifilaires et notes de calcul électriques
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Analyse de rentabilité et business plan solaire
+                    </li>
+                </ul>
+            </div>
+            <div class="expertise-visual">
+                <img src="img/photo-panneaux-montagne.jpeg" alt="Étude et conception de centrale photovoltaïque en toiture" width="600" height="400" loading="lazy">
+                <div class="expertise-visual-overlay">
+                    <span>Conception technique de centrales C&I et au sol</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EXPERTISE 2: Dimensionnement -->
+<section class="expertise-section" aria-labelledby="exp-dimensionnement">
+    <div class="container">
+        <div class="expertise-row reverse fade-up">
+            <div class="expertise-visual">
+                <img src="img/photo-batteries.jpeg" alt="Dimensionnement batterie BESS et onduleurs solaire" width="600" height="400" loading="lazy">
+                <div class="expertise-visual-overlay">
+                    <span>Dimensionnement PV, onduleurs et stockage batterie</span>
+                </div>
+            </div>
+            <div class="expertise-text">
+                <span class="section-label">Phase 2</span>
+                <h2 id="exp-dimensionnement">Dimensionnement & Modélisation énergétique</h2>
+                <p>Nous dimensionnons chaque composant de votre centrale pour atteindre le meilleur compromis entre performance, coût et durabilité. Notre modélisation PVsyst garantit des estimations fiables du productible annuel.</p>
+                <p>Pour les projets avec stockage, nous intégrons le dimensionnement des systèmes BESS en optimisant le ratio d'autoconsommation et le retour sur investissement.</p>
+                <ul class="expertise-list">
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Simulation PVsyst et rapport de productible
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Dimensionnement PV, onduleurs et câblage
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Sizing batteries et stratégie BESS
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Optimisation LCOE et performance ratio
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EXPERTISE 3: Consultation & Négociation -->
+<section class="expertise-section" aria-labelledby="exp-consultation">
+    <div class="container">
+        <div class="expertise-row fade-up">
+            <div class="expertise-text">
+                <span class="section-label">Phase 3</span>
+                <h2 id="exp-consultation">Assistance à consultation & Négociation</h2>
+                <p>Nous accompagnons les donneurs d'ordre dans la sélection de leurs prestataires EPC et fournisseurs d'équipements. Notre rôle : sécuriser techniquement et financièrement chaque étape de la consultation.</p>
+                <p>Grâce à notre connaissance approfondie du marché, nous identifions les meilleures offres et négocions les conditions contractuelles les plus avantageuses.</p>
+                <ul class="expertise-list">
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Rédaction du dossier de consultation (DCE)
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Analyse comparative des offres EPC
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Négociation des prix et conditions contractuelles
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Revue des garanties de performance
+                    </li>
+                </ul>
+            </div>
+            <div class="expertise-visual">
+                <img src="img/photo-techniciens.jpeg" alt="Assistance à consultation et négociation EPC solaire" width="600" height="400" loading="lazy">
+                <div class="expertise-visual-overlay">
+                    <span>Sélection EPC et négociation contractuelle</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EXPERTISE 4: Pilotage -->
+<section class="expertise-section" aria-labelledby="exp-pilotage">
+    <div class="container">
+        <div class="expertise-row reverse fade-up">
+            <div class="expertise-visual">
+                <img src="img/photo-panneaux-montagne-2.jpeg" alt="Pilotage de projet et suivi de chantier photovoltaïque" width="600" height="400" loading="lazy">
+                <div class="expertise-visual-overlay">
+                    <span>Pilotage de chantier et commissionnement</span>
+                </div>
+            </div>
+            <div class="expertise-text">
+                <span class="section-label">Phase 4</span>
+                <h2 id="exp-pilotage">Pilotage de projet & Commissionnement</h2>
+                <p>Nous assurons le suivi opérationnel de la construction de votre centrale, du premier coup de pelle à la mise en service. Contrôle qualité, coordination des intervenants et reporting régulier garantissent le respect des délais et du budget.</p>
+                <p>Le commissionnement final valide la conformité et les performances de l'installation avant la réception définitive.</p>
+                <ul class="expertise-list">
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Suivi de chantier et contrôle qualité
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Coordination des intervenants et planning
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Tests de performance et commissionnement
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Réception des ouvrages et levée de réserves
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- KEY FIGURES -->
+<section class="key-figures" aria-label="Chiffres clés">
+    <div class="container">
+        <div class="figures-grid fade-up">
+            <div class="figure-item">
+                <div class="fig-number">100%</div>
+                <div class="fig-label">Indépendant et objectif</div>
+            </div>
+            <div class="figure-item">
+                <div class="fig-number">< 1 MWc</div>
+                <div class="fig-label">Centrales au sol max</div>
+            </div>
+            <div class="figure-item">
+                <div class="fig-number">BESS</div>
+                <div class="fig-label">Expertise stockage batterie</div>
+            </div>
+            <div class="figure-item">
+                <div class="fig-number">1</div>
+                <div class="fig-label">Interlocuteur unique dédié</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools-section" aria-labelledby="tools-title">
+    <div class="container">
+        <div class="tools-header fade-up">
+            <span class="section-label">Nos outils</span>
+            <h2 id="tools-title">Technologies & Savoir-faire</h2>
+            <p>Nous utilisons les outils de référence de l'industrie pour garantir la fiabilité de nos études et conceptions.</p>
+        </div>
+        <div class="tools-grid fade-up">
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                </div>
+                <h4>PVsyst</h4>
+                <p>Simulation et modélisation énergétique de référence</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <h4>AutoCAD / SketchUp</h4>
+                <p>Conception technique et plans d'implantation</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                </div>
+                <h4>Homer Energy</h4>
+                <p>Optimisation des systèmes hybrides PV + stockage</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+                <h4>Helioscope</h4>
+                <p>Design de systèmes PV et estimation de production</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-inner fade-up">
+            <h2>Besoin d'un accompagnement technique ?</h2>
+            <p>Parlons de votre projet et voyons comment notre expertise peut sécuriser votre investissement solaire.</p>
+            <a href="contact.html" class="btn-primary">Demander un rendez-vous →</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="img/Logo_Sungen_white_sans_fond.png" alt="Logo Sungen" width="140" height="38" loading="lazy">
+                <p>Cabinet de conseil en Photovoltaïque. Conception, dimensionnement et pilotage de centrales solaires pour donneurs d'ordre.</p>
+            </div>
+            <div>
+                <h4>Expertise</h4>
+                <ul>
+                    <li><a href="expertise.html">Étude & Conception</a></li>
+                    <li><a href="expertise.html">Dimensionnement</a></li>
+                    <li><a href="expertise.html">Assistance à Consultation</a></li>
+                    <li><a href="expertise.html">Pilotage de Projet</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Segments</h4>
+                <ul>
+                    <li><a href="segments.html">C&I 100 kWc — 1 MWc</a></li>
+                    <li><a href="segments.html">C&I + Batterie 36 — 100 kWc</a></li>
+                    <li><a href="segments.html">Centrales au sol < 1 MWc</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="contact.html">Formulaire de contact</a></li>
+                    <li><a href="mailto:contact@sungen.fr">contact@sungen.fr</a></li>
+                    <li><a href="tel:+33000000000">+33 (0)0 00 00 00 00</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Sungen — Tous droits réservés. <a href="#" style="color:var(--jaune);">Mentions légales</a> · <a href="#" style="color:var(--jaune);">Politique de confidentialité</a></span>
+        </div>
+    </div>
+</footer>
+
+<script>
+    document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('open'); });
+    window.addEventListener('scroll', () => { document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50); });
+    const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
