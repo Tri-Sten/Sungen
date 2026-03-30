@@ -129,12 +129,36 @@
         .comp-line:last-child { border: none; }
         .comp-line .comp-val { font-weight: 700; }
 
-        /* DOWNLOAD */
-        .download-section { padding: 4rem 0; background: var(--noir); }
-        .download-inner { max-width: 700px; margin: 0 auto; text-align: center; }
-        .download-inner h2 { font-size: 1.8rem; font-weight: 800; color: var(--blanc); margin-bottom: 0.5rem; }
-        .download-inner > p { color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
-        .dl-form { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 2.5rem; text-align: left; }
+        /* DOWNLOAD / PRICING */
+        .download-section { padding: 5rem 0; background: var(--noir); }
+        .download-header { text-align: center; margin-bottom: 3rem; }
+        .download-header h2 { font-size: 2.2rem; font-weight: 800; color: var(--blanc); margin-bottom: 0.5rem; }
+        .download-header p { color: rgba(255,255,255,0.5); max-width: 550px; margin: 0 auto; }
+        .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 900px; margin: 0 auto; }
+        .pricing-card { border-radius: 16px; padding: 2.5rem; cursor: pointer; transition: var(--transition); position: relative; }
+        .pricing-card.free { background: rgba(255,255,255,0.04); border: 2px solid rgba(255,255,255,0.08); }
+        .pricing-card.free.selected { border-color: var(--bleu); background: rgba(67,135,166,0.08); }
+        .pricing-card.premium { background: rgba(248,190,0,0.04); border: 2px solid rgba(248,190,0,0.15); }
+        .pricing-card.premium.selected { border-color: var(--jaune); background: rgba(248,190,0,0.08); }
+        .pricing-radio { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
+        .pricing-radio input[type="radio"] { width: 20px; height: 20px; accent-color: var(--jaune); cursor: pointer; }
+        .pricing-radio label { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; }
+        .pricing-card.free .pricing-radio label { color: var(--bleu-light); }
+        .pricing-card.premium .pricing-radio label { color: var(--jaune); }
+        .pricing-badge { position: absolute; top: -12px; right: 1.5rem; background: var(--jaune); color: var(--noir); font-size: 0.7rem; font-weight: 800; padding: 0.25rem 0.8rem; border-radius: 4px; letter-spacing: 0.05em; }
+        .pricing-price { margin-bottom: 1rem; }
+        .pricing-price .amount { font-size: 2.2rem; font-weight: 800; color: var(--blanc); line-height: 1; }
+        .pricing-price .amount.free-price { color: #22c55e; }
+        .pricing-price .ht { font-size: 0.85rem; color: rgba(255,255,255,0.4); font-weight: 500; }
+        .pricing-desc { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 1.2rem; line-height: 1.6; }
+        .pricing-features { display: flex; flex-direction: column; gap: 0.6rem; }
+        .pricing-feat { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.4; }
+        .pricing-feat svg { min-width: 16px; margin-top: 2px; }
+        .pricing-feat svg.check-blue { color: var(--bleu-light); }
+        .pricing-feat svg.check-gold { color: var(--jaune); }
+
+        .dl-form { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 2.5rem; text-align: left; max-width: 900px; margin: 2.5rem auto 0; display: none; }
+        .dl-form.visible { display: block; }
         .dl-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
         .dl-form-group { display: flex; flex-direction: column; gap: 0.3rem; }
         .dl-form-group.full { grid-column: 1 / -1; }
@@ -144,6 +168,14 @@
         .dl-form-group input::placeholder { color: rgba(255,255,255,0.3); }
         .btn-download { width: 100%; background: var(--jaune); color: var(--noir); padding: 1.1rem; border: none; border-radius: 8px; font-family: 'Raleway', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: var(--transition); margin-top: 1rem; }
         .btn-download:hover { background: var(--jaune-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(248,190,0,0.3); }
+        .btn-download.outline { background: transparent; border: 2px solid var(--bleu); color: var(--blanc); }
+        .btn-download.outline:hover { background: rgba(67,135,166,0.15); box-shadow: none; }
+
+        /* CB FORM */
+        .cb-section { display: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
+        .cb-section.visible { display: block; }
+        .cb-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .cb-label { font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
 
         /* FOOTER */
         .footer { background: var(--noir); color: rgba(255,255,255,0.6); padding: 4rem 0 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -331,28 +363,87 @@
     </div>
 </section>
 
-<!-- DOWNLOAD -->
+<!-- DOWNLOAD / PRICING -->
 <section class="download-section" id="download">
     <div class="container">
-        <div class="download-inner fade-up">
-            <h2>Télécharger le rapport complet</h2>
-            <p>Recevez votre Business Plan détaillé en PDF avec l'ensemble des projections financières.</p>
-            <div class="dl-form">
-                <div class="dl-form-row">
-                    <div class="dl-form-group"><label>Nom *</label><input type="text" id="dlNom" placeholder="Votre nom" required></div>
-                    <div class="dl-form-group"><label>Prénom *</label><input type="text" id="dlPrenom" placeholder="Votre prénom" required></div>
+        <div class="download-header fade-up">
+            <h2>Obtenez votre rapport</h2>
+            <p>Choisissez la formule adaptée à votre besoin et recevez votre analyse personnalisée.</p>
+        </div>
+
+        <!-- PRICING CARDS -->
+        <div class="pricing-grid fade-up">
+            <!-- FREE -->
+            <div class="pricing-card free" id="cardFree" onclick="selectPlan('free')">
+                <div class="pricing-radio">
+                    <input type="radio" name="plan" id="planFree" value="free" checked>
+                    <label for="planFree">Synthèse gratuite</label>
                 </div>
-                <div class="dl-form-row">
-                    <div class="dl-form-group"><label>Email professionnel *</label><input type="email" id="dlEmail" placeholder="vous@entreprise.com" required></div>
-                    <div class="dl-form-group"><label>Téléphone *</label><input type="tel" id="dlTel" placeholder="+33 6 00 00 00 00" required></div>
+                <div class="pricing-price">
+                    <span class="amount free-price">Gratuit</span>
                 </div>
-                <div class="dl-form-row">
-                    <div class="dl-form-group full"><label>Société / Organisation</label><input type="text" id="dlSociete" placeholder="Nom de votre entreprise"></div>
+                <p class="pricing-desc">PDF de synthèse avec les résultats clés de votre simulation. Envoyé par email.</p>
+                <div class="pricing-features">
+                    <div class="pricing-feat"><svg class="check-blue" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>KPIs du projet (CAPEX, TRI, VAN, Payback)</div>
+                    <div class="pricing-feat"><svg class="check-blue" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Comparatif CRE vs Optimisation Sungen</div>
+                    <div class="pricing-feat"><svg class="check-blue" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Synthèse CAPEX et revenus An 1</div>
+                    <div class="pricing-feat"><svg class="check-blue" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>PDF envoyé par email</div>
                 </div>
-                <button class="btn-download" onclick="generatePDF()">
-                    Télécharger le rapport PDF →
-                </button>
             </div>
+
+            <!-- PREMIUM -->
+            <div class="pricing-card premium" id="cardPremium" onclick="selectPlan('premium')">
+                <span class="pricing-badge">RECOMMANDÉ</span>
+                <div class="pricing-radio">
+                    <input type="radio" name="plan" id="planPremium" value="premium">
+                    <label for="planPremium">Business Plan complet</label>
+                </div>
+                <div class="pricing-price">
+                    <span class="amount">495 €</span> <span class="ht">HT</span>
+                </div>
+                <p class="pricing-desc">Package complet incluant le modèle financier Excel, toutes les projections et la documentation opérationnelle.</p>
+                <div class="pricing-features">
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Business Plan financier complet (Excel)</div>
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Planning & milestones ordonnancés</div>
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Coûts de développement détaillés</div>
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Liste des contrats à établir</div>
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Risk scenario & sensibilité du modèle</div>
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Notice complète d'utilisation</div>
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Fichier : BP_PV_Stockage_[surface]_Optimisation_CRE.xlsx</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORM -->
+        <div class="dl-form" id="dlForm">
+            <div class="dl-form-row">
+                <div class="dl-form-group"><label>Nom *</label><input type="text" id="dlNom" placeholder="Votre nom" required></div>
+                <div class="dl-form-group"><label>Prénom *</label><input type="text" id="dlPrenom" placeholder="Votre prénom" required></div>
+            </div>
+            <div class="dl-form-row">
+                <div class="dl-form-group"><label>Email professionnel *</label><input type="email" id="dlEmail" placeholder="vous@entreprise.com" required></div>
+                <div class="dl-form-group"><label>Téléphone *</label><input type="tel" id="dlTel" placeholder="+33 6 00 00 00 00" required></div>
+            </div>
+            <div class="dl-form-row">
+                <div class="dl-form-group full"><label>Société / Organisation</label><input type="text" id="dlSociete" placeholder="Nom de votre entreprise"></div>
+            </div>
+
+            <!-- CB SECTION (premium only) -->
+            <div class="cb-section" id="cbSection">
+                <p class="cb-label">💳 Paiement sécurisé — 495 € HT (594 € TTC)</p>
+                <div class="dl-form-row">
+                    <div class="dl-form-group full"><label>Numéro de carte</label><input type="text" id="cbNumber" placeholder="4242 4242 4242 4242" maxlength="19"></div>
+                </div>
+                <div class="cb-row">
+                    <div class="dl-form-group"><label>Expiration</label><input type="text" id="cbExpiry" placeholder="MM / AA" maxlength="7"></div>
+                    <div class="dl-form-group"><label>CVC</label><input type="text" id="cbCvc" placeholder="123" maxlength="4"></div>
+                    <div class="dl-form-group"><label>Pays</label><input type="text" id="cbCountry" placeholder="France" value="France"></div>
+                </div>
+            </div>
+
+            <button class="btn-download" id="btnSubmit" onclick="handleSubmit()">
+                <span id="btnLabel">Recevoir la synthèse gratuite →</span>
+            </button>
         </div>
     </div>
 </section>
@@ -553,17 +644,65 @@ function updateResults() {
     `;
 }
 
-function generatePDF() {
+// ═══════════════ PLAN SELECTION ═══════════════
+let selectedPlan = 'free';
+
+function selectPlan(plan) {
+    selectedPlan = plan;
+    document.getElementById('planFree').checked = (plan === 'free');
+    document.getElementById('planPremium').checked = (plan === 'premium');
+    document.getElementById('cardFree').classList.toggle('selected', plan === 'free');
+    document.getElementById('cardPremium').classList.toggle('selected', plan === 'premium');
+    document.getElementById('cbSection').classList.toggle('visible', plan === 'premium');
+    document.getElementById('dlForm').classList.add('visible');
+
+    if (plan === 'premium') {
+        document.getElementById('btnLabel').textContent = 'Payer 495 € HT et recevoir le package complet →';
+        document.getElementById('btnSubmit').classList.remove('outline');
+    } else {
+        document.getElementById('btnLabel').textContent = 'Recevoir la synthèse gratuite →';
+        document.getElementById('btnSubmit').classList.remove('outline');
+    }
+    document.getElementById('dlForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function handleSubmit() {
+    const nom = document.getElementById('dlNom').value;
+    const prenom = document.getElementById('dlPrenom').value;
+    const email = document.getElementById('dlEmail').value;
+    const tel = document.getElementById('dlTel').value;
+    if (!nom || !prenom || !email || !tel) {
+        alert('Veuillez remplir tous les champs obligatoires.');
+        return;
+    }
+
+    if (selectedPlan === 'premium') {
+        const cbNum = document.getElementById('cbNumber').value;
+        const cbExp = document.getElementById('cbExpiry').value;
+        const cbCvc = document.getElementById('cbCvc').value;
+        if (!cbNum || !cbExp || !cbCvc) {
+            alert('Veuillez remplir les informations de paiement.');
+            return;
+        }
+        // Simulate payment processing
+        document.getElementById('btnLabel').textContent = 'Traitement du paiement...';
+        document.getElementById('btnSubmit').disabled = true;
+        setTimeout(() => {
+            alert(`✅ Paiement de 495 € HT confirmé.\n\nLe fichier BP_PV_Stockage_${document.getElementById('surfaceRange').value}ha_Optimisation_CRE_March2026.xlsx sera envoyé à ${email} dans les prochaines minutes.\n\nMerci ${prenom} !`);
+            document.getElementById('btnLabel').textContent = '✓ Package envoyé par email';
+            document.getElementById('btnSubmit').style.background = '#22c55e';
+        }, 2000);
+    } else {
+        generateFreePDF();
+    }
+}
+
+function generateFreePDF() {
     const nom = document.getElementById('dlNom').value;
     const prenom = document.getElementById('dlPrenom').value;
     const email = document.getElementById('dlEmail').value;
     const tel = document.getElementById('dlTel').value;
     const societe = document.getElementById('dlSociete').value;
-
-    if (!nom || !prenom || !email || !tel) {
-        alert('Veuillez remplir tous les champs obligatoires.');
-        return;
-    }
 
     const ha = parseInt(document.getElementById('surfaceRange').value);
     const zone = document.getElementById('zoneSelect').value;
@@ -573,53 +712,66 @@ function generatePDF() {
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-    let y = 20;
     const lm = 15;
+    let y;
 
-    // Header
+    // ── PAGE 1 : HEADER ──
     doc.setFillColor(26, 26, 46);
-    doc.rect(0, 0, 210, 35, 'F');
+    doc.rect(0, 0, 210, 40, 'F');
     doc.setFillColor(248, 190, 0);
     doc.rect(0, 0, 210, 3, 'F');
     doc.setTextColor(248, 190, 0);
-    doc.setFontSize(18);
+    doc.setFontSize(20);
     doc.setFont('helvetica', 'bold');
-    doc.text('SUNGEN — Rapport Optimizer', lm, 18);
-    doc.setFontSize(9);
+    doc.text('SUNGEN', lm, 17);
+    doc.setFontSize(10);
+    doc.setTextColor(255, 255, 255);
+    doc.text('Optimizer — Synthèse du Business Plan', lm, 25);
+    doc.setFontSize(8);
     doc.setTextColor(150, 170, 200);
-    doc.text(`Business Plan — Centrale PV + Stockage BESS | ${ha} ha | ${z.label}`, lm, 26);
-    doc.text(`Généré le ${new Date().toLocaleDateString('fr-FR')} pour ${prenom} ${nom} — ${societe || 'N/A'}`, lm, 32);
+    doc.text(`Centrale PV + Stockage BESS  |  ${ha} hectare(s)  |  ${z.label}`, lm, 32);
+    doc.text(`Préparé pour ${prenom} ${nom}${societe ? ' — ' + societe : ''}  |  ${new Date().toLocaleDateString('fr-FR')}`, lm, 37);
 
-    y = 45;
-    doc.setTextColor(0, 0, 0);
-    doc.setFontSize(12);
+    // ── CONFIGURATION ──
+    y = 50;
+    doc.setFillColor(67, 135, 166);
+    doc.rect(lm, y - 5, 180, 8, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
-    doc.text('1. Configuration optimale recommandée', lm, y); y += 8;
+    doc.text('1. CONFIGURATION OPTIMALE', lm + 3, y);
+    y += 12;
 
+    doc.setTextColor(60, 60, 60);
     doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    const configLines = [
-        ['Puissance PV', fmt(o.pvMWc) + ' MWc'],
-        ['Batterie BESS', fmt(o.batMW) + ' MW / ' + fmt(o.batMWh) + ' MWh LFP'],
-        ['Surface', ha + ' hectare(s)'],
-        ['Zone', z.label],
-        ['Productible', fmtI(z.prod) + ' kWh/kWc/an'],
+    const rows1 = [
+        ['Puissance PV', fmt(o.pvMWc) + ' MWc  (' + fmtI(o.pvKWc) + ' kWc)'],
+        ['Batterie BESS LFP', fmt(o.batMW) + ' MW / ' + fmt(o.batMWh) + ' MWh'],
+        ['Surface foncière', ha + ' hectare(s)'],
+        ['Zone géographique', z.label],
+        ['Irradiance', fmtI(z.irr) + ' kWh/m²/an'],
+        ['Productible estimé', fmtI(z.prod) + ' kWh/kWc/an'],
     ];
-    configLines.forEach(l => {
-        doc.text(l[0], lm, y);
-        doc.setFont('helvetica', 'bold');
-        doc.text(l[1], 100, y);
+    rows1.forEach(r => {
         doc.setFont('helvetica', 'normal');
+        doc.text(r[0], lm + 2, y);
+        doc.setFont('helvetica', 'bold');
+        doc.text(r[1], 105, y);
         y += 6;
     });
 
+    // ── KPIs ──
     y += 5;
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'bold');
-    doc.text('2. Indicateurs clés', lm, y); y += 8;
+    doc.setFillColor(248, 190, 0);
+    doc.rect(lm, y - 5, 180, 8, 'F');
+    doc.setTextColor(26, 26, 46);
+    doc.setFontSize(11);
+    doc.text('2. INDICATEURS CLÉS', lm + 3, y);
+    y += 12;
 
+    doc.setTextColor(60, 60, 60);
     doc.setFontSize(9);
-    const kpiLines = [
+    const kpis = [
         ['CAPEX Total', fmt(o.capexTotal / 1e6, 2) + ' M€'],
         ['TRI Projet', fmt(o.tri) + ' %'],
         ['VAN @6%', '+' + fmt(o.van / 1e6, 2) + ' M€'],
@@ -627,78 +779,141 @@ function generatePDF() {
         ['Revenu An 1', fmtI(o.revTotal / 1000) + ' k€'],
         ['EBITDA An 1', fmtI((o.revTotal - o.opexTotal) / 1000) + ' k€'],
     ];
-    kpiLines.forEach(l => {
+    kpis.forEach(r => {
         doc.setFont('helvetica', 'normal');
-        doc.text(l[0], lm, y);
+        doc.text(r[0], lm + 2, y);
         doc.setFont('helvetica', 'bold');
-        doc.text(l[1], 100, y);
+        doc.setTextColor(67, 135, 166);
+        doc.text(r[1], 105, y);
+        doc.setTextColor(60, 60, 60);
         y += 6;
     });
 
+    // ── COMPARAISON ──
     y += 5;
-    doc.setFontSize(12);
+    doc.setFillColor(67, 135, 166);
+    doc.rect(lm, y - 5, 180, 8, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(11);
+    doc.text('3. COMPARAISON CRE 50% vs OPTIMISATION 100%', lm + 3, y);
+    y += 12;
+
+    doc.setTextColor(100, 100, 100);
+    doc.setFontSize(8);
     doc.setFont('helvetica', 'bold');
-    doc.text('3. Comparaison CRE 50% vs Optimisation 100%', lm, y); y += 8;
+    ['', 'CRE 50 %', 'Opti Sungen 100 %', 'Écart'].forEach((h, i) => doc.text(h, lm + 2 + i * 45, y));
+    y += 2;
+    doc.setDrawColor(200); doc.line(lm, y, 195, y);
+    y += 5;
 
     doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    const compHeaders = ['', 'CRE 50%', 'Opti 100%', 'Delta'];
-    const compData = [
-        ['CAPEX', fmt(c.capexTotal/1e6,2)+' M€', fmt(o.capexTotal/1e6,2)+' M€', '+'+fmt((o.capexTotal-c.capexTotal)/1000)+' k€'],
-        ['TRI', fmt(c.tri)+'%', fmt(o.tri)+'%', '+'+fmt(o.tri-c.tri)+' pts'],
-        ['VAN', '+'+fmt(c.van/1e6,2)+' M€', '+'+fmt(o.van/1e6,2)+' M€', '+'+fmt((o.van-c.van)/1000)+' k€'],
-        ['Payback', fmt(c.payback)+' ans', fmt(o.payback)+' ans', fmt(c.payback-o.payback)+' ans'],
+    const compRows = [
+        ['CAPEX', fmt(c.capexTotal/1e6,2)+' M€', fmt(o.capexTotal/1e6,2)+' M€', '+'+fmtI((o.capexTotal-c.capexTotal)/1000)+' k€'],
+        ['TRI', fmt(c.tri)+' %', fmt(o.tri)+' %', '+'+fmt(o.tri-c.tri)+' pts'],
+        ['VAN @6%', '+'+fmt(c.van/1e6,2)+' M€', '+'+fmt(o.van/1e6,2)+' M€', '+'+fmtI((o.van-c.van)/1000)+' k€'],
+        ['Payback', fmt(c.payback)+' ans', fmt(o.payback)+' ans', '-'+fmt(c.payback-o.payback)+' ans'],
+        ['Revenu An 1', fmtI(c.revTotal/1000)+' k€', fmtI(o.revTotal/1000)+' k€', '+'+fmtI((o.revTotal-c.revTotal)/1000)+' k€'],
     ];
-
-    doc.setFont('helvetica', 'bold');
-    compHeaders.forEach((h, i) => doc.text(h, lm + i * 45, y));
-    y += 5;
-    doc.setFont('helvetica', 'normal');
-    compData.forEach(row => {
-        row.forEach((cell, i) => doc.text(cell, lm + i * 45, y));
-        y += 5;
+    compRows.forEach(r => {
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(60, 60, 60);
+        r.forEach((cell, i) => {
+            if (i === 2) { doc.setFont('helvetica', 'bold'); doc.setTextColor(67, 135, 166); }
+            else if (i === 3) { doc.setFont('helvetica', 'normal'); doc.setTextColor(34, 197, 94); }
+            else { doc.setFont('helvetica', 'normal'); doc.setTextColor(60, 60, 60); }
+            doc.text(cell, lm + 2 + i * 45, y);
+        });
+        y += 6;
     });
 
-    y += 8;
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'bold');
-    doc.text('4. Détail CAPEX', lm, y); y += 7;
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    [
-        ['Modules PV', fmtI(o.capexPV/1000)+' k€'],
-        ['Batterie BESS LFP', fmtI(o.capexBat/1000)+' k€'],
-        ['BOS / raccordement / GC', fmtI(o.capexBOS/1000)+' k€'],
-        ['Développement & études', fmtI(o.capexDev/1000)+' k€'],
-        ['TOTAL', fmt(o.capexTotal/1e6,2)+' M€'],
-    ].forEach(l => { doc.text(l[0], lm, y); doc.text(l[1], 130, y); y += 5; });
-
+    // ── CAPEX DETAIL ──
     y += 5;
-    doc.setFontSize(12);
+    doc.setFillColor(248, 190, 0);
+    doc.rect(lm, y - 5, 180, 8, 'F');
+    doc.setTextColor(26, 26, 46);
+    doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
-    doc.text('5. Revenus An 1', lm, y); y += 7;
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    [
-        ['Vente PV (CRE ' + TARIF_CR + ' €/MWh)', fmtI(o.revPV/1000)+' k€'],
-        ['Services système batterie', fmtI(o.revBat/1000)+' k€'],
-        ['TOTAL REVENUS', fmtI(o.revTotal/1000)+' k€'],
-        ['OPEX annuel', '-'+fmtI(o.opexTotal/1000)+' k€'],
-        ['EBITDA', fmtI((o.revTotal-o.opexTotal)/1000)+' k€'],
-    ].forEach(l => { doc.text(l[0], lm, y); doc.text(l[1], 130, y); y += 5; });
+    doc.text('4. DÉTAIL CAPEX', lm + 3, y);
+    y += 12;
 
-    // Footer
+    doc.setTextColor(60, 60, 60);
+    doc.setFontSize(9);
+    [
+        ['Modules PV (' + fmtI(o.pvKWc) + ' kWc × ' + CAPEX_PV + ' €/kWc)', fmtI(o.capexPV/1000)+' k€'],
+        ['Batterie BESS LFP (' + fmtI(o.batKWh) + ' kWh × ' + CAPEX_BAT + ' €/kWh)', fmtI(o.capexBat/1000)+' k€'],
+        ['BOS, raccordement, GC', fmtI(o.capexBOS/1000)+' k€'],
+        ['Développement & études', fmtI(o.capexDev/1000)+' k€'],
+    ].forEach(l => {
+        doc.setFont('helvetica', 'normal');
+        doc.text(l[0], lm + 2, y);
+        doc.text(l[1], 165, y, { align: 'right' });
+        y += 6;
+    });
+    doc.setDrawColor(67, 135, 166); doc.line(lm + 2, y - 1, 180, y - 1);
+    doc.setFont('helvetica', 'bold');
+    doc.text('CAPEX TOTAL', lm + 2, y + 4);
+    doc.setTextColor(26, 26, 46);
+    doc.text(fmt(o.capexTotal/1e6, 2) + ' M€', 165, y + 4, { align: 'right' });
+    y += 12;
+
+    // ── REVENUS ──
+    doc.setFillColor(67, 135, 166);
+    doc.rect(lm, y - 5, 180, 8, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(11);
+    doc.text('5. REVENUS ANNUELS — AN 1', lm + 3, y);
+    y += 12;
+
+    doc.setTextColor(60, 60, 60);
+    doc.setFontSize(9);
+    [
+        ['Vente PV — Contrat CRE (' + TARIF_CR + ' €/MWh)', fmtI(o.revPV/1000)+' k€'],
+        ['Services système batterie (aFRR, capacité)', fmtI(o.revBat/1000)+' k€'],
+    ].forEach(l => {
+        doc.setFont('helvetica', 'normal');
+        doc.text(l[0], lm + 2, y);
+        doc.setTextColor(34, 197, 94);
+        doc.text(l[1], 165, y, { align: 'right' });
+        doc.setTextColor(60, 60, 60);
+        y += 6;
+    });
+    doc.setDrawColor(34, 197, 94); doc.line(lm + 2, y - 1, 180, y - 1);
+    doc.setFont('helvetica', 'bold');
+    doc.text('REVENU TOTAL AN 1', lm + 2, y + 4);
+    doc.setTextColor(34, 197, 94);
+    doc.text(fmtI(o.revTotal/1000) + ' k€', 165, y + 4, { align: 'right' });
+    y += 10;
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(60, 60, 60);
+    doc.text('OPEX annuel (maintenance, assurance, foncier)', lm + 2, y);
+    doc.setTextColor(235, 91, 86);
+    doc.text('-' + fmtI(o.opexTotal/1000) + ' k€', 165, y, { align: 'right' });
+    y += 6;
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(196, 150, 0);
+    doc.text('EBITDA AN 1', lm + 2, y);
+    doc.text(fmtI((o.revTotal-o.opexTotal)/1000) + ' k€', 165, y, { align: 'right' });
+
+    // ── FOOTER ──
     doc.setFillColor(26, 26, 46);
-    doc.rect(0, 280, 210, 17, 'F');
+    doc.rect(0, 278, 210, 20, 'F');
     doc.setTextColor(150, 170, 200);
     doc.setFontSize(7);
-    doc.text('SUNGEN — Cabinet de conseil en Photovoltaïque | sungen.fr | Résultats indicatifs — Hypothèses CRE 05/03/2026', lm, 288);
-    doc.text(`Contact : ${email} | ${tel}`, lm, 292);
+    doc.setFont('helvetica', 'normal');
+    doc.text('SUNGEN — Cabinet de conseil en Photovoltaïque  |  sungen.fr  |  Résultats indicatifs — Hypothèses Note CRE 05/03/2026', lm, 285);
+    doc.text(`Document préparé pour ${prenom} ${nom}  |  ${email}  |  ${tel}`, lm, 290);
+    doc.setTextColor(248, 190, 0);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Pour le Business Plan complet (Excel, planning, contrats, risques) : sungen.fr/optimizer', lm, 295);
 
-    doc.save(`Sungen_Optimizer_${ha}ha_${zone}.pdf`);
+    doc.save(`Sungen_Synthese_${ha}ha_${zone}.pdf`);
+    
+    alert(`✅ Synthèse téléchargée !\n\nUne copie sera également envoyée à ${email}.\n\nPour le package complet (Excel, planning, contrats, risques) → 495 € HT.`);
 }
 
 // Init
+selectPlan('free');
 document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('open'); });
 window.addEventListener('scroll', () => { document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50); });
 const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
