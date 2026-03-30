@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimizer | Sungen — Optimisation économique centrales PV + Stockage</title>
+    <meta name="description" content="Outil d'optimisation économique pour centrales photovoltaïques au sol avec stockage batterie. Simulez votre Business Plan selon la surface et la zone d'ensoleillement.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.sungen.fr/optimizer.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bleu: #4387a6; --bleu-dark: #2c6f90; --bleu-light: #5da2c2;
+            --jaune: #f8be00; --jaune-light: #ffd23f;
+            --gris: #9d9d9c; --gris-light: #e8e8e8; --gris-dark: #4a4a4a;
+            --rouge: #eb5b56; --blanc: #ffffff; --noir: #1a1a2e;
+            --bg-cream: #f7f5f2;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: 'Raleway', sans-serif; color: var(--noir); background: var(--blanc); line-height: 1.7; overflow-x: hidden; }
+        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+        /* NAV */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(26,26,46,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); transition: var(--transition); }
+        .navbar.scrolled { background: rgba(26,26,46,0.98); box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .nav-logo img { height: 38px; width: auto; }
+        .nav-links { display: flex; gap: 1.8rem; align-items: center; }
+        .nav-links a { color: rgba(255,255,255,0.75); font-weight: 500; font-size: 0.9rem; letter-spacing: 0.03em; transition: var(--transition); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--jaune); transition: var(--transition); }
+        .nav-links a:hover, .nav-links a.active { color: var(--blanc); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-cta { background: var(--jaune) !important; color: var(--noir) !important; padding: 0.65rem 1.5rem; border-radius: 6px; font-weight: 700; font-size: 0.85rem; transition: var(--transition); }
+        .nav-cta:hover { background: var(--jaune-light) !important; transform: translateY(-1px); }
+        .nav-cta::after { display: none !important; }
+        .lang-selector { position: relative; margin-left: 0.5rem; }
+        .lang-current { display: flex; align-items: center; gap: 0.3rem; color: rgba(255,255,255,0.75); font-size: 0.82rem; font-weight: 600; cursor: pointer; padding: 0.4rem 0.6rem; border-radius: 4px; transition: var(--transition); }
+        .lang-current:hover { color: var(--blanc); background: rgba(255,255,255,0.08); }
+        .lang-current svg { width: 12px; height: 12px; transition: var(--transition); }
+        .lang-selector:hover .lang-current svg { transform: rotate(180deg); }
+        .lang-dropdown { display: none; position: absolute; top: 100%; right: 0; background: rgba(26,26,46,0.98); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 0.4rem; min-width: 100px; margin-top: 0.3rem; box-shadow: 0 8px 25px rgba(0,0,0,0.3); z-index: 100; }
+        .lang-selector:hover .lang-dropdown { display: block; }
+        .lang-dropdown a { display: block; padding: 0.45rem 0.8rem; font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,0.65); border-radius: 4px; transition: var(--transition); }
+        .lang-dropdown a:hover { background: rgba(255,255,255,0.08); color: var(--blanc); }
+        .lang-dropdown a.active { color: var(--jaune); font-weight: 700; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+        .hamburger span { width: 26px; height: 2px; background: var(--blanc); transition: var(--transition); }
+
+        /* PAGE HERO */
+        .page-hero { padding: 10rem 0 4rem; background: var(--noir); position: relative; overflow: hidden; }
+        .page-hero::before { content: ''; position: absolute; top: -200px; right: -100px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(248,190,0,0.1) 0%, transparent 70%); }
+        .page-hero-content { position: relative; z-index: 2; }
+        .page-hero .breadcrumb { font-size: 0.82rem; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; font-weight: 500; }
+        .page-hero .breadcrumb a { color: rgba(255,255,255,0.6); transition: var(--transition); }
+        .page-hero .breadcrumb a:hover { color: var(--jaune); }
+        .page-hero h1 { font-size: 2.8rem; font-weight: 800; color: var(--blanc); line-height: 1.15; margin-bottom: 1rem; max-width: 700px; }
+        .page-hero h1 em { font-style: normal; color: var(--jaune); }
+        .page-hero p { font-size: 1.1rem; color: rgba(255,255,255,0.6); max-width: 600px; line-height: 1.8; }
+
+        /* CONFIGURATOR */
+        .configurator { padding: 4rem 0; background: var(--bg-cream); }
+        .config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .config-card { background: var(--blanc); border-radius: 16px; padding: 2.5rem; border: 1px solid rgba(0,0,0,0.04); }
+        .config-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; color: var(--noir); }
+        .config-card .config-sub { font-size: 0.85rem; color: var(--gris); margin-bottom: 1.5rem; }
+
+        .range-wrapper { position: relative; margin-bottom: 1rem; }
+        .range-value { text-align: center; font-size: 2.5rem; font-weight: 800; color: var(--bleu); margin-bottom: 0.5rem; line-height: 1; }
+        .range-value span { font-size: 1rem; font-weight: 600; color: var(--gris-dark); }
+        input[type="range"] { width: 100%; -webkit-appearance: none; appearance: none; height: 6px; border-radius: 3px; background: var(--gris-light); outline: none; cursor: pointer; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--bleu); cursor: pointer; box-shadow: 0 2px 8px rgba(67,135,166,0.3); }
+        .range-labels { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--gris); margin-top: 0.3rem; }
+
+        .zone-select { width: 100%; padding: 1rem; border: 2px solid var(--gris-light); border-radius: 10px; font-family: 'Raleway', sans-serif; font-size: 1rem; font-weight: 600; color: var(--noir); background: var(--blanc); cursor: pointer; outline: none; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234387a6' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 3rem; transition: var(--transition); }
+        .zone-select:focus { border-color: var(--bleu); box-shadow: 0 0 0 3px rgba(67,135,166,0.12); }
+        .zone-info { display: flex; justify-content: space-between; margin-top: 1rem; padding: 0.8rem 1rem; background: rgba(67,135,166,0.06); border-radius: 8px; font-size: 0.85rem; }
+        .zone-info strong { color: var(--bleu); }
+
+        /* RESULTS */
+        .results { padding: 4rem 0; }
+        .results-title { text-align: center; margin-bottom: 3rem; }
+        .results-title h2 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .results-title p { color: var(--gris-dark); font-size: 0.95rem; }
+
+        /* KPIs */
+        .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2rem; margin-bottom: 3rem; }
+        .kpi-card { background: var(--noir); border-radius: 14px; padding: 1.8rem 1.2rem; text-align: center; position: relative; overflow: hidden; }
+        .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+        .kpi-card.blue::before { background: var(--bleu); }
+        .kpi-card.yellow::before { background: var(--jaune); }
+        .kpi-card.green::before { background: #22c55e; }
+        .kpi-card.red::before { background: var(--rouge); }
+        .kpi-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem; }
+        .kpi-value { font-size: 1.8rem; font-weight: 800; color: var(--jaune); line-height: 1.1; margin-bottom: 0.2rem; }
+        .kpi-unit { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
+
+        /* BP SECTIONS */
+        .bp-section { margin-bottom: 2.5rem; }
+        .bp-section-title { font-size: 1.15rem; font-weight: 700; color: var(--noir); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--bleu); display: flex; align-items: center; gap: 0.5rem; }
+        .bp-section-title .num { background: var(--bleu); color: var(--blanc); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 700; }
+
+        .bp-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; font-size: 0.88rem; }
+        .bp-table thead th { background: var(--noir); color: var(--blanc); padding: 0.8rem 1rem; text-align: left; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; }
+        .bp-table tbody td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--gris-light); }
+        .bp-table tbody tr:hover { background: rgba(67,135,166,0.04); }
+        .bp-table .val { font-weight: 700; color: var(--noir); text-align: right; font-family: 'Raleway', sans-serif; }
+        .bp-table .val.green { color: #16a34a; }
+        .bp-table .val.blue { color: var(--bleu); }
+        .bp-table .val.gold { color: #c49600; }
+
+        /* COMPARISON CRE vs OPTI */
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2.5rem; }
+        .comp-card { border-radius: 14px; padding: 2rem; }
+        .comp-card.cre { background: rgba(67,135,166,0.06); border: 1px solid rgba(67,135,166,0.15); }
+        .comp-card.opti { background: rgba(248,190,0,0.06); border: 2px solid rgba(248,190,0,0.3); position: relative; }
+        .comp-card.opti::after { content: '★ RECOMMANDÉ'; position: absolute; top: -10px; right: 1.5rem; background: var(--jaune); color: var(--noir); font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.8rem; border-radius: 4px; letter-spacing: 0.05em; }
+        .comp-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+        .comp-card.cre h4 { color: var(--bleu); }
+        .comp-card.opti h4 { color: #c49600; }
+        .comp-line { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: 0.88rem; }
+        .comp-line:last-child { border: none; }
+        .comp-line .comp-val { font-weight: 700; }
+
+        /* DOWNLOAD */
+        .download-section { padding: 4rem 0; background: var(--noir); }
+        .download-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+        .download-inner h2 { font-size: 1.8rem; font-weight: 800; color: var(--blanc); margin-bottom: 0.5rem; }
+        .download-inner > p { color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
+        .dl-form { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 2.5rem; text-align: left; }
+        .dl-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .dl-form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+        .dl-form-group.full { grid-column: 1 / -1; }
+        .dl-form-group label { font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7); }
+        .dl-form-group input { padding: 0.8rem 1rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; background: rgba(255,255,255,0.06); color: var(--blanc); font-family: 'Raleway', sans-serif; font-size: 0.9rem; outline: none; transition: var(--transition); }
+        .dl-form-group input:focus { border-color: var(--jaune); box-shadow: 0 0 0 3px rgba(248,190,0,0.1); }
+        .dl-form-group input::placeholder { color: rgba(255,255,255,0.3); }
+        .btn-download { width: 100%; background: var(--jaune); color: var(--noir); padding: 1.1rem; border: none; border-radius: 8px; font-family: 'Raleway', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: var(--transition); margin-top: 1rem; }
+        .btn-download:hover { background: var(--jaune-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(248,190,0,0.3); }
+
+        /* FOOTER */
+        .footer { background: var(--noir); color: rgba(255,255,255,0.6); padding: 4rem 0 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+        .footer-brand img { height: 36px; margin-bottom: 1rem; }
+        .footer-brand p { font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .footer h4 { color: var(--blanc); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1.2rem; }
+        .footer ul li { margin-bottom: 0.6rem; }
+        .footer ul li a { font-size: 0.9rem; transition: var(--transition); }
+        .footer ul li a:hover { color: var(--jaune); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
+
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 1024px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); } .comparison-grid { grid-template-columns: 1fr; } .config-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(26,26,46,0.98); flex-direction: column; padding: 2rem; gap: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+            .nav-links.open { display: flex; }
+            .page-hero h1 { font-size: 2rem; }
+            .kpi-grid { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+            .dl-form-row { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) { .page-hero h1 { font-size: 1.7rem; } .kpi-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar" role="navigation">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo"><img src="../img/Logo_Sungen_white_sans_fond.png" alt="Sungen" width="140" height="38"></a>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="expertise.html">Our Expertise</a>
+            <a href="segments.html">Our Segments</a>
+            <a href="optimizer.html" class="active">Optimizer</a>
+            <a href="contact.html" class="nav-cta">Contact Us</a>
+            <div class="lang-selector">
+                <div class="lang-current">EN <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                <div class="lang-dropdown">
+                    <a href="../optimizer.html">Français</a>
+                    <a href="optimizer.html" class="active">English</a>
+                    <a href="../es/optimizer.html">Spanish</a>
+                    <a href="../it/optimizer.html">Italiano</a>
+                </div>
+            </div>
+        </div>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="page-hero">
+    <div class="container">
+        <div class="page-hero-content">
+            <nav class="breadcrumb"><a href="index.html">Home</a> / <span>Optimizer</span></nav>
+            <h1>Optimisez votre <em>Business Plan solaire</em></h1>
+            <p>Simulez l'optimum économique de votre centrale photovoltaïque au sol avec stockage batterie. Résultats instantanés selon votre surface et votre zone géographique.</p>
+        </div>
+    </div>
+</header>
+
+<!-- CONFIGURATOR -->
+<section class="configurator">
+    <div class="container">
+        <div class="config-grid fade-up">
+            <div class="config-card">
+                <h3>Surface du projet</h3>
+                <p class="config-sub">Sélectionnez la surface foncière disponible</p>
+                <div class="range-wrapper">
+                    <div class="range-value" id="surfaceDisplay">2 <span>hectares</span></div>
+                    <input type="range" id="surfaceRange" min="1" max="10" value="2" step="1" oninput="updateResults()">
+                    <div class="range-labels"><span>1 ha</span><span>5 ha</span><span>10 ha</span></div>
+                </div>
+            </div>
+            <div class="config-card">
+                <h3>Zone d'ensoleillement</h3>
+                <p class="config-sub">Sélectionnez la zone géographique du projet</p>
+                <select class="zone-select" id="zoneSelect" onchange="updateResults()">
+                    <option value="lille">Lille — Nord</option>
+                    <option value="paris" selected>Paris — Île-de-France</option>
+                    <option value="dijon">Dijon · Rennes — Centre-Ouest</option>
+                    <option value="lyon">Lyon · Bordeaux — Rhône-Atlantique</option>
+                    <option value="toulouse">Toulouse · Avignon — Sud-Ouest / Provence</option>
+                    <option value="nice">Biarritz · Nice — Grand Sud</option>
+                </select>
+                <div class="zone-info">
+                    <span>Irradiance : <strong id="irradianceDisplay">1 150</strong> kWh/m²/an</span>
+                    <span>Productible : <strong id="productibleDisplay">1 150</strong> kWh/kWc/an</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results" id="results">
+    <div class="container">
+        <div class="results-title fade-up">
+            <h2>Résultats de votre simulation</h2>
+            <p>Configuration optimale : <strong id="configSummary">1,8 MWc PV + 1,8 MW / 3,6 MWh BESS</strong></p>
+        </div>
+
+        <!-- KPIs -->
+        <div class="kpi-grid fade-up">
+            <div class="kpi-card blue">
+                <div class="kpi-label">CAPEX Total</div>
+                <div class="kpi-value" id="kpiCapex">3,4 M€</div>
+                <div class="kpi-unit">Investissement initial</div>
+            </div>
+            <div class="kpi-card yellow">
+                <div class="kpi-label">TRI Projet</div>
+                <div class="kpi-value" id="kpiTri">10,8 %</div>
+                <div class="kpi-unit">Taux de rendement interne</div>
+            </div>
+            <div class="kpi-card green">
+                <div class="kpi-label">VAN @6%</div>
+                <div class="kpi-value" id="kpiVan">+1,5 M€</div>
+                <div class="kpi-unit">Valeur actuelle nette</div>
+            </div>
+            <div class="kpi-card yellow">
+                <div class="kpi-label">Payback</div>
+                <div class="kpi-value" id="kpiPayback">7,2 ans</div>
+                <div class="kpi-unit">Retour sur investissement</div>
+            </div>
+            <div class="kpi-card blue">
+                <div class="kpi-label">Revenu An 1</div>
+                <div class="kpi-value" id="kpiRevenu">440 k€</div>
+                <div class="kpi-unit">PV CR + Services batterie</div>
+            </div>
+        </div>
+
+        <!-- COMPARISON CRE vs OPTI -->
+        <div class="bp-section fade-up">
+            <div class="bp-section-title"><span class="num">1</span> Préconisation CRE vs Optimisation Sungen</div>
+            <div class="comparison-grid">
+                <div class="comp-card cre">
+                    <h4>Préconisation CRE — 50% P_PV / 2h</h4>
+                    <div class="comp-line"><span>Puissance PV</span><span class="comp-val" id="crePv">1,80 MWc</span></div>
+                    <div class="comp-line"><span>Batterie</span><span class="comp-val" id="creBat">0,90 MW / 1,80 MWh</span></div>
+                    <div class="comp-line"><span>CAPEX</span><span class="comp-val" id="creCapex">2,85 M€</span></div>
+                    <div class="comp-line"><span>TRI</span><span class="comp-val" id="creTri">9,1 %</span></div>
+                    <div class="comp-line"><span>VAN @6%</span><span class="comp-val" id="creVan">+0,95 M€</span></div>
+                    <div class="comp-line"><span>Payback</span><span class="comp-val" id="crePayback">8,5 ans</span></div>
+                </div>
+                <div class="comp-card opti">
+                    <h4>Optimisation Sungen — 100% P_PV / 2h</h4>
+                    <div class="comp-line"><span>Puissance PV</span><span class="comp-val" id="optiPv">1,80 MWc</span></div>
+                    <div class="comp-line"><span>Batterie</span><span class="comp-val" id="optiBat">1,80 MW / 3,60 MWh</span></div>
+                    <div class="comp-line"><span>CAPEX</span><span class="comp-val" id="optiCapex">3,40 M€</span></div>
+                    <div class="comp-line"><span>TRI</span><span class="comp-val" id="optiTri">11,7 %</span></div>
+                    <div class="comp-line"><span>VAN @6%</span><span class="comp-val" id="optiVan">+1,47 M€</span></div>
+                    <div class="comp-line"><span>Payback</span><span class="comp-val" id="optiPayback">7,2 ans</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BP DETAILS -->
+        <div class="bp-section fade-up">
+            <div class="bp-section-title"><span class="num">2</span> Détail du Business Plan — Configuration optimale</div>
+            <table class="bp-table">
+                <thead><tr><th>Poste</th><th>Détail</th><th style="text-align:right">Montant</th></tr></thead>
+                <tbody id="bpCapexBody"></tbody>
+            </table>
+        </div>
+
+        <div class="bp-section fade-up">
+            <div class="bp-section-title"><span class="num">3</span> Revenus annuels estimés — Année 1</div>
+            <table class="bp-table">
+                <thead><tr><th>Source de revenu</th><th>Hypothèse</th><th style="text-align:right">Montant / an</th></tr></thead>
+                <tbody id="bpRevenusBody"></tbody>
+            </table>
+        </div>
+
+        <div class="bp-section fade-up">
+            <div class="bp-section-title"><span class="num">4</span> Projection sur 25 ans — Middle Case</div>
+            <table class="bp-table">
+                <thead><tr><th>Métrique</th><th style="text-align:right">Valeur</th></tr></thead>
+                <tbody id="bpProjectionBody"></tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section class="download-section" id="download">
+    <div class="container">
+        <div class="download-inner fade-up">
+            <h2>Télécharger le rapport complet</h2>
+            <p>Recevez votre Business Plan détaillé en PDF avec l'ensemble des projections financières.</p>
+            <div class="dl-form">
+                <div class="dl-form-row">
+                    <div class="dl-form-group"><label>Nom *</label><input type="text" id="dlNom" placeholder="Votre nom" required></div>
+                    <div class="dl-form-group"><label>Prénom *</label><input type="text" id="dlPrenom" placeholder="Votre prénom" required></div>
+                </div>
+                <div class="dl-form-row">
+                    <div class="dl-form-group"><label>Email professionnel *</label><input type="email" id="dlEmail" placeholder="vous@entreprise.com" required></div>
+                    <div class="dl-form-group"><label>Téléphone *</label><input type="tel" id="dlTel" placeholder="+33 6 00 00 00 00" required></div>
+                </div>
+                <div class="dl-form-row">
+                    <div class="dl-form-group full"><label>Société / Organisation</label><input type="text" id="dlSociete" placeholder="Nom de votre entreprise"></div>
+                </div>
+                <button class="btn-download" onclick="generatePDF()">
+                    Télécharger le rapport PDF →
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="../img/Logo_Sungen_white_sans_fond.png" alt="Logo Sungen" width="140" height="38" loading="lazy">
+                <p>Cabinet de conseil en Photovoltaïque. Conception, dimensionnement et AMO de centrales solaires pour donneurs d'ordre.</p>
+            </div>
+            <div><h4>Expertise</h4><ul><li><a href="expertise.html">Étude & Conception</a></li><li><a href="expertise.html">Dimensionnement</a></li><li><a href="expertise.html">Assistance à Consultation</a></li><li><a href="expertise.html">Assistance à Maîtrise d'Ouvrage (AMO)</a></li></ul></div>
+            <div><h4>Segments</h4><ul><li><a href="segments.html">C&I 100 kWc — 1 MWc</a></li><li><a href="segments.html">Optimisation des rendements avec Batterie 36 — 100 kWc</a></li><li><a href="segments.html">Centrales au sol < 1 MWc</a></li></ul></div>
+            <div><h4>Contact</h4><ul><li><a href="contact.html">Formulaire de contact</a></li><li><a href="mailto:contact@sungen.fr">contact@sungen.fr</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Sungen — Tous droits réservés. <a href="#" style="color:var(--jaune);">Mentions légales</a> · <a href="#" style="color:var(--jaune);">Politique de confidentialité</a></span>
+        </div>
+    </div>
+</footer>
+
+<script>
+// ═══════════════ DATA MODEL ═══════════════
+const ZONES = {
+    lille:    { label: 'Lille — Nord',                    irr: 1020, prod: 1000 },
+    paris:   { label: 'Paris — Île-de-France',            irr: 1150, prod: 1100 },
+    dijon:   { label: 'Dijon · Rennes — Centre-Ouest',   irr: 1200, prod: 1150 },
+    lyon:    { label: 'Lyon · Bordeaux — Rhône-Atlantique', irr: 1350, prod: 1280 },
+    toulouse:{ label: 'Toulouse · Avignon — Sud-Ouest',   irr: 1500, prod: 1400 },
+    nice:    { label: 'Biarritz · Nice — Grand Sud',      irr: 1650, prod: 1530 }
+};
+
+const PV_PER_HA = 0.9;     // MWc/ha
+const BAT_RATIO_CRE = 0.5; // 50% P_PV
+const BAT_RATIO_OPTI = 1.0; // 100% P_PV
+const BAT_HOURS = 2;        // h
+
+const CAPEX_PV = 750;       // €/kWc
+const CAPEX_BAT = 350;      // €/kWh
+const CAPEX_BOS = 80;       // k€/MWc (raccordement, GC, etc.)
+const OPEX_PV = 12;         // €/kWc/an
+const OPEX_BAT = 8;         // €/kW/an
+
+const TARIF_CR = 90;        // €/MWh (AO CRE target)
+const REV_BAT_BASE = 130;   // k€/MW/an (services système aFRR + capacité)
+const DISCOUNT_RATE = 0.06;
+const PROJECT_YEARS = 25;
+const DEGRADATION = 0.005;  // 0.5%/an
+const BAT_REPLACE_Y = 12;
+const BAT_REPLACE_COST = 220; // €/kWh en 2037
+
+function fmt(n, d=1) { return n.toLocaleString('fr-FR', {minimumFractionDigits:d, maximumFractionDigits:d}); }
+function fmtI(n) { return n.toLocaleString('fr-FR', {maximumFractionDigits:0}); }
+
+function calc(ha, zone, batRatio) {
+    const z = ZONES[zone];
+    const pvMWc = ha * PV_PER_HA;
+    const pvKWc = pvMWc * 1000;
+    const batMW = pvMWc * batRatio;
+    const batMWh = batMW * BAT_HOURS;
+    const batKWh = batMWh * 1000;
+
+    // CAPEX
+    const capexPV = pvKWc * CAPEX_PV;
+    const capexBat = batKWh * CAPEX_BAT;
+    const capexBOS = pvMWc * CAPEX_BOS * 1000;
+    const capexDev = 110000 + ha * 15000; // études + foncier
+    const capexTotal = capexPV + capexBat + capexBOS + capexDev;
+
+    // OPEX annual
+    const opexPV = pvKWc * OPEX_PV;
+    const opexBat = batMW * 1000 * OPEX_BAT;
+    const opexAssurance = capexTotal * 0.004;
+    const opexFoncier = ha * 3500;
+    const opexTotal = opexPV + opexBat + opexAssurance + opexFoncier;
+
+    // Revenue Y1
+    const prodKWh = pvKWc * z.prod;
+    const revPV = prodKWh * TARIF_CR / 1000; // €
+    const revBat = batMW * REV_BAT_BASE * 1000; // €
+    const revTotal = revPV + revBat;
+
+    // Cash flows 25 years
+    let vanSum = -capexTotal;
+    let cumulCF = -capexTotal;
+    let payback = PROJECT_YEARS;
+    let totalRev = 0;
+    let totalCost = capexTotal;
+
+    for (let y = 1; y <= PROJECT_YEARS; y++) {
+        const deg = Math.pow(1 - DEGRADATION, y - 1);
+        const revPVy = prodKWh * TARIF_CR / 1000 * deg;
+        const revBaty = batMW * REV_BAT_BASE * 1000 * (y <= 10 ? 1 : 0.85);
+        let cf = revPVy + revBaty - opexTotal;
+        if (y === BAT_REPLACE_Y) cf -= batKWh * BAT_REPLACE_COST;
+        vanSum += cf / Math.pow(1 + DISCOUNT_RATE, y);
+        cumulCF += cf;
+        totalRev += revPVy + revBaty;
+        if (cumulCF >= 0 && payback === PROJECT_YEARS) payback = y - 1 + (-cumulCF + cf) / cf;
+    }
+
+    // Simple TRI approximation (Newton-Raphson)
+    let tri = 0.10;
+    for (let iter = 0; iter < 50; iter++) {
+        let npv = -capexTotal, dnpv = 0;
+        for (let y = 1; y <= PROJECT_YEARS; y++) {
+            const deg = Math.pow(1 - DEGRADATION, y - 1);
+            const revPVy = prodKWh * TARIF_CR / 1000 * deg;
+            const revBaty = batMW * REV_BAT_BASE * 1000 * (y <= 10 ? 1 : 0.85);
+            let cf = revPVy + revBaty - opexTotal;
+            if (y === BAT_REPLACE_Y) cf -= batKWh * BAT_REPLACE_COST;
+            npv += cf / Math.pow(1 + tri, y);
+            dnpv -= y * cf / Math.pow(1 + tri, y + 1);
+        }
+        tri -= npv / dnpv;
+        if (Math.abs(npv) < 100) break;
+    }
+
+    return {
+        pvMWc, pvKWc, batMW, batMWh, batKWh,
+        capexPV, capexBat, capexBOS, capexDev, capexTotal,
+        opexPV, opexBat, opexAssurance, opexFoncier, opexTotal,
+        prodKWh, revPV, revBat, revTotal,
+        van: vanSum, tri: tri * 100, payback, totalRev,
+        zone: z
+    };
+}
+
+function updateResults() {
+    const ha = parseInt(document.getElementById('surfaceRange').value);
+    const zone = document.getElementById('zoneSelect').value;
+    const z = ZONES[zone];
+
+    document.getElementById('surfaceDisplay').innerHTML = `${ha} <span>hectare${ha > 1 ? 's' : ''}</span>`;
+    document.getElementById('irradianceDisplay').textContent = fmtI(z.irr);
+    document.getElementById('productibleDisplay').textContent = fmtI(z.prod);
+
+    const opti = calc(ha, zone, BAT_RATIO_OPTI);
+    const cre = calc(ha, zone, BAT_RATIO_CRE);
+
+    // Config summary
+    document.getElementById('configSummary').textContent =
+        `${fmt(opti.pvMWc)} MWc PV + ${fmt(opti.batMW)} MW / ${fmt(opti.batMWh)} MWh BESS`;
+
+    // KPIs
+    document.getElementById('kpiCapex').textContent = opti.capexTotal >= 1e6 ? fmt(opti.capexTotal / 1e6) + ' M€' : fmtI(opti.capexTotal / 1000) + ' k€';
+    document.getElementById('kpiTri').textContent = fmt(opti.tri) + ' %';
+    document.getElementById('kpiVan').textContent = '+' + fmt(opti.van / 1e6) + ' M€';
+    document.getElementById('kpiPayback').textContent = fmt(opti.payback) + ' ans';
+    document.getElementById('kpiRevenu').textContent = fmtI(opti.revTotal / 1000) + ' k€';
+
+    // CRE card
+    document.getElementById('crePv').textContent = fmt(cre.pvMWc, 2) + ' MWc';
+    document.getElementById('creBat').textContent = fmt(cre.batMW, 2) + ' MW / ' + fmt(cre.batMWh, 2) + ' MWh';
+    document.getElementById('creCapex').textContent = fmt(cre.capexTotal / 1e6, 2) + ' M€';
+    document.getElementById('creTri').textContent = fmt(cre.tri) + ' %';
+    document.getElementById('creVan').textContent = '+' + fmt(cre.van / 1e6, 2) + ' M€';
+    document.getElementById('crePayback').textContent = fmt(cre.payback) + ' ans';
+
+    // Opti card
+    document.getElementById('optiPv').textContent = fmt(opti.pvMWc, 2) + ' MWc';
+    document.getElementById('optiBat').textContent = fmt(opti.batMW, 2) + ' MW / ' + fmt(opti.batMWh, 2) + ' MWh';
+    document.getElementById('optiCapex').textContent = fmt(opti.capexTotal / 1e6, 2) + ' M€';
+    document.getElementById('optiTri').textContent = fmt(opti.tri) + ' %';
+    document.getElementById('optiVan').textContent = '+' + fmt(opti.van / 1e6, 2) + ' M€';
+    document.getElementById('optiPayback').textContent = fmt(opti.payback) + ' ans';
+
+    // BP CAPEX table
+    const o = opti;
+    document.getElementById('bpCapexBody').innerHTML = `
+        <tr><td>Modules PV (${fmt(o.pvMWc)} MWc)</td><td>${fmtI(o.pvKWc)} kWc × ${CAPEX_PV} €/kWc</td><td class="val blue">${fmtI(o.capexPV / 1000)} k€</td></tr>
+        <tr><td>Batterie BESS LFP</td><td>${fmtI(o.batKWh)} kWh × ${CAPEX_BAT} €/kWh</td><td class="val blue">${fmtI(o.capexBat / 1000)} k€</td></tr>
+        <tr><td>BOS, raccordement, GC</td><td>${fmt(o.pvMWc)} MWc × ${CAPEX_BOS} k€/MWc</td><td class="val blue">${fmtI(o.capexBOS / 1000)} k€</td></tr>
+        <tr><td>Développement & études</td><td>Foncier, permis, études techniques</td><td class="val blue">${fmtI(o.capexDev / 1000)} k€</td></tr>
+        <tr style="background:rgba(67,135,166,0.06);font-weight:700;"><td>CAPEX TOTAL</td><td></td><td class="val" style="color:var(--noir);font-size:1rem;">${fmt(o.capexTotal / 1e6, 2)} M€</td></tr>
+    `;
+
+    // Revenus table
+    document.getElementById('bpRevenusBody').innerHTML = `
+        <tr><td>Vente PV — Contrat CRE</td><td>${fmtI(o.prodKWh / 1000)} MWh × ${TARIF_CR} €/MWh</td><td class="val green">${fmtI(o.revPV / 1000)} k€</td></tr>
+        <tr><td>Services système batterie (aFRR, capacité)</td><td>${fmt(o.batMW)} MW × ${REV_BAT_BASE} k€/MW/an</td><td class="val green">${fmtI(o.revBat / 1000)} k€</td></tr>
+        <tr style="background:rgba(34,197,94,0.06);font-weight:700;"><td>REVENU TOTAL AN 1</td><td></td><td class="val green" style="font-size:1rem;">${fmtI(o.revTotal / 1000)} k€</td></tr>
+        <tr><td>OPEX annuel</td><td>Maintenance, assurance, foncier</td><td class="val" style="color:var(--rouge);">-${fmtI(o.opexTotal / 1000)} k€</td></tr>
+        <tr style="background:rgba(248,190,0,0.06);font-weight:700;"><td>EBITDA AN 1</td><td></td><td class="val gold" style="font-size:1rem;">${fmtI((o.revTotal - o.opexTotal) / 1000)} k€</td></tr>
+    `;
+
+    // Projection table
+    document.getElementById('bpProjectionBody').innerHTML = `
+        <tr><td>Durée du projet</td><td class="val">${PROJECT_YEARS} ans</td></tr>
+        <tr><td>TRI projet</td><td class="val green">${fmt(o.tri)} %</td></tr>
+        <tr><td>VAN @6%</td><td class="val green">+${fmt(o.van / 1e6, 2)} M€</td></tr>
+        <tr><td>Payback simple</td><td class="val blue">${fmt(o.payback)} ans</td></tr>
+        <tr><td>Revenus cumulés 25 ans</td><td class="val gold">${fmt(o.totalRev / 1e6)} M€</td></tr>
+        <tr><td>Remplacement batterie (année ${BAT_REPLACE_Y})</td><td class="val" style="color:var(--rouge);">${fmtI(o.batKWh * BAT_REPLACE_COST / 1000)} k€</td></tr>
+        <tr><td>Dégradation PV annuelle</td><td class="val">0,5 % / an</td></tr>
+        <tr><td>Revenus batterie post-Y10</td><td class="val">85 % du nominal</td></tr>
+    `;
+}
+
+function generatePDF() {
+    const nom = document.getElementById('dlNom').value;
+    const prenom = document.getElementById('dlPrenom').value;
+    const email = document.getElementById('dlEmail').value;
+    const tel = document.getElementById('dlTel').value;
+    const societe = document.getElementById('dlSociete').value;
+
+    if (!nom || !prenom || !email || !tel) {
+        alert('Veuillez remplir tous les champs obligatoires.');
+        return;
+    }
+
+    const ha = parseInt(document.getElementById('surfaceRange').value);
+    const zone = document.getElementById('zoneSelect').value;
+    const z = ZONES[zone];
+    const o = calc(ha, zone, BAT_RATIO_OPTI);
+    const c = calc(ha, zone, BAT_RATIO_CRE);
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    let y = 20;
+    const lm = 15;
+
+    // Header
+    doc.setFillColor(26, 26, 46);
+    doc.rect(0, 0, 210, 35, 'F');
+    doc.setFillColor(248, 190, 0);
+    doc.rect(0, 0, 210, 3, 'F');
+    doc.setTextColor(248, 190, 0);
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text('SUNGEN — Rapport Optimizer', lm, 18);
+    doc.setFontSize(9);
+    doc.setTextColor(150, 170, 200);
+    doc.text(`Business Plan — Centrale PV + Stockage BESS | ${ha} ha | ${z.label}`, lm, 26);
+    doc.text(`Généré le ${new Date().toLocaleDateString('fr-FR')} pour ${prenom} ${nom} — ${societe || 'N/A'}`, lm, 32);
+
+    y = 45;
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('1. Configuration optimale recommandée', lm, y); y += 8;
+
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    const configLines = [
+        ['Puissance PV', fmt(o.pvMWc) + ' MWc'],
+        ['Batterie BESS', fmt(o.batMW) + ' MW / ' + fmt(o.batMWh) + ' MWh LFP'],
+        ['Surface', ha + ' hectare(s)'],
+        ['Zone', z.label],
+        ['Productible', fmtI(z.prod) + ' kWh/kWc/an'],
+    ];
+    configLines.forEach(l => {
+        doc.text(l[0], lm, y);
+        doc.setFont('helvetica', 'bold');
+        doc.text(l[1], 100, y);
+        doc.setFont('helvetica', 'normal');
+        y += 6;
+    });
+
+    y += 5;
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('2. Indicateurs clés', lm, y); y += 8;
+
+    doc.setFontSize(9);
+    const kpiLines = [
+        ['CAPEX Total', fmt(o.capexTotal / 1e6, 2) + ' M€'],
+        ['TRI Projet', fmt(o.tri) + ' %'],
+        ['VAN @6%', '+' + fmt(o.van / 1e6, 2) + ' M€'],
+        ['Payback simple', fmt(o.payback) + ' ans'],
+        ['Revenu An 1', fmtI(o.revTotal / 1000) + ' k€'],
+        ['EBITDA An 1', fmtI((o.revTotal - o.opexTotal) / 1000) + ' k€'],
+    ];
+    kpiLines.forEach(l => {
+        doc.setFont('helvetica', 'normal');
+        doc.text(l[0], lm, y);
+        doc.setFont('helvetica', 'bold');
+        doc.text(l[1], 100, y);
+        y += 6;
+    });
+
+    y += 5;
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('3. Comparaison CRE 50% vs Optimisation 100%', lm, y); y += 8;
+
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    const compHeaders = ['', 'CRE 50%', 'Opti 100%', 'Delta'];
+    const compData = [
+        ['CAPEX', fmt(c.capexTotal/1e6,2)+' M€', fmt(o.capexTotal/1e6,2)+' M€', '+'+fmt((o.capexTotal-c.capexTotal)/1000)+' k€'],
+        ['TRI', fmt(c.tri)+'%', fmt(o.tri)+'%', '+'+fmt(o.tri-c.tri)+' pts'],
+        ['VAN', '+'+fmt(c.van/1e6,2)+' M€', '+'+fmt(o.van/1e6,2)+' M€', '+'+fmt((o.van-c.van)/1000)+' k€'],
+        ['Payback', fmt(c.payback)+' ans', fmt(o.payback)+' ans', fmt(c.payback-o.payback)+' ans'],
+    ];
+
+    doc.setFont('helvetica', 'bold');
+    compHeaders.forEach((h, i) => doc.text(h, lm + i * 45, y));
+    y += 5;
+    doc.setFont('helvetica', 'normal');
+    compData.forEach(row => {
+        row.forEach((cell, i) => doc.text(cell, lm + i * 45, y));
+        y += 5;
+    });
+
+    y += 8;
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('4. Détail CAPEX', lm, y); y += 7;
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    [
+        ['Modules PV', fmtI(o.capexPV/1000)+' k€'],
+        ['Batterie BESS LFP', fmtI(o.capexBat/1000)+' k€'],
+        ['BOS / raccordement / GC', fmtI(o.capexBOS/1000)+' k€'],
+        ['Développement & études', fmtI(o.capexDev/1000)+' k€'],
+        ['TOTAL', fmt(o.capexTotal/1e6,2)+' M€'],
+    ].forEach(l => { doc.text(l[0], lm, y); doc.text(l[1], 130, y); y += 5; });
+
+    y += 5;
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('5. Revenus An 1', lm, y); y += 7;
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    [
+        ['Vente PV (CRE ' + TARIF_CR + ' €/MWh)', fmtI(o.revPV/1000)+' k€'],
+        ['Services système batterie', fmtI(o.revBat/1000)+' k€'],
+        ['TOTAL REVENUS', fmtI(o.revTotal/1000)+' k€'],
+        ['OPEX annuel', '-'+fmtI(o.opexTotal/1000)+' k€'],
+        ['EBITDA', fmtI((o.revTotal-o.opexTotal)/1000)+' k€'],
+    ].forEach(l => { doc.text(l[0], lm, y); doc.text(l[1], 130, y); y += 5; });
+
+    // Footer
+    doc.setFillColor(26, 26, 46);
+    doc.rect(0, 280, 210, 17, 'F');
+    doc.setTextColor(150, 170, 200);
+    doc.setFontSize(7);
+    doc.text('SUNGEN — Cabinet de conseil en Photovoltaïque | sungen.fr | Résultats indicatifs — Hypothèses CRE 05/03/2026', lm, 288);
+    doc.text(`Contact : ${email} | ${tel}`, lm, 292);
+
+    doc.save(`Sungen_Optimizer_${ha}ha_${zone}.pdf`);
+}
+
+// Init
+document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('open'); });
+window.addEventListener('scroll', () => { document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50); });
+const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+updateResults();
+</script>
+</body>
+</html>
