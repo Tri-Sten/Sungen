@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse de Consommation Linky | Sungen — Cabinet de conseil en Photovoltaïque</title>
+    <meta name="description" content="Connectez votre compteur Linky et obtenez une analyse détaillée de votre consommation électrique pour dimensionner votre installation photovoltaïque.">
+    <meta name="keywords" content="analyse consommation Linky, Enedis Data Connect, dimensionnement photovoltaïque, courbe de charge, autoconsommation solaire">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.sungen.fr/optimizer-particulier.html">
+
+    <meta property="og:title" content="Analyse Consommation Linky | Sungen">
+    <meta property="og:description" content="Connectez votre compteur Linky pour une analyse gratuite de votre consommation électrique.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.sungen.fr/optimizer-particulier.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bleu: #4387a6;
+            --bleu-dark: #2d6a8a;
+            --bleu-light: #5a9dbf;
+            --jaune: #f8be00;
+            --jaune-light: #ffd23f;
+            --gris: #9d9d9c;
+            --gris-light: #e8e8e8;
+            --gris-dark: #4a4a4a;
+            --rouge: #eb5b56;
+            --blanc: #ffffff;
+            --noir: #1a1a2e;
+            --bg-cream: #f7f5f2;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: 'Raleway', sans-serif; color: var(--noir); background: var(--blanc); line-height: 1.7; overflow-x: hidden; }
+        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+        /* NAV */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(26,26,46,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); transition: var(--transition); }
+        .navbar.scrolled { background: rgba(26,26,46,0.98); box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .nav-logo img { height: 38px; width: auto; }
+        .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+        .nav-links a { color: rgba(255,255,255,0.75); font-weight: 500; font-size: 0.9rem; letter-spacing: 0.03em; transition: var(--transition); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--jaune); transition: var(--transition); }
+        .nav-links a:hover, .nav-links a.active { color: var(--blanc); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-cta { background: var(--jaune) !important; color: var(--noir) !important; padding: 0.65rem 1.5rem; border-radius: 6px; font-weight: 700; font-size: 0.85rem; transition: var(--transition); }
+        .nav-cta:hover { background: var(--jaune-light) !important; transform: translateY(-1px); }
+        .nav-cta::after { display: none !important; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+        .hamburger span { width: 26px; height: 2px; background: var(--blanc); transition: var(--transition); }
+
+        /* HERO COMPACT */
+        .page-hero {
+            padding: 10rem 0 4rem;
+            background: linear-gradient(135deg, var(--noir) 0%, #1a2a3e 50%, var(--bleu-dark) 100%);
+            color: var(--blanc);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(248,190,0,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .page-hero h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        .page-hero h1 span { color: var(--jaune); }
+        .page-hero p { font-size: 1.15rem; color: rgba(255,255,255,0.7); max-width: 700px; margin: 0 auto; font-weight: 300; }
+
+        /* SANDBOX BANNER */
+        .sandbox-banner {
+            background: linear-gradient(90deg, var(--jaune) 0%, #ffcf33 100%);
+            color: var(--noir);
+            text-align: center;
+            padding: 0.6rem 1rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+        .sandbox-banner code { background: rgba(0,0,0,0.1); padding: 0.15rem 0.5rem; border-radius: 3px; font-family: monospace; }
+
+        /* FLOW SECTION */
+        .flow-section { padding: 5rem 0; }
+        .flow-section.alt-bg { background: var(--bg-cream); }
+
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        .flow-step {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            background: var(--blanc);
+            border-radius: 16px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.04);
+            position: relative;
+            transition: var(--transition);
+        }
+        .flow-step:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+        .flow-step-num {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--bleu), var(--bleu-dark));
+            color: var(--blanc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin: 0 auto 1.5rem;
+        }
+        .flow-step.active .flow-step-num {
+            background: linear-gradient(135deg, var(--jaune), var(--jaune-light));
+            color: var(--noir);
+            box-shadow: 0 4px 20px rgba(248,190,0,0.4);
+        }
+        .flow-step.done .flow-step-num {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+        .flow-step.done .flow-step-num::after { content: '✓'; font-size: 1.4rem; }
+        .flow-step.done .flow-step-num span { display: none; }
+        .flow-step h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--noir); }
+        .flow-step p { font-size: 0.88rem; color: var(--gris-dark); line-height: 1.6; }
+
+        /* CONSENT PANEL */
+        .consent-panel {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--blanc);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .consent-panel h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--noir);
+        }
+        .consent-panel .subtitle {
+            font-size: 0.95rem;
+            color: var(--gris-dark);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.88rem;
+            margin-bottom: 0.5rem;
+            color: var(--noir);
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.85rem 1.2rem;
+            border: 2px solid var(--gris-light);
+            border-radius: 10px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: #fafafa;
+        }
+        .form-group input:focus { outline: none; border-color: var(--bleu); background: var(--blanc); box-shadow: 0 0 0 4px rgba(67,135,166,0.1); }
+        .form-group .hint { font-size: 0.78rem; color: var(--gris); margin-top: 0.4rem; }
+
+        .consent-info {
+            background: linear-gradient(135deg, #f0f7fa, #e8f4f8);
+            border-left: 4px solid var(--bleu);
+            padding: 1.2rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 2rem;
+        }
+        .consent-info p { font-size: 0.85rem; color: var(--bleu-dark); line-height: 1.6; }
+        .consent-info strong { font-weight: 700; }
+
+        .btn-enedis {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: linear-gradient(135deg, #00b33c, #009933);
+            color: var(--blanc);
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.02em;
+            width: 100%;
+            justify-content: center;
+        }
+        .btn-enedis:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,179,60,0.3); }
+        .btn-enedis:active { transform: translateY(0); }
+        .btn-enedis svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+        /* DATA DISPLAY */
+        .data-panel {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: none;
+        }
+        .data-panel.visible { display: block; }
+
+        .data-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .data-header h2 { font-size: 1.6rem; font-weight: 800; }
+
+        .data-kpis {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .kpi-card {
+            background: var(--blanc);
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.04);
+            text-align: center;
+        }
+        .kpi-card .kpi-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--bleu);
+            line-height: 1.2;
+        }
+        .kpi-card .kpi-unit { font-size: 0.85rem; color: var(--gris); font-weight: 500; }
+        .kpi-card .kpi-label { font-size: 0.82rem; color: var(--gris-dark); margin-top: 0.3rem; font-weight: 600; }
+
+        .chart-container {
+            background: var(--blanc);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.04);
+            margin-bottom: 2rem;
+        }
+        .chart-container h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
+        .chart-container canvas { max-height: 350px; }
+
+        .chart-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .chart-tab {
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            background: var(--gris-light);
+            border: none;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--gris-dark);
+        }
+        .chart-tab.active { background: var(--bleu); color: var(--blanc); }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--jaune);
+            color: var(--noir);
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Raleway', sans-serif;
+        }
+        .btn-download:hover { background: var(--jaune-light); transform: translateY(-1px); }
+
+        .btn-reset {
+            background: transparent;
+            border: 2px solid var(--gris-light);
+            color: var(--gris-dark);
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Raleway', sans-serif;
+        }
+        .btn-reset:hover { border-color: var(--rouge); color: var(--rouge); }
+
+        /* LOADING */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(26,26,46,0.85);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .loading-overlay.visible { display: flex; }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.15);
+            border-top-color: var(--jaune);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-overlay p { color: var(--blanc); font-weight: 500; font-size: 1rem; }
+
+        /* ERROR */
+        .error-box {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border-left: 4px solid var(--rouge);
+            padding: 1.2rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.5rem 0;
+            display: none;
+        }
+        .error-box.visible { display: block; }
+        .error-box p { font-size: 0.88rem; color: #991b1b; line-height: 1.6; }
+        .error-box code { background: rgba(0,0,0,0.06); padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.82rem; }
+
+        /* SUCCESS */
+        .success-box {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-left: 4px solid #27ae60;
+            padding: 1.2rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.5rem 0;
+            display: none;
+        }
+        .success-box.visible { display: block; }
+        .success-box p { font-size: 0.88rem; color: #166534; line-height: 1.6; }
+
+        /* CTA SECTION */
+        .cta-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--noir) 0%, #1a2a3e 100%);
+            color: var(--blanc);
+            text-align: center;
+        }
+        .cta-section h2 { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
+        .cta-section p { color: rgba(255,255,255,0.65); max-width: 600px; margin: 0 auto 2rem; font-size: 1.05rem; }
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--jaune);
+            color: var(--noir);
+            padding: 1rem 2.5rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        .btn-cta:hover { background: var(--jaune-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(248,190,0,0.25); }
+
+        /* FOOTER */
+        .footer {
+            background: var(--noir);
+            color: rgba(255,255,255,0.5);
+            padding: 3rem 0 1.5rem;
+            font-size: 0.85rem;
+        }
+        .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer-logo img { height: 30px; opacity: 0.7; }
+        .footer-links { display: flex; gap: 2rem; }
+        .footer-links a { color: rgba(255,255,255,0.5); transition: var(--transition); font-size: 0.85rem; }
+        .footer-links a:hover { color: var(--jaune); }
+        .footer-copy { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.78rem; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .nav-links.open { display: flex; position: absolute; top: 100%; left: 0; right: 0; background: rgba(26,26,46,0.98); flex-direction: column; padding: 2rem; gap: 1.5rem; }
+            .page-hero h1 { font-size: 2rem; }
+            .flow-steps { grid-template-columns: 1fr; }
+            .data-kpis { grid-template-columns: repeat(2, 1fr); }
+            .consent-panel { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo"><img src="img/Logo_Sungen_white_sans_fond.png" alt="Sungen" loading="eager"></a>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Accueil</a>
+            <a href="expertise.html">Expertise</a>
+            <a href="segments.html">Segments</a>
+            <a href="optimizer.html">Simulator Pro</a>
+            <a href="optimizer-particulier.html" class="active">Mon Compteur</a>
+            <a href="contact.html" class="nav-cta">Contact</a>
+        </div>
+        <div class="hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- SANDBOX BANNER -->
+<div class="sandbox-banner">
+    ⚡ Mode Bac à Sable Enedis — Application <code>SUNGEN-CONSULT</code> — Données de test uniquement
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+    <div class="container">
+        <h1>Analysez votre <span>consommation</span> Linky</h1>
+        <p>Connectez votre compteur communicant et obtenez une analyse détaillée de votre profil de consommation sur 12 mois. Gratuit, sécurisé, via Enedis Data Connect.</p>
+    </div>
+</section>
+
+<!-- FLOW STEPS -->
+<section class="flow-section alt-bg">
+    <div class="container">
+        <div class="flow-steps">
+            <div class="flow-step active" id="step1-indicator">
+                <div class="flow-step-num"><span>1</span></div>
+                <h3>Consentement Enedis</h3>
+                <p>Autorisez Sungen à accéder à vos données Linky via le portail sécurisé Enedis.</p>
+            </div>
+            <div class="flow-step" id="step2-indicator">
+                <div class="flow-step-num"><span>2</span></div>
+                <h3>Récupération des données</h3>
+                <p>Nous collectons votre courbe de charge et consommation journalière sur 12 mois.</p>
+            </div>
+            <div class="flow-step" id="step3-indicator">
+                <div class="flow-step-num"><span>3</span></div>
+                <h3>Analyse & Résultats</h3>
+                <p>Visualisez votre profil de consommation et recevez des recommandations solaires.</p>
+            </div>
+        </div>
+
+        <!-- STEP 1: CONSENT -->
+        <div id="consent-view">
+            <div class="consent-panel">
+                <h2>Connectez votre compteur Linky</h2>
+                <p class="subtitle">Sungen utilise l'API officielle Enedis Data Connect pour récupérer vos données de consommation en toute sécurité. Vous serez redirigé vers le portail Enedis pour donner votre consentement.</p>
+
+                <div class="form-group">
+                    <label for="prm-input">Numéro PRM (Point de Référence Mesure) — optionnel</label>
+                    <input type="text" id="prm-input" placeholder="Ex: 22516914714270" maxlength="14" pattern="[0-9]{14}">
+                    <p class="hint">14 chiffres, indiqué sur votre facture d'électricité ou sur votre compteur Linky. Si non renseigné, vous le sélectionnerez sur le portail Enedis.</p>
+                </div>
+
+                <div class="consent-info">
+                    <p><strong>Données récupérées :</strong> Consommation journalière, courbe de charge au pas 30 min, puissance maximale quotidienne, données contractuelles (puissance souscrite, option tarifaire).</p>
+                    <p style="margin-top:0.5rem;"><strong>Durée du consentement :</strong> 1 an, révocable à tout moment sur votre espace Enedis.</p>
+                </div>
+
+                <div class="error-box" id="error-consent"></div>
+
+                <button class="btn-enedis" onclick="startConsent()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                    Connecter mon compteur via Enedis
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 2: PROCESSING -->
+        <div id="processing-view" style="display:none">
+            <div class="consent-panel" style="text-align:center;">
+                <div class="spinner" style="margin:0 auto 1.5rem;border-color:var(--gris-light);border-top-color:var(--bleu);"></div>
+                <h2>Récupération en cours...</h2>
+                <p class="subtitle" id="processing-status">Échange du code d'autorisation contre un jeton d'accès...</p>
+                <div class="error-box" id="error-processing"></div>
+                <div class="success-box" id="success-processing"></div>
+            </div>
+        </div>
+
+        <!-- STEP 3: DATA DISPLAY -->
+        <div class="data-panel" id="data-view">
+            <div class="data-header">
+                <div>
+                    <h2>Votre profil de consommation</h2>
+                    <p style="color:var(--gris-dark);font-size:0.9rem;" id="data-period"></p>
+                </div>
+                <div style="display:flex;gap:0.8rem;">
+                    <button class="btn-download" onclick="downloadCSV()">📥 Exporter CSV</button>
+                    <button class="btn-reset" onclick="resetFlow()">Nouveau compteur</button>
+                </div>
+            </div>
+
+            <div class="data-kpis">
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-total">—</div>
+                    <div class="kpi-unit">kWh</div>
+                    <div class="kpi-label">Conso annuelle</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-avg-day">—</div>
+                    <div class="kpi-unit">kWh/jour</div>
+                    <div class="kpi-label">Moyenne journalière</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-peak">—</div>
+                    <div class="kpi-unit">kW</div>
+                    <div class="kpi-label">Puissance max</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="kpi-cost">—</div>
+                    <div class="kpi-unit">€/an</div>
+                    <div class="kpi-label">Coût estimé</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+                    <h3>Consommation journalière (kWh)</h3>
+                    <div class="chart-tabs">
+                        <button class="chart-tab active" onclick="switchChart('daily')">Journalier</button>
+                        <button class="chart-tab" onclick="switchChart('monthly')">Mensuel</button>
+                    </div>
+                </div>
+                <canvas id="chart-daily"></canvas>
+                <canvas id="chart-monthly" style="display:none;"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3>Courbe de charge type — Jour moyen (pas 30 min)</h3>
+                <canvas id="chart-loadcurve"></canvas>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Prêt à passer au solaire ?</h2>
+        <p>Nos ingénieurs analysent votre profil de consommation pour dimensionner la solution photovoltaïque optimale.</p>
+        <a href="contact.html" class="btn-cta">Demander une étude gratuite →</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <a href="index.html" class="footer-logo"><img src="img/Logo_Sungen_white_sans_fond.png" alt="Sungen"></a>
+            <div class="footer-links">
+                <a href="index.html">Accueil</a>
+                <a href="expertise.html">Expertise</a>
+                <a href="segments.html">Segments</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+        <div class="footer-copy">© 2025 Sungen — Cabinet de conseil en Photovoltaïque. Tous droits réservés.</div>
+    </div>
+</footer>
+
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loading">
+    <div class="spinner"></div>
+    <p id="loading-text">Connexion à Enedis Data Connect...</p>
+</div>
+
+<script>
+// ============================================================
+// ENEDIS DATA CONNECT — SANDBOX CONFIGURATION
+// ============================================================
+// ⚠️  ATTENTION : Ces clés sont pour le BAC À SABLE uniquement.
+//     En production, l'échange code→token DOIT se faire côté
+//     serveur (Cloudflare Worker, API backend, etc.).
+//     Le client_secret ne doit JAMAIS être exposé en frontend.
+// ============================================================
+
+const CONFIG = {
+    client_id:     'pXNV7nORYUnPfYdVxdtxyjfVhI8a',
+    client_secret: 'xe3zjJWxEQKgykMzf7fWGCUaoe0a',
+    redirect_uri:  window.location.origin + '/optimizer-particulier.html',
+    // Enedis Data Connect endpoints (nouvelle plateforme)
+    auth_url:      'https://mon-compte-particulier.enedis.fr/dataconnect/v1/oauth2/authorize',
+    token_url:     'https://gw.hml.api.enedis.fr/v1/oauth2/token',
+    api_base:      'https://ext.hml.api.enedis.fr',
+    duration:      'P1Y',    // Durée consentement: 1 an
+    sandbox:       true
+};
+
+// State management
+let appState = {
+    step: 1,
+    access_token: null,
+    refresh_token: null,
+    usage_point_id: null,
+    daily_data: [],
+    load_curve_data: [],
+    contractual_data: null
+};
+
+let chartDaily = null;
+let chartMonthly = null;
+let chartLoad = null;
+
+// ============================================================
+// STEP 1: INITIATE CONSENT
+// ============================================================
+function startConsent() {
+    const prm = document.getElementById('prm-input').value.trim();
+    const state = generateState();
+    sessionStorage.setItem('enedis_state', state);
+
+    let url = CONFIG.auth_url
+        + '?client_id=' + encodeURIComponent(CONFIG.client_id)
+        + '&response_type=code'
+        + '&redirect_uri=' + encodeURIComponent(CONFIG.redirect_uri)
+        + '&duration=' + CONFIG.duration
+        + '&state=' + encodeURIComponent(state);
+
+    if (prm && prm.length === 14) {
+        url += '&usage_point_id=' + encodeURIComponent(prm);
+    }
+
+    window.location.href = url;
+}
+
+function generateState() {
+    const array = new Uint8Array(24);
+    crypto.getRandomValues(array);
+    return Array.from(array, b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// ============================================================
+// STEP 2: HANDLE CALLBACK
+// ============================================================
+async function handleCallback() {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const state = params.get('state');
+    const error = params.get('error');
+
+    if (!code) return false;
+
+    // Clean URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+
+    // Verify state
+    const savedState = sessionStorage.getItem('enedis_state');
+    if (state && savedState && state !== savedState) {
+        showError('consent', 'Erreur de sécurité : le paramètre state ne correspond pas. Veuillez réessayer.');
+        return true;
+    }
+
+    if (error) {
+        showError('consent', 'Le consentement a été refusé ou une erreur est survenue : ' + error);
+        return true;
+    }
+
+    // Move to step 2
+    updateStep(2);
+    showView('processing');
+
+    try {
+        // Exchange code for token
+        updateProcessingStatus('Échange du code d\'autorisation...');
+        const tokenData = await exchangeCodeForToken(code);
+
+        appState.access_token = tokenData.access_token;
+        appState.refresh_token = tokenData.refresh_token;
+        appState.usage_point_id = tokenData.usage_points_id || tokenData.usage_point_id;
+
+        if (!appState.usage_point_id && tokenData.usage_points_id) {
+            appState.usage_point_id = tokenData.usage_points_id;
+        }
+
+        showSuccess('processing', 'Jeton d\'accès obtenu. PRM : ' + (appState.usage_point_id || 'N/A'));
+
+        // Fetch consumption data
+        updateProcessingStatus('Récupération de la consommation journalière (12 mois)...');
+        await fetchDailyConsumption();
+
+        updateProcessingStatus('Récupération de la courbe de charge...');
+        await fetchLoadCurve();
+
+        // Move to step 3
+        updateStep(3);
+        displayResults();
+
+    } catch (err) {
+        console.error('Error in callback flow:', err);
+        showError('processing',
+            'Erreur lors de la récupération des données : ' + err.message +
+            '<br><br><strong>Note :</strong> En mode bac à sable, l\'API peut bloquer les appels CORS depuis le navigateur. ' +
+            'Pour la production, un proxy backend (Cloudflare Worker) sera nécessaire pour l\'échange code→token.'
+        );
+    }
+
+    return true;
+}
+
+// ============================================================
+// TOKEN EXCHANGE
+// ============================================================
+async function exchangeCodeForToken(code) {
+    const body = new URLSearchParams({
+        grant_type: 'authorization_code',
+        client_id: CONFIG.client_id,
+        client_secret: CONFIG.client_secret,
+        code: code,
+        redirect_uri: CONFIG.redirect_uri
+    });
+
+    const resp = await fetch(CONFIG.token_url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString()
+    });
+
+    if (!resp.ok) {
+        const errText = await resp.text();
+        throw new Error('Token exchange failed (' + resp.status + '): ' + errText);
+    }
+
+    return await resp.json();
+}
+
+// ============================================================
+// DATA FETCHING
+// ============================================================
+async function fetchDailyConsumption() {
+    const end = new Date();
+    const start = new Date();
+    start.setFullYear(start.getFullYear() - 1);
+
+    const url = CONFIG.api_base + '/metering_data/v5/daily_consumption'
+        + '?usage_point_id=' + appState.usage_point_id
+        + '&start=' + formatDate(start)
+        + '&end=' + formatDate(end);
+
+    const resp = await fetch(url, {
+        headers: {
+            'Authorization': 'Bearer ' + appState.access_token,
+            'Accept': 'application/json'
+        }
+    });
+
+    if (!resp.ok) {
+        const errText = await resp.text();
+        throw new Error('Daily consumption fetch failed (' + resp.status + '): ' + errText);
+    }
+
+    const data = await resp.json();
+    const readings = data?.meter_reading?.interval_reading || [];
+    appState.daily_data = readings.map(r => ({
+        date: r.date,
+        value: parseFloat(r.value) / 1000 // Wh → kWh
+    }));
+}
+
+async function fetchLoadCurve() {
+    // Fetch last 7 days for load curve
+    const end = new Date();
+    const start = new Date();
+    start.setDate(start.getDate() - 7);
+
+    const url = CONFIG.api_base + '/metering_data/v5/consumption_load_curve'
+        + '?usage_point_id=' + appState.usage_point_id
+        + '&start=' + formatDate(start)
+        + '&end=' + formatDate(end);
+
+    const resp = await fetch(url, {
+        headers: {
+            'Authorization': 'Bearer ' + appState.access_token,
+            'Accept': 'application/json'
+        }
+    });
+
+    if (!resp.ok) {
+        console.warn('Load curve fetch failed, skipping');
+        return;
+    }
+
+    const data = await resp.json();
+    const readings = data?.meter_reading?.interval_reading || [];
+    appState.load_curve_data = readings.map(r => ({
+        date: r.date,
+        value: parseFloat(r.value) // W
+    }));
+}
+
+// ============================================================
+// DISPLAY RESULTS
+// ============================================================
+function displayResults() {
+    showView('data');
+    const daily = appState.daily_data;
+
+    if (!daily.length) {
+        // Use demo data for sandbox
+        generateDemoData();
+        return;
+    }
+
+    computeAndRender(daily);
+}
+
+function computeAndRender(daily) {
+    // KPIs
+    const totalKwh = daily.reduce((s, d) => s + d.value, 0);
+    const avgDay = totalKwh / daily.length;
+    const peakDay = Math.max(...daily.map(d => d.value));
+    const costEstimate = totalKwh * 0.2516; // Tarif base TTC approx.
+
+    document.getElementById('kpi-total').textContent = Math.round(totalKwh).toLocaleString('fr-FR');
+    document.getElementById('kpi-avg-day').textContent = avgDay.toFixed(1);
+    document.getElementById('kpi-peak').textContent = (peakDay * 2).toFixed(1); // Rough peak power estimate
+    document.getElementById('kpi-cost').textContent = Math.round(costEstimate).toLocaleString('fr-FR');
+
+    if (daily.length > 1) {
+        document.getElementById('data-period').textContent =
+            'Période : ' + daily[0].date + ' → ' + daily[daily.length - 1].date;
+    }
+
+    // Daily chart
+    const dailyCtx = document.getElementById('chart-daily').getContext('2d');
+    if (chartDaily) chartDaily.destroy();
+    chartDaily = new Chart(dailyCtx, {
+        type: 'bar',
+        data: {
+            labels: daily.map(d => d.date),
+            datasets: [{
+                label: 'kWh/jour',
+                data: daily.map(d => d.value),
+                backgroundColor: 'rgba(67, 135, 166, 0.6)',
+                borderColor: 'rgba(67, 135, 166, 1)',
+                borderWidth: 1,
+                borderRadius: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { display: true, ticks: { maxTicksLimit: 12, font: { family: 'Raleway', size: 11 } } },
+                y: { beginAtZero: true, title: { display: true, text: 'kWh', font: { family: 'Raleway' } } }
+            }
+        }
+    });
+
+    // Monthly chart
+    const monthly = aggregateMonthly(daily);
+    const monthlyCtx = document.getElementById('chart-monthly').getContext('2d');
+    if (chartMonthly) chartMonthly.destroy();
+    chartMonthly = new Chart(monthlyCtx, {
+        type: 'bar',
+        data: {
+            labels: monthly.map(m => m.label),
+            datasets: [{
+                label: 'kWh/mois',
+                data: monthly.map(m => m.value),
+                backgroundColor: monthly.map(m => m.value > avgDay * 30 ? 'rgba(235,91,86,0.7)' : 'rgba(67,135,166,0.7)'),
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: 'kWh', font: { family: 'Raleway' } } }
+            }
+        }
+    });
+
+    // Load curve (average profile)
+    renderLoadCurve();
+}
+
+function renderLoadCurve() {
+    const lc = appState.load_curve_data;
+    let avgProfile = new Array(48).fill(0);
+    let counts = new Array(48).fill(0);
+
+    if (lc.length > 0) {
+        lc.forEach((reading, i) => {
+            const slot = i % 48;
+            avgProfile[slot] += reading.value;
+            counts[slot]++;
+        });
+        avgProfile = avgProfile.map((v, i) => counts[i] > 0 ? v / counts[i] / 1000 : 0); // W → kW
+    } else {
+        // Demo load curve
+        for (let i = 0; i < 48; i++) {
+            const h = i / 2;
+            if (h < 6) avgProfile[i] = 0.3 + Math.random() * 0.1;
+            else if (h < 8) avgProfile[i] = 0.6 + Math.random() * 0.3;
+            else if (h < 12) avgProfile[i] = 1.2 + Math.random() * 0.4;
+            else if (h < 14) avgProfile[i] = 1.5 + Math.random() * 0.3;
+            else if (h < 18) avgProfile[i] = 1.0 + Math.random() * 0.3;
+            else if (h < 21) avgProfile[i] = 1.8 + Math.random() * 0.5;
+            else avgProfile[i] = 0.5 + Math.random() * 0.2;
+        }
+    }
+
+    const labels = [];
+    for (let i = 0; i < 48; i++) {
+        const h = Math.floor(i / 2);
+        const m = (i % 2) * 30;
+        labels.push(h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0'));
+    }
+
+    const lcCtx = document.getElementById('chart-loadcurve').getContext('2d');
+    if (chartLoad) chartLoad.destroy();
+    chartLoad = new Chart(lcCtx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'kW',
+                data: avgProfile,
+                borderColor: 'rgba(248, 190, 0, 1)',
+                backgroundColor: 'rgba(248, 190, 0, 0.1)',
+                fill: true,
+                tension: 0.3,
+                pointRadius: 0,
+                borderWidth: 2.5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { maxTicksLimit: 12, font: { family: 'Raleway', size: 11 } } },
+                y: { beginAtZero: true, title: { display: true, text: 'kW', font: { family: 'Raleway' } } }
+            }
+        }
+    });
+}
+
+function aggregateMonthly(daily) {
+    const months = {};
+    const monthNames = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
+    daily.forEach(d => {
+        const dt = new Date(d.date);
+        const key = dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0');
+        const label = monthNames[dt.getMonth()] + ' ' + dt.getFullYear();
+        if (!months[key]) months[key] = { label, value: 0 };
+        months[key].value += d.value;
+    });
+    return Object.values(months);
+}
+
+// ============================================================
+// DEMO DATA (for sandbox when API doesn't return real data)
+// ============================================================
+function generateDemoData() {
+    const daily = [];
+    const end = new Date();
+    const start = new Date();
+    start.setFullYear(start.getFullYear() - 1);
+
+    const d = new Date(start);
+    while (d <= end) {
+        const month = d.getMonth();
+        // Seasonal pattern: higher in winter
+        let base = 8;
+        if (month >= 10 || month <= 2) base = 14; // Winter
+        else if (month >= 4 && month <= 8) base = 6; // Summer
+        const dow = d.getDay();
+        const weekendFactor = (dow === 0 || dow === 6) ? 1.15 : 1.0;
+        const value = (base + (Math.random() - 0.5) * 4) * weekendFactor;
+
+        daily.push({
+            date: formatDate(d),
+            value: Math.max(1, value)
+        });
+        d.setDate(d.getDate() + 1);
+    }
+    appState.daily_data = daily;
+    computeAndRender(daily);
+
+    showSuccess('processing',
+        'Mode bac à sable : données de démonstration générées (le sandbox Enedis n\'a pas retourné de données réelles).'
+    );
+}
+
+// ============================================================
+// UTILITIES
+// ============================================================
+function formatDate(date) {
+    return date.getFullYear() + '-'
+        + String(date.getMonth() + 1).padStart(2, '0') + '-'
+        + String(date.getDate()).padStart(2, '0');
+}
+
+function updateStep(n) {
+    appState.step = n;
+    for (let i = 1; i <= 3; i++) {
+        const el = document.getElementById('step' + i + '-indicator');
+        el.classList.remove('active', 'done');
+        if (i < n) el.classList.add('done');
+        if (i === n) el.classList.add('active');
+    }
+}
+
+function showView(name) {
+    document.getElementById('consent-view').style.display = name === 'consent' ? 'block' : 'none';
+    document.getElementById('processing-view').style.display = name === 'processing' ? 'block' : 'none';
+    const dataPanel = document.getElementById('data-view');
+    if (name === 'data') { dataPanel.classList.add('visible'); } else { dataPanel.classList.remove('visible'); }
+}
+
+function updateProcessingStatus(msg) {
+    document.getElementById('processing-status').textContent = msg;
+}
+
+function showError(panel, msg) {
+    const el = document.getElementById('error-' + panel);
+    if (el) { el.innerHTML = '<p>' + msg + '</p>'; el.classList.add('visible'); }
+}
+
+function showSuccess(panel, msg) {
+    const el = document.getElementById('success-' + panel);
+    if (el) { el.innerHTML = '<p>' + msg + '</p>'; el.classList.add('visible'); }
+}
+
+function switchChart(type) {
+    document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('chart-daily').style.display = type === 'daily' ? 'block' : 'none';
+    document.getElementById('chart-monthly').style.display = type === 'monthly' ? 'block' : 'none';
+}
+
+function resetFlow() {
+    appState = { step: 1, access_token: null, refresh_token: null, usage_point_id: null, daily_data: [], load_curve_data: [], contractual_data: null };
+    updateStep(1);
+    showView('consent');
+    document.querySelectorAll('.error-box, .success-box').forEach(el => { el.classList.remove('visible'); el.innerHTML = ''; });
+}
+
+function downloadCSV() {
+    const daily = appState.daily_data;
+    if (!daily.length) return;
+
+    let csv = 'Date;Consommation_kWh\n';
+    daily.forEach(d => { csv += d.date + ';' + d.value.toFixed(2) + '\n'; });
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'sungen_consommation_' + (appState.usage_point_id || 'export') + '.csv';
+    link.click();
+}
+
+// ============================================================
+// NAV SCROLL EFFECT
+// ============================================================
+window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ============================================================
+// INIT — Check for callback code on page load
+// ============================================================
+(async function init() {
+    const hasCallback = await handleCallback();
+    if (!hasCallback) {
+        showView('consent');
+    }
+})();
+</script>
+
+</body>
+</html>
