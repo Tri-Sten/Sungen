@@ -476,7 +476,7 @@
         <div id="consent-view">
             <div class="consent-panel">
                 <h2>Connectez votre compteur Linky</h2>
-                <p class="subtitle">Sungen utilise l'API officielle Enedis Data Connect pour récupérer vos données de consommation en toute sécurité. Vous serez redirigé vers le portail Enedis pour donner votre consentement.</p>
+                <p class="subtitle">Sungen utilise l'API officielle Enedis Data Connect pour récupérer vos données de consommation en toute sécurité. Une fenêtre Enedis s'ouvrira pour votre consentement — vous restez sur cette page.</p>
 
                 <div class="form-group">
                     <label for="prm-input">Numéro PRM (Point de Référence Mesure) — optionnel</label>
@@ -611,11 +611,10 @@ const CONFIG = {
     client_id:     'pXNV7nORYUnPfYdVxdtxyjfVhI8a',
     client_secret: 'xe3zjJWxEQKgykMzf7fWGCUaoe0a',
     redirect_uri:  window.location.origin + '/optimizer-particulier.html',
-    // Enedis Data Connect endpoints (nouvelle plateforme)
     auth_url:      'https://mon-compte-particulier.enedis.fr/dataconnect/v1/oauth2/authorize',
     token_url:     'https://gw.hml.api.enedis.fr/v1/oauth2/token',
     api_base:      'https://ext.hml.api.enedis.fr',
-    duration:      'P1Y',    // Durée consentement: 1 an
+    duration:      'P1Y',
     sandbox:       true
 };
 
@@ -633,9 +632,62 @@ let appState = {
 let chartDaily = null;
 let chartMonthly = null;
 let chartLoad = null;
+let consentPopup = null;
+let popupCheckInterval = null;
 
 // ============================================================
-// STEP 1: INITIATE CONSENT
+// POPUP MODE DETECTION
+// If this page loads inside a popup with ?code=, send code
+// back to the opener window and close.
+// ============================================================
+(function detectPopupCallback() {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const state = params.get('state');
+    const error = params.get('error');
+
+    // We're in the popup if we have a code/error AND an opener
+    if ((code || error) && window.opener && !window.opener.closed) {
+        // Send the code (or error) back to the main page
+        window.opener.postMessage({
+            type: 'enedis_callback',
+            code: code || null,
+            state: state || null,
+            error: error || null
+        }, window.location.origin);
+
+        // Show a brief message then close
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Raleway,sans-serif;background:#f7f5f2;"><div style="text-align:center;padding:2rem;"><h2 style="color:#1a1a2e;margin-bottom:1rem;">✓ Consentement enregistré</h2><p style="color:#4a4a4a;">Cette fenêtre va se fermer automatiquement...</p></div></div>';
+        });
+
+        // Close after a short delay (let postMessage arrive)
+        setTimeout(function() { window.close(); }, 1500);
+
+        return; // Stop all further initialization
+    }
+
+    // Not a popup callback — proceed with normal page init
+    document.addEventListener('DOMContentLoaded', initMainPage);
+})();
+
+// ============================================================
+// MAIN PAGE INITIALIZATION
+// ============================================================
+function initMainPage() {
+    showView('consent');
+
+    // Listen for messages from the popup
+    window.addEventListener('message', handlePopupMessage);
+
+    // Nav scroll
+    window.addEventListener('scroll', function() {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+}
+
+// ============================================================
+// STEP 1: OPEN CONSENT IN POPUP
 // ============================================================
 function startConsent() {
     const prm = document.getElementById('prm-input').value.trim();
@@ -653,7 +705,43 @@ function startConsent() {
         url += '&usage_point_id=' + encodeURIComponent(prm);
     }
 
-    window.location.href = url;
+    // Open Enedis in a centered popup
+    const w = 600, h = 700;
+    const left = (screen.width - w) / 2;
+    const top = (screen.height - h) / 2;
+    consentPopup = window.open(
+        url,
+        'enedis_consent',
+        'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',scrollbars=yes,resizable=yes'
+    );
+
+    if (!consentPopup || consentPopup.closed) {
+        // Popup blocked — fallback to redirect
+        showError('consent',
+            'Votre navigateur a bloqué la fenêtre popup. ' +
+            'Veuillez autoriser les popups pour <strong>sungen.fr</strong> puis réessayer, ' +
+            'ou <a href="' + url + '" style="color:var(--bleu);text-decoration:underline;">cliquez ici</a> pour ouvrir Enedis dans cet onglet.'
+        );
+        return;
+    }
+
+    // Update UI to show waiting state
+    updateStep(2);
+    showView('processing');
+    updateProcessingStatus('En attente de votre consentement sur le portail Enedis...');
+
+    // Monitor if user closes popup without completing
+    popupCheckInterval = setInterval(function() {
+        if (consentPopup && consentPopup.closed) {
+            clearInterval(popupCheckInterval);
+            // If we're still on step 2 (no code received), reset
+            if (appState.step === 2 && !appState.access_token) {
+                updateStep(1);
+                showView('consent');
+                showError('consent', 'La fenêtre Enedis a été fermée avant la validation du consentement. Veuillez réessayer.');
+            }
+        }
+    }, 500);
 }
 
 function generateState() {
@@ -663,71 +751,66 @@ function generateState() {
 }
 
 // ============================================================
-// STEP 2: HANDLE CALLBACK
+// STEP 2: RECEIVE CODE FROM POPUP
 // ============================================================
-async function handleCallback() {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get('code');
-    const state = params.get('state');
-    const error = params.get('error');
+async function handlePopupMessage(event) {
+    // Security: only accept messages from our own origin
+    if (event.origin !== window.location.origin) return;
+    if (!event.data || event.data.type !== 'enedis_callback') return;
 
-    if (!code) return false;
+    // Stop monitoring popup
+    if (popupCheckInterval) clearInterval(popupCheckInterval);
 
-    // Clean URL
-    window.history.replaceState({}, document.title, window.location.pathname);
+    const { code, state, error } = event.data;
 
     // Verify state
     const savedState = sessionStorage.getItem('enedis_state');
     if (state && savedState && state !== savedState) {
-        showError('consent', 'Erreur de sécurité : le paramètre state ne correspond pas. Veuillez réessayer.');
-        return true;
+        showError('processing', 'Erreur de sécurité : le paramètre state ne correspond pas. Veuillez réessayer.');
+        setTimeout(function() { updateStep(1); showView('consent'); }, 3000);
+        return;
     }
 
-    if (error) {
-        showError('consent', 'Le consentement a été refusé ou une erreur est survenue : ' + error);
-        return true;
+    if (error || !code) {
+        showError('processing', 'Le consentement a été refusé ou une erreur est survenue.' + (error ? ' (' + error + ')' : ''));
+        setTimeout(function() { updateStep(1); showView('consent'); }, 3000);
+        return;
     }
 
-    // Move to step 2
-    updateStep(2);
-    showView('processing');
-
+    // We have the code — proceed with token exchange
     try {
-        // Exchange code for token
-        updateProcessingStatus('Échange du code d\'autorisation...');
+        updateProcessingStatus('Consentement validé ! Échange du code d\'autorisation...');
+
         const tokenData = await exchangeCodeForToken(code);
 
         appState.access_token = tokenData.access_token;
         appState.refresh_token = tokenData.refresh_token;
         appState.usage_point_id = tokenData.usage_points_id || tokenData.usage_point_id;
 
-        if (!appState.usage_point_id && tokenData.usage_points_id) {
-            appState.usage_point_id = tokenData.usage_points_id;
-        }
-
         showSuccess('processing', 'Jeton d\'accès obtenu. PRM : ' + (appState.usage_point_id || 'N/A'));
 
-        // Fetch consumption data
         updateProcessingStatus('Récupération de la consommation journalière (12 mois)...');
         await fetchDailyConsumption();
 
         updateProcessingStatus('Récupération de la courbe de charge...');
         await fetchLoadCurve();
 
-        // Move to step 3
         updateStep(3);
         displayResults();
 
     } catch (err) {
-        console.error('Error in callback flow:', err);
+        console.error('Error in token/data flow:', err);
         showError('processing',
             'Erreur lors de la récupération des données : ' + err.message +
             '<br><br><strong>Note :</strong> En mode bac à sable, l\'API peut bloquer les appels CORS depuis le navigateur. ' +
-            'Pour la production, un proxy backend (Cloudflare Worker) sera nécessaire pour l\'échange code→token.'
+            'Pour la production, un proxy backend (Cloudflare Worker) sera nécessaire.'
         );
+        // Still show demo data after error
+        setTimeout(function() {
+            updateStep(3);
+            displayResults();
+        }, 2000);
     }
-
-    return true;
 }
 
 // ============================================================
@@ -785,12 +868,11 @@ async function fetchDailyConsumption() {
     const readings = data?.meter_reading?.interval_reading || [];
     appState.daily_data = readings.map(r => ({
         date: r.date,
-        value: parseFloat(r.value) / 1000 // Wh → kWh
+        value: parseFloat(r.value) / 1000
     }));
 }
 
 async function fetchLoadCurve() {
-    // Fetch last 7 days for load curve
     const end = new Date();
     const start = new Date();
     start.setDate(start.getDate() - 7);
@@ -816,7 +898,7 @@ async function fetchLoadCurve() {
     const readings = data?.meter_reading?.interval_reading || [];
     appState.load_curve_data = readings.map(r => ({
         date: r.date,
-        value: parseFloat(r.value) // W
+        value: parseFloat(r.value)
     }));
 }
 
@@ -828,7 +910,6 @@ function displayResults() {
     const daily = appState.daily_data;
 
     if (!daily.length) {
-        // Use demo data for sandbox
         generateDemoData();
         return;
     }
@@ -837,15 +918,14 @@ function displayResults() {
 }
 
 function computeAndRender(daily) {
-    // KPIs
     const totalKwh = daily.reduce((s, d) => s + d.value, 0);
     const avgDay = totalKwh / daily.length;
     const peakDay = Math.max(...daily.map(d => d.value));
-    const costEstimate = totalKwh * 0.2516; // Tarif base TTC approx.
+    const costEstimate = totalKwh * 0.2516;
 
     document.getElementById('kpi-total').textContent = Math.round(totalKwh).toLocaleString('fr-FR');
     document.getElementById('kpi-avg-day').textContent = avgDay.toFixed(1);
-    document.getElementById('kpi-peak').textContent = (peakDay * 2).toFixed(1); // Rough peak power estimate
+    document.getElementById('kpi-peak').textContent = (peakDay * 2).toFixed(1);
     document.getElementById('kpi-cost').textContent = Math.round(costEstimate).toLocaleString('fr-FR');
 
     if (daily.length > 1) {
@@ -853,7 +933,6 @@ function computeAndRender(daily) {
             'Période : ' + daily[0].date + ' → ' + daily[daily.length - 1].date;
     }
 
-    // Daily chart
     const dailyCtx = document.getElementById('chart-daily').getContext('2d');
     if (chartDaily) chartDaily.destroy();
     chartDaily = new Chart(dailyCtx, {
@@ -880,7 +959,6 @@ function computeAndRender(daily) {
         }
     });
 
-    // Monthly chart
     const monthly = aggregateMonthly(daily);
     const monthlyCtx = document.getElementById('chart-monthly').getContext('2d');
     if (chartMonthly) chartMonthly.destroy();
@@ -905,7 +983,6 @@ function computeAndRender(daily) {
         }
     });
 
-    // Load curve (average profile)
     renderLoadCurve();
 }
 
@@ -920,9 +997,8 @@ function renderLoadCurve() {
             avgProfile[slot] += reading.value;
             counts[slot]++;
         });
-        avgProfile = avgProfile.map((v, i) => counts[i] > 0 ? v / counts[i] / 1000 : 0); // W → kW
+        avgProfile = avgProfile.map((v, i) => counts[i] > 0 ? v / counts[i] / 1000 : 0);
     } else {
-        // Demo load curve
         for (let i = 0; i < 48; i++) {
             const h = i / 2;
             if (h < 6) avgProfile[i] = 0.3 + Math.random() * 0.1;
@@ -996,10 +1072,9 @@ function generateDemoData() {
     const d = new Date(start);
     while (d <= end) {
         const month = d.getMonth();
-        // Seasonal pattern: higher in winter
         let base = 8;
-        if (month >= 10 || month <= 2) base = 14; // Winter
-        else if (month >= 4 && month <= 8) base = 6; // Summer
+        if (month >= 10 || month <= 2) base = 14;
+        else if (month >= 4 && month <= 8) base = 6;
         const dow = d.getDay();
         const weekendFactor = (dow === 0 || dow === 6) ? 1.15 : 1.0;
         const value = (base + (Math.random() - 0.5) * 4) * weekendFactor;
@@ -1085,23 +1160,6 @@ function downloadCSV() {
     link.download = 'sungen_consommation_' + (appState.usage_point_id || 'export') + '.csv';
     link.click();
 }
-
-// ============================================================
-// NAV SCROLL EFFECT
-// ============================================================
-window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-});
-
-// ============================================================
-// INIT — Check for callback code on page load
-// ============================================================
-(async function init() {
-    const hasCallback = await handleCallback();
-    if (!hasCallback) {
-        showView('consent');
-    }
-})();
 </script>
 
 </body>
