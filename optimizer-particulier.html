@@ -599,18 +599,18 @@
 
 <script>
 // ============================================================
-// ENEDIS DATA CONNECT — SANDBOX CONFIGURATION
+// ENEDIS DATA CONNECT — SANDBOX (SUNGEN-CONSULT)
 // ============================================================
-// ⚠️  ATTENTION : Ces clés sont pour le BAC À SABLE uniquement.
-//     En production, l'échange code→token DOIT se faire côté
-//     serveur (Cloudflare Worker, API backend, etc.).
-//     Le client_secret ne doit JAMAIS être exposé en frontend.
+// BAC À SABLE. En prod: token exchange côté serveur.
 // ============================================================
+
+// redirect_uri = URL complète de cette page (gère GitHub Pages /Sungen/)
+const PAGE_URL = window.location.origin + window.location.pathname;
 
 const CONFIG = {
     client_id:     'pXNV7nORYUnPfYdVxdtxyjfVhI8a',
     client_secret: 'xe3zjJWxEQKgykMzf7fWGCUaoe0a',
-    redirect_uri:  window.location.origin + '/optimizer-particulier.html',
+    redirect_uri:  PAGE_URL,
     auth_url:      'https://mon-compte-particulier.enedis.fr/dataconnect/v1/oauth2/authorize',
     token_url:     'https://gw.hml.api.enedis.fr/v1/oauth2/token',
     api_base:      'https://ext.hml.api.enedis.fr',
@@ -618,83 +618,73 @@ const CONFIG = {
     sandbox:       true
 };
 
-// State management
 let appState = {
-    step: 1,
-    access_token: null,
-    refresh_token: null,
-    usage_point_id: null,
-    daily_data: [],
-    load_curve_data: [],
-    contractual_data: null
+    step: 1, access_token: null, refresh_token: null,
+    usage_point_id: null, daily_data: [], load_curve_data: []
 };
-
-let chartDaily = null;
-let chartMonthly = null;
-let chartLoad = null;
-let consentPopup = null;
-let popupCheckInterval = null;
+let chartDaily = null, chartMonthly = null, chartLoad = null;
+let consentPopup = null, popupCheckInterval = null, lsCheckInterval = null;
 
 // ============================================================
-// POPUP MODE DETECTION
-// If this page loads inside a popup with ?code=, send code
-// back to the opener window and close.
+// BOOT: detect ?code= in URL (callback from Enedis redirect)
 // ============================================================
-(function detectPopupCallback() {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get('code');
-    const state = params.get('state');
-    const error = params.get('error');
+(function boot() {
+    var params = new URLSearchParams(window.location.search);
+    var code = params.get('code');
+    var state = params.get('state');
+    var error = params.get('error');
 
-    // We're in the popup if we have a code/error AND an opener
-    if ((code || error) && window.opener && !window.opener.closed) {
-        // Send the code (or error) back to the main page
-        window.opener.postMessage({
-            type: 'enedis_callback',
-            code: code || null,
-            state: state || null,
-            error: error || null
-        }, window.location.origin);
+    if (code || error) {
+        // Store code in localStorage for the main page to pick up
+        localStorage.setItem('enedis_callback', JSON.stringify({
+            code: code, state: state, error: error, ts: Date.now()
+        }));
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
 
-        // Show a brief message then close
+        // If we have an opener (popup worked), show message & close
+        if (window.opener) {
+            document.addEventListener('DOMContentLoaded', function() {
+                document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Raleway,sans-serif;background:#f7f5f2;"><div style="text-align:center;padding:2rem;"><h2 style="color:#1a1a2e;margin-bottom:1rem;">✓ Consentement enregistré</h2><p style="color:#4a4a4a;">Fermeture automatique...</p></div></div>';
+            });
+            setTimeout(function() { window.close(); }, 800);
+            return;
+        }
+
+        // No opener (cross-origin killed it, or same-tab redirect)
+        // → process code directly on this page
         document.addEventListener('DOMContentLoaded', function() {
-            document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Raleway,sans-serif;background:#f7f5f2;"><div style="text-align:center;padding:2rem;"><h2 style="color:#1a1a2e;margin-bottom:1rem;">✓ Consentement enregistré</h2><p style="color:#4a4a4a;">Cette fenêtre va se fermer automatiquement...</p></div></div>';
+            initMainPage();
+            processCallback(code, state, error);
         });
-
-        // Close after a short delay (let postMessage arrive)
-        setTimeout(function() { window.close(); }, 1500);
-
-        return; // Stop all further initialization
+        return;
     }
 
-    // Not a popup callback — proceed with normal page init
+    // Normal page load (no callback)
     document.addEventListener('DOMContentLoaded', initMainPage);
 })();
 
 // ============================================================
-// MAIN PAGE INITIALIZATION
+// MAIN PAGE INIT
 // ============================================================
 function initMainPage() {
     showView('consent');
-
-    // Listen for messages from the popup
-    window.addEventListener('message', handlePopupMessage);
-
-    // Nav scroll
     window.addEventListener('scroll', function() {
         document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
     });
 }
 
 // ============================================================
-// STEP 1: OPEN CONSENT IN POPUP
+// STEP 1: OPEN CONSENT
 // ============================================================
 function startConsent() {
-    const prm = document.getElementById('prm-input').value.trim();
-    const state = generateState();
+    localStorage.removeItem('enedis_callback');
+
+    var prm = document.getElementById('prm-input').value.trim();
+    var state = generateState();
     sessionStorage.setItem('enedis_state', state);
 
-    let url = CONFIG.auth_url
+    var url = CONFIG.auth_url
         + '?client_id=' + encodeURIComponent(CONFIG.client_id)
         + '&response_type=code'
         + '&redirect_uri=' + encodeURIComponent(CONFIG.redirect_uri)
@@ -705,111 +695,108 @@ function startConsent() {
         url += '&usage_point_id=' + encodeURIComponent(prm);
     }
 
-    // Open Enedis in a centered popup
-    const w = 600, h = 700;
-    const left = (screen.width - w) / 2;
-    const top = (screen.height - h) / 2;
-    consentPopup = window.open(
-        url,
-        'enedis_consent',
+    // Try popup
+    var w = 600, h = 700;
+    var left = (screen.width - w) / 2;
+    var top = (screen.height - h) / 2;
+    consentPopup = window.open(url, 'enedis_consent',
         'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',scrollbars=yes,resizable=yes'
     );
 
     if (!consentPopup || consentPopup.closed) {
-        // Popup blocked — fallback to redirect
-        showError('consent',
-            'Votre navigateur a bloqué la fenêtre popup. ' +
-            'Veuillez autoriser les popups pour <strong>sungen.fr</strong> puis réessayer, ' +
-            'ou <a href="' + url + '" style="color:var(--bleu);text-decoration:underline;">cliquez ici</a> pour ouvrir Enedis dans cet onglet.'
-        );
+        // Popup blocked → same-tab redirect
+        window.location.href = url;
         return;
     }
 
-    // Update UI to show waiting state
+    // Popup opened — show waiting state
     updateStep(2);
     showView('processing');
     updateProcessingStatus('En attente de votre consentement sur le portail Enedis...');
 
-    // Monitor if user closes popup without completing
+    // Poll localStorage for callback data (written by popup)
+    lsCheckInterval = setInterval(function() {
+        var raw = localStorage.getItem('enedis_callback');
+        if (raw) {
+            clearInterval(lsCheckInterval);
+            if (popupCheckInterval) clearInterval(popupCheckInterval);
+            localStorage.removeItem('enedis_callback');
+            try {
+                var data = JSON.parse(raw);
+                if (Date.now() - data.ts < 120000) {
+                    processCallback(data.code, data.state, data.error);
+                }
+            } catch(e) { console.error('Parse error', e); }
+        }
+    }, 300);
+
+    // Monitor popup close (user cancelled)
     popupCheckInterval = setInterval(function() {
         if (consentPopup && consentPopup.closed) {
             clearInterval(popupCheckInterval);
-            // If we're still on step 2 (no code received), reset
-            if (appState.step === 2 && !appState.access_token) {
-                updateStep(1);
-                showView('consent');
-                showError('consent', 'La fenêtre Enedis a été fermée avant la validation du consentement. Veuillez réessayer.');
-            }
+            setTimeout(function() {
+                if (!localStorage.getItem('enedis_callback') && appState.step === 2 && !appState.access_token) {
+                    clearInterval(lsCheckInterval);
+                    updateStep(1);
+                    showView('consent');
+                    showError('consent', 'La fenêtre Enedis a été fermée. Veuillez réessayer.');
+                }
+            }, 2000);
         }
     }, 500);
 }
 
 function generateState() {
-    const array = new Uint8Array(24);
-    crypto.getRandomValues(array);
-    return Array.from(array, b => b.toString(16).padStart(2, '0')).join('');
+    var a = new Uint8Array(24);
+    crypto.getRandomValues(a);
+    return Array.from(a, function(b) { return b.toString(16).padStart(2, '0'); }).join('');
 }
 
 // ============================================================
-// STEP 2: RECEIVE CODE FROM POPUP
+// STEP 2: PROCESS CALLBACK
 // ============================================================
-async function handlePopupMessage(event) {
-    // Security: only accept messages from our own origin
-    if (event.origin !== window.location.origin) return;
-    if (!event.data || event.data.type !== 'enedis_callback') return;
-
-    // Stop monitoring popup
-    if (popupCheckInterval) clearInterval(popupCheckInterval);
-
-    const { code, state, error } = event.data;
-
-    // Verify state
-    const savedState = sessionStorage.getItem('enedis_state');
+async function processCallback(code, state, error) {
+    var savedState = sessionStorage.getItem('enedis_state');
     if (state && savedState && state !== savedState) {
-        showError('processing', 'Erreur de sécurité : le paramètre state ne correspond pas. Veuillez réessayer.');
+        showError('processing', 'Erreur de sécurité : state incorrect.');
         setTimeout(function() { updateStep(1); showView('consent'); }, 3000);
         return;
     }
-
     if (error || !code) {
-        showError('processing', 'Le consentement a été refusé ou une erreur est survenue.' + (error ? ' (' + error + ')' : ''));
+        showError('processing', 'Consentement refusé.' + (error ? ' (' + error + ')' : ''));
         setTimeout(function() { updateStep(1); showView('consent'); }, 3000);
         return;
     }
 
-    // We have the code — proceed with token exchange
-    try {
-        updateProcessingStatus('Consentement validé ! Échange du code d\'autorisation...');
+    updateStep(2);
+    showView('processing');
 
-        const tokenData = await exchangeCodeForToken(code);
+    try {
+        updateProcessingStatus('Consentement validé ! Échange du code...');
+        var tokenData = await exchangeCodeForToken(code);
 
         appState.access_token = tokenData.access_token;
         appState.refresh_token = tokenData.refresh_token;
         appState.usage_point_id = tokenData.usage_points_id || tokenData.usage_point_id;
 
-        showSuccess('processing', 'Jeton d\'accès obtenu. PRM : ' + (appState.usage_point_id || 'N/A'));
+        showSuccess('processing', 'Jeton obtenu. PRM : ' + (appState.usage_point_id || 'N/A'));
 
-        updateProcessingStatus('Récupération de la consommation journalière (12 mois)...');
+        updateProcessingStatus('Récupération conso journalière (12 mois)...');
         await fetchDailyConsumption();
 
-        updateProcessingStatus('Récupération de la courbe de charge...');
+        updateProcessingStatus('Récupération courbe de charge...');
         await fetchLoadCurve();
 
         updateStep(3);
         displayResults();
 
     } catch (err) {
-        console.error('Error in token/data flow:', err);
+        console.error('Error:', err);
         showError('processing',
-            'Erreur lors de la récupération des données : ' + err.message +
-            '<br><br><strong>Note :</strong> En mode bac à sable, l\'API peut bloquer les appels CORS depuis le navigateur. ' +
-            'Pour la production, un proxy backend (Cloudflare Worker) sera nécessaire.'
+            'Erreur : ' + err.message +
+            '<br><br>En bac à sable, l\'API bloque les appels CORS navigateur. Affichage démo.'
         );
-        // Still show demo data after error
-        setTimeout(function() {
-            updateStep(3);
-            displayResults();
-        }, 2000);
+        setTimeout(function() { updateStep(3); displayResults(); }, 2000);
     }
 }
 
@@ -817,25 +804,19 @@ async function handlePopupMessage(event) {
 // TOKEN EXCHANGE
 // ============================================================
 async function exchangeCodeForToken(code) {
-    const body = new URLSearchParams({
+    var body = new URLSearchParams({
         grant_type: 'authorization_code',
         client_id: CONFIG.client_id,
         client_secret: CONFIG.client_secret,
         code: code,
         redirect_uri: CONFIG.redirect_uri
     });
-
-    const resp = await fetch(CONFIG.token_url, {
+    var resp = await fetch(CONFIG.token_url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: body.toString()
     });
-
-    if (!resp.ok) {
-        const errText = await resp.text();
-        throw new Error('Token exchange failed (' + resp.status + '): ' + errText);
-    }
-
+    if (!resp.ok) throw new Error('Token exchange failed (' + resp.status + ')');
     return await resp.json();
 }
 
@@ -843,164 +824,102 @@ async function exchangeCodeForToken(code) {
 // DATA FETCHING
 // ============================================================
 async function fetchDailyConsumption() {
-    const end = new Date();
-    const start = new Date();
+    var end = new Date(), start = new Date();
     start.setFullYear(start.getFullYear() - 1);
-
-    const url = CONFIG.api_base + '/metering_data/v5/daily_consumption'
+    var url = CONFIG.api_base + '/metering_data/v5/daily_consumption'
         + '?usage_point_id=' + appState.usage_point_id
-        + '&start=' + formatDate(start)
-        + '&end=' + formatDate(end);
-
-    const resp = await fetch(url, {
-        headers: {
-            'Authorization': 'Bearer ' + appState.access_token,
-            'Accept': 'application/json'
-        }
+        + '&start=' + formatDate(start) + '&end=' + formatDate(end);
+    var resp = await fetch(url, {
+        headers: { 'Authorization': 'Bearer ' + appState.access_token, 'Accept': 'application/json' }
     });
-
-    if (!resp.ok) {
-        const errText = await resp.text();
-        throw new Error('Daily consumption fetch failed (' + resp.status + '): ' + errText);
-    }
-
-    const data = await resp.json();
-    const readings = data?.meter_reading?.interval_reading || [];
-    appState.daily_data = readings.map(r => ({
-        date: r.date,
-        value: parseFloat(r.value) / 1000
-    }));
+    if (!resp.ok) throw new Error('Daily consumption failed (' + resp.status + ')');
+    var data = await resp.json();
+    appState.daily_data = (data.meter_reading && data.meter_reading.interval_reading || []).map(function(r) {
+        return { date: r.date, value: parseFloat(r.value) / 1000 };
+    });
 }
 
 async function fetchLoadCurve() {
-    const end = new Date();
-    const start = new Date();
+    var end = new Date(), start = new Date();
     start.setDate(start.getDate() - 7);
-
-    const url = CONFIG.api_base + '/metering_data/v5/consumption_load_curve'
+    var url = CONFIG.api_base + '/metering_data/v5/consumption_load_curve'
         + '?usage_point_id=' + appState.usage_point_id
-        + '&start=' + formatDate(start)
-        + '&end=' + formatDate(end);
-
-    const resp = await fetch(url, {
-        headers: {
-            'Authorization': 'Bearer ' + appState.access_token,
-            'Accept': 'application/json'
-        }
+        + '&start=' + formatDate(start) + '&end=' + formatDate(end);
+    var resp = await fetch(url, {
+        headers: { 'Authorization': 'Bearer ' + appState.access_token, 'Accept': 'application/json' }
     });
-
-    if (!resp.ok) {
-        console.warn('Load curve fetch failed, skipping');
-        return;
-    }
-
-    const data = await resp.json();
-    const readings = data?.meter_reading?.interval_reading || [];
-    appState.load_curve_data = readings.map(r => ({
-        date: r.date,
-        value: parseFloat(r.value)
-    }));
+    if (!resp.ok) return;
+    var data = await resp.json();
+    appState.load_curve_data = (data.meter_reading && data.meter_reading.interval_reading || []).map(function(r) {
+        return { date: r.date, value: parseFloat(r.value) };
+    });
 }
 
 // ============================================================
-// DISPLAY RESULTS
+// DISPLAY
 // ============================================================
 function displayResults() {
     showView('data');
-    const daily = appState.daily_data;
-
-    if (!daily.length) {
-        generateDemoData();
-        return;
-    }
-
-    computeAndRender(daily);
+    if (!appState.daily_data.length) { generateDemoData(); return; }
+    computeAndRender(appState.daily_data);
 }
 
 function computeAndRender(daily) {
-    const totalKwh = daily.reduce((s, d) => s + d.value, 0);
-    const avgDay = totalKwh / daily.length;
-    const peakDay = Math.max(...daily.map(d => d.value));
-    const costEstimate = totalKwh * 0.2516;
+    var totalKwh = daily.reduce(function(s, d) { return s + d.value; }, 0);
+    var avgDay = totalKwh / daily.length;
+    var peakDay = Math.max.apply(null, daily.map(function(d) { return d.value; }));
 
     document.getElementById('kpi-total').textContent = Math.round(totalKwh).toLocaleString('fr-FR');
     document.getElementById('kpi-avg-day').textContent = avgDay.toFixed(1);
     document.getElementById('kpi-peak').textContent = (peakDay * 2).toFixed(1);
-    document.getElementById('kpi-cost').textContent = Math.round(costEstimate).toLocaleString('fr-FR');
+    document.getElementById('kpi-cost').textContent = Math.round(totalKwh * 0.2516).toLocaleString('fr-FR');
 
     if (daily.length > 1) {
         document.getElementById('data-period').textContent =
             'Période : ' + daily[0].date + ' → ' + daily[daily.length - 1].date;
     }
 
-    const dailyCtx = document.getElementById('chart-daily').getContext('2d');
+    var dailyCtx = document.getElementById('chart-daily').getContext('2d');
     if (chartDaily) chartDaily.destroy();
     chartDaily = new Chart(dailyCtx, {
         type: 'bar',
-        data: {
-            labels: daily.map(d => d.date),
-            datasets: [{
-                label: 'kWh/jour',
-                data: daily.map(d => d.value),
-                backgroundColor: 'rgba(67, 135, 166, 0.6)',
-                borderColor: 'rgba(67, 135, 166, 1)',
-                borderWidth: 1,
-                borderRadius: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                x: { display: true, ticks: { maxTicksLimit: 12, font: { family: 'Raleway', size: 11 } } },
-                y: { beginAtZero: true, title: { display: true, text: 'kWh', font: { family: 'Raleway' } } }
-            }
+        data: { labels: daily.map(function(d){return d.date}), datasets: [{
+            label: 'kWh/jour', data: daily.map(function(d){return d.value}),
+            backgroundColor: 'rgba(67,135,166,0.6)', borderColor: 'rgba(67,135,166,1)', borderWidth: 1, borderRadius: 2
+        }]},
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+            scales: { x: { ticks: { maxTicksLimit: 12, font: { family: 'Raleway', size: 11 } } },
+                y: { beginAtZero: true, title: { display: true, text: 'kWh', font: { family: 'Raleway' } } } }
         }
     });
 
-    const monthly = aggregateMonthly(daily);
-    const monthlyCtx = document.getElementById('chart-monthly').getContext('2d');
+    var monthly = aggregateMonthly(daily);
+    var monthlyCtx = document.getElementById('chart-monthly').getContext('2d');
     if (chartMonthly) chartMonthly.destroy();
     chartMonthly = new Chart(monthlyCtx, {
         type: 'bar',
-        data: {
-            labels: monthly.map(m => m.label),
-            datasets: [{
-                label: 'kWh/mois',
-                data: monthly.map(m => m.value),
-                backgroundColor: monthly.map(m => m.value > avgDay * 30 ? 'rgba(235,91,86,0.7)' : 'rgba(67,135,166,0.7)'),
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                y: { beginAtZero: true, title: { display: true, text: 'kWh', font: { family: 'Raleway' } } }
-            }
+        data: { labels: monthly.map(function(m){return m.label}), datasets: [{
+            label: 'kWh/mois', data: monthly.map(function(m){return m.value}),
+            backgroundColor: monthly.map(function(m){return m.value > avgDay * 30 ? 'rgba(235,91,86,0.7)' : 'rgba(67,135,166,0.7)'}),
+            borderRadius: 6
+        }]},
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true, title: { display: true, text: 'kWh', font: { family: 'Raleway' } } } }
         }
     });
-
     renderLoadCurve();
 }
 
 function renderLoadCurve() {
-    const lc = appState.load_curve_data;
-    let avgProfile = new Array(48).fill(0);
-    let counts = new Array(48).fill(0);
-
+    var lc = appState.load_curve_data;
+    var avgProfile = new Array(48).fill(0);
+    var counts = new Array(48).fill(0);
     if (lc.length > 0) {
-        lc.forEach((reading, i) => {
-            const slot = i % 48;
-            avgProfile[slot] += reading.value;
-            counts[slot]++;
-        });
-        avgProfile = avgProfile.map((v, i) => counts[i] > 0 ? v / counts[i] / 1000 : 0);
+        lc.forEach(function(r, i) { var s = i % 48; avgProfile[s] += r.value; counts[s]++; });
+        avgProfile = avgProfile.map(function(v, i) { return counts[i] > 0 ? v / counts[i] / 1000 : 0; });
     } else {
-        for (let i = 0; i < 48; i++) {
-            const h = i / 2;
+        for (var i = 0; i < 48; i++) {
+            var h = i / 2;
             if (h < 6) avgProfile[i] = 0.3 + Math.random() * 0.1;
             else if (h < 8) avgProfile[i] = 0.6 + Math.random() * 0.3;
             else if (h < 12) avgProfile[i] = 1.2 + Math.random() * 0.4;
@@ -1010,153 +929,105 @@ function renderLoadCurve() {
             else avgProfile[i] = 0.5 + Math.random() * 0.2;
         }
     }
-
-    const labels = [];
-    for (let i = 0; i < 48; i++) {
-        const h = Math.floor(i / 2);
-        const m = (i % 2) * 30;
-        labels.push(h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0'));
+    var labels = [];
+    for (var j = 0; j < 48; j++) {
+        labels.push(Math.floor(j/2).toString().padStart(2,'0') + ':' + ((j%2)*30).toString().padStart(2,'0'));
     }
-
-    const lcCtx = document.getElementById('chart-loadcurve').getContext('2d');
+    var ctx = document.getElementById('chart-loadcurve').getContext('2d');
     if (chartLoad) chartLoad.destroy();
-    chartLoad = new Chart(lcCtx, {
+    chartLoad = new Chart(ctx, {
         type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'kW',
-                data: avgProfile,
-                borderColor: 'rgba(248, 190, 0, 1)',
-                backgroundColor: 'rgba(248, 190, 0, 0.1)',
-                fill: true,
-                tension: 0.3,
-                pointRadius: 0,
-                borderWidth: 2.5
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                x: { ticks: { maxTicksLimit: 12, font: { family: 'Raleway', size: 11 } } },
-                y: { beginAtZero: true, title: { display: true, text: 'kW', font: { family: 'Raleway' } } }
-            }
+        data: { labels: labels, datasets: [{
+            label: 'kW', data: avgProfile,
+            borderColor: 'rgba(248,190,0,1)', backgroundColor: 'rgba(248,190,0,0.1)',
+            fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2.5
+        }]},
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+            scales: { x: { ticks: { maxTicksLimit: 12, font: { family: 'Raleway', size: 11 } } },
+                y: { beginAtZero: true, title: { display: true, text: 'kW', font: { family: 'Raleway' } } } }
         }
     });
 }
 
 function aggregateMonthly(daily) {
-    const months = {};
-    const monthNames = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
-    daily.forEach(d => {
-        const dt = new Date(d.date);
-        const key = dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0');
-        const label = monthNames[dt.getMonth()] + ' ' + dt.getFullYear();
-        if (!months[key]) months[key] = { label, value: 0 };
+    var months = {};
+    var names = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+    daily.forEach(function(d) {
+        var dt = new Date(d.date);
+        var key = dt.getFullYear() + '-' + String(dt.getMonth()+1).padStart(2,'0');
+        if (!months[key]) months[key] = { label: names[dt.getMonth()] + ' ' + dt.getFullYear(), value: 0 };
         months[key].value += d.value;
     });
     return Object.values(months);
 }
 
 // ============================================================
-// DEMO DATA (for sandbox when API doesn't return real data)
+// DEMO DATA
 // ============================================================
 function generateDemoData() {
-    const daily = [];
-    const end = new Date();
-    const start = new Date();
+    var daily = [];
+    var end = new Date(), start = new Date();
     start.setFullYear(start.getFullYear() - 1);
-
-    const d = new Date(start);
+    var d = new Date(start);
     while (d <= end) {
-        const month = d.getMonth();
-        let base = 8;
-        if (month >= 10 || month <= 2) base = 14;
-        else if (month >= 4 && month <= 8) base = 6;
-        const dow = d.getDay();
-        const weekendFactor = (dow === 0 || dow === 6) ? 1.15 : 1.0;
-        const value = (base + (Math.random() - 0.5) * 4) * weekendFactor;
-
-        daily.push({
-            date: formatDate(d),
-            value: Math.max(1, value)
-        });
+        var m = d.getMonth();
+        var base = (m >= 10 || m <= 2) ? 14 : (m >= 4 && m <= 8) ? 6 : 8;
+        var wk = (d.getDay() === 0 || d.getDay() === 6) ? 1.15 : 1.0;
+        daily.push({ date: formatDate(d), value: Math.max(1, (base + (Math.random()-0.5)*4) * wk) });
         d.setDate(d.getDate() + 1);
     }
     appState.daily_data = daily;
     computeAndRender(daily);
-
-    showSuccess('processing',
-        'Mode bac à sable : données de démonstration générées (le sandbox Enedis n\'a pas retourné de données réelles).'
-    );
+    showSuccess('processing', 'Mode bac à sable : données de démonstration (sandbox Enedis).');
 }
 
 // ============================================================
 // UTILITIES
 // ============================================================
-function formatDate(date) {
-    return date.getFullYear() + '-'
-        + String(date.getMonth() + 1).padStart(2, '0') + '-'
-        + String(date.getDate()).padStart(2, '0');
+function formatDate(dt) {
+    return dt.getFullYear() + '-' + String(dt.getMonth()+1).padStart(2,'0') + '-' + String(dt.getDate()).padStart(2,'0');
 }
-
 function updateStep(n) {
     appState.step = n;
-    for (let i = 1; i <= 3; i++) {
-        const el = document.getElementById('step' + i + '-indicator');
+    for (var i = 1; i <= 3; i++) {
+        var el = document.getElementById('step' + i + '-indicator');
         el.classList.remove('active', 'done');
         if (i < n) el.classList.add('done');
         if (i === n) el.classList.add('active');
     }
 }
-
 function showView(name) {
     document.getElementById('consent-view').style.display = name === 'consent' ? 'block' : 'none';
     document.getElementById('processing-view').style.display = name === 'processing' ? 'block' : 'none';
-    const dataPanel = document.getElementById('data-view');
-    if (name === 'data') { dataPanel.classList.add('visible'); } else { dataPanel.classList.remove('visible'); }
+    var dp = document.getElementById('data-view');
+    if (name === 'data') dp.classList.add('visible'); else dp.classList.remove('visible');
 }
-
-function updateProcessingStatus(msg) {
-    document.getElementById('processing-status').textContent = msg;
-}
-
+function updateProcessingStatus(msg) { document.getElementById('processing-status').textContent = msg; }
 function showError(panel, msg) {
-    const el = document.getElementById('error-' + panel);
+    var el = document.getElementById('error-' + panel);
     if (el) { el.innerHTML = '<p>' + msg + '</p>'; el.classList.add('visible'); }
 }
-
 function showSuccess(panel, msg) {
-    const el = document.getElementById('success-' + panel);
+    var el = document.getElementById('success-' + panel);
     if (el) { el.innerHTML = '<p>' + msg + '</p>'; el.classList.add('visible'); }
 }
-
 function switchChart(type) {
-    document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.chart-tab').forEach(function(t) { t.classList.remove('active'); });
     event.target.classList.add('active');
     document.getElementById('chart-daily').style.display = type === 'daily' ? 'block' : 'none';
     document.getElementById('chart-monthly').style.display = type === 'monthly' ? 'block' : 'none';
 }
-
 function resetFlow() {
-    appState = { step: 1, access_token: null, refresh_token: null, usage_point_id: null, daily_data: [], load_curve_data: [], contractual_data: null };
-    updateStep(1);
-    showView('consent');
-    document.querySelectorAll('.error-box, .success-box').forEach(el => { el.classList.remove('visible'); el.innerHTML = ''; });
+    appState = { step: 1, access_token: null, refresh_token: null, usage_point_id: null, daily_data: [], load_curve_data: [] };
+    updateStep(1); showView('consent');
+    document.querySelectorAll('.error-box, .success-box').forEach(function(el) { el.classList.remove('visible'); el.innerHTML = ''; });
 }
-
 function downloadCSV() {
-    const daily = appState.daily_data;
-    if (!daily.length) return;
-
-    let csv = 'Date;Consommation_kWh\n';
-    daily.forEach(d => { csv += d.date + ';' + d.value.toFixed(2) + '\n'; });
-
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
+    if (!appState.daily_data.length) return;
+    var csv = 'Date;Consommation_kWh\n';
+    appState.daily_data.forEach(function(d) { csv += d.date + ';' + d.value.toFixed(2) + '\n'; });
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
     link.download = 'sungen_consommation_' + (appState.usage_point_id || 'export') + '.csv';
     link.click();
 }
