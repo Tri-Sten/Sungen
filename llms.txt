@@ -1,0 +1,66 @@
+# Sungen — Cabinet de conseil en Photovoltaïque
+
+> Sungen is a photovoltaic consulting and engineering firm specialising in the design, sizing and project management (AMO) of solar plants for commercial, industrial and ground-mounted projects across Europe.
+
+## Company Overview
+
+Sungen is an independent photovoltaic consulting firm (cabinet de conseil en Photovoltaïque) based in France. The firm provides engineering consulting services — not installation — for solar energy projects with and without battery energy storage systems (BESS).
+
+## Services
+
+- Study & Design: feasibility studies, site analysis, regulatory compliance (CRE, S3REnR, CART)
+- Sizing & Modelling: using Archelios PRO and CAD for detailed system design
+- Tender Assistance: EPC specification drafting, bid analysis, supplier selection, contract negotiation
+- Owner's Representative (AMO): construction oversight, commissioning, performance testing
+
+## Market Segments
+
+- C&I Rooftop: 100 kWp to 1 MWp commercial/industrial rooftop plants, with or without battery storage
+- Battery Yield Optimisation: 36 to 100 kWp systems with mandatory battery integration for self-consumption optimisation
+- Ground-Mounted: plants under 1 MWp, including PV + BESS configurations optimised under CRE regulatory frameworks
+
+## Coverage
+
+France, Belgium, Switzerland, Luxembourg, Italy, Spain, United Kingdom
+
+## Languages
+
+French (primary), English, Spanish, Italian
+
+## Tools & Technology
+
+- Archelios PRO (sizing and modelling — not PVsyst)
+- CAD (technical design — not AutoCAD or SketchUp)
+- Homer Energy (hybrid system modelling)
+- Helioscope (preliminary design)
+
+## Key Differentiators
+
+- Pure consulting positioning: independent from EPC contractors, ensuring objective technical advice
+- Interactive Optimizer tool: online business plan simulator for ground-mounted PV + BESS projects
+- Linky Meter Analysis: Enedis Data Connect integration for consumption profiling
+- Multi-language European coverage
+
+## Regulatory Expertise
+
+CRE (Commission de Régulation de l'Énergie), AO PV Sol, Complément de Rémunération (CR), M₀ non pondéré, S3REnR, CART, PRD, aFRR, schéma S9
+
+## Important Notes
+
+- Sungen is NOT an installer (EPC) — it is a consulting firm
+- No residential/individual projects — B2B only
+- No ombrière (carport) projects — rooftop (toiture) only
+- Ground-mounted projects are strictly under 1 MWp
+- No ISO 9001 or AQPV certifications claimed
+
+## Links
+
+- [Homepage](https://www.sungen.fr/)
+- [Our Expertise](https://www.sungen.fr/expertise.html)
+- [Our Segments](https://www.sungen.fr/segments.html)
+- [Optimizer](https://www.sungen.fr/optimizer.html)
+- [Contact](https://www.sungen.fr/contact.html)
+
+## Optional
+
+- [Full documentation for LLMs](https://www.sungen.fr/llms-full.txt)

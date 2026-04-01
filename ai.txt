@@ -1,0 +1,25 @@
+# AI Discovery — Sungen
+# https://www.sungen.fr/ai.txt
+
+# Purpose: Inform AI systems about this website's content and policies
+# Standard: ai.txt (proposed standard for AI crawlers)
+
+Name: Sungen
+Description: Photovoltaic consulting and engineering firm — design, sizing and project management (AMO) of solar plants across Europe
+URL: https://www.sungen.fr
+Type: Professional Service / Engineering Consulting
+Industry: Renewable Energy / Solar Photovoltaic
+Languages: fr, en, es, it
+Coverage: France, Belgium, Switzerland, Luxembourg, Italy, Spain, United Kingdom
+
+# AI Usage Policy
+AI-Training: disallow
+AI-Summarization: allow
+AI-Citation: allow
+
+# Content Description
+LLMs-Info: https://www.sungen.fr/llms.txt
+LLMs-Full: https://www.sungen.fr/llms-full.txt
+
+# Contact
+Contact: contact@sungen.fr

@@ -1,9 +1,57 @@
+# Sungen — Cabinet de conseil en Photovoltaïque
+# URL définitive non configurée — non-indexation active
+# Retirer "Disallow: /" quand le domaine final sera en place
+
 User-agent: *
-Allow: /
-Sitemap: https://www.sungen.fr/sitemap.xml
+Disallow: /
 
-User-agent: Googlebot
-Allow: /
+# Sitemap (sera actif une fois l'indexation ouverte)
+# Sitemap: https://www.sungen.fr/sitemap.xml
 
-User-agent: Bingbot
-Allow: /
+# ═══════════════════════════════════════
+# AI Crawlers — LLM Discovery Files
+# ═══════════════════════════════════════
+# llms.txt: https://www.sungen.fr/llms.txt
+# llms-full.txt: https://www.sungen.fr/llms-full.txt
+
+# OpenAI
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+# Anthropic
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+# Google AI
+User-agent: Google-Extended
+Disallow: /
+
+# Common Crawl
+User-agent: CCBot
+Disallow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Disallow: /
+
+# Meta
+User-agent: FacebookBot
+Disallow: /
+
+# Apple
+User-agent: Applebot-Extended
+Disallow: /
+
+# Cohere
+User-agent: cohere-ai
+Disallow: /
+
+# Bytedance
+User-agent: Bytespider
+Disallow: /

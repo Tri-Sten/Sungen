@@ -1,0 +1,29 @@
+/* TEAM */
+
+Company: Sungen
+Role: Cabinet de conseil en Photovoltaïque
+Location: France
+Contact: contact@sungen.fr
+Website: https://www.sungen.fr
+
+/* SITE */
+
+Last update: 2026-03-31
+Standards: HTML5, CSS3, JavaScript ES6
+Software: Archelios PRO, CAD, Homer Energy, Helioscope
+Fonts: Raleway (Google Fonts)
+Colors: Blue #4387a6, Yellow #f8be00, Grey #9d9d9c, Red #eb5b56
+Languages: French, English, Spanish, Italian
+
+/* COVERAGE */
+
+France, Belgium, Switzerland, Luxembourg, Italy, Spain, United Kingdom
+
+/* SERVICES */
+
+Photovoltaic engineering consulting
+Solar plant design and sizing
+Tender assistance and negotiation
+Owner's representative (AMO)
+Battery storage (BESS) integration
+Ground-mounted PV + storage optimisation
