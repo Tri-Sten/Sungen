@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.sungen.fr/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.sungen.fr/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sungen.fr/en/index.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.sungen.fr/es/index.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.sungen.fr/it/index.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sungen.fr/" />
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.sungen.fr/expertise.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.sungen.fr/expertise.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sungen.fr/en/expertise.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.sungen.fr/es/expertise.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.sungen.fr/it/expertise.html" />
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.sungen.fr/segments.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.sungen.fr/segments.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sungen.fr/en/segments.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.sungen.fr/es/segments.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.sungen.fr/it/segments.html" />
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.sungen.fr/optimizer.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.sungen.fr/optimizer.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sungen.fr/en/optimizer.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.sungen.fr/es/optimizer.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.sungen.fr/it/optimizer.html" />
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.sungen.fr/optimizer-particulier.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.sungen.fr/optimizer-particulier.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sungen.fr/en/optimizer-particulier.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.sungen.fr/es/optimizer-particulier.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.sungen.fr/it/optimizer-particulier.html" />
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.sungen.fr/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.sungen.fr/contact.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sungen.fr/en/contact.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.sungen.fr/es/contact.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.sungen.fr/it/contact.html" />
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+</urlset>
