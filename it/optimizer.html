@@ -139,7 +139,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             z-index: 100;
         }
-        .lang-selector:hover .lang-dropdown { display: block; }
+        .lang-dropdown.open { display: block; }
         .lang-dropdown a {
             display: flex;
             align-items: center;
@@ -335,7 +335,7 @@
             <a href="optimizer-particulier.html">Il Mio Contatore</a>
             <a href="contact.html" class="nav-cta">Contattaci</a>
             <div class="lang-selector">
-                <div class="lang-current">🇮🇹 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                <div class="lang-current" onclick="toggleLang(event)">🇮🇹 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
                 <div class="lang-dropdown">
                     <a href="../optimizer.html">🇫🇷 Français</a>
                     <a href="../en/optimizer.html">🇬🇧 English</a>
@@ -1039,6 +1039,23 @@ window.addEventListener('scroll', () => { document.querySelector('.navbar').clas
 const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 updateResults();
+
+// Language selector toggle (click-based)
+function toggleLang(e) {
+    e.stopPropagation();
+    var dd = e.currentTarget.nextElementSibling;
+    var cur = e.currentTarget;
+    dd.classList.toggle('open');
+    cur.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+    document.querySelectorAll('.lang-dropdown.open').forEach(function(d) { d.classList.remove('open'); });
+    document.querySelectorAll('.lang-current.open').forEach(function(c) { c.classList.remove('open'); });
+});
+document.querySelectorAll('.lang-dropdown').forEach(function(dd) {
+    dd.addEventListener('click', function(e) { e.stopPropagation(); });
+});
+
 </script>
 </body>
 </html>

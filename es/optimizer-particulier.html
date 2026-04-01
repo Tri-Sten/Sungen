@@ -140,7 +140,7 @@
         }
         .lang-current:hover { color: var(--blanc); background: rgba(255,255,255,0.08); }
         .lang-current svg { width: 12px; height: 12px; transition: var(--transition); }
-        .lang-selector:hover .lang-current svg { transform: rotate(180deg); }
+        .lang-current.open svg { transform: rotate(180deg); }
         .lang-dropdown {
             display: none;
             position: absolute;
@@ -154,7 +154,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             z-index: 100;
         }
-        .lang-selector:hover .lang-dropdown { display: block; }
+        .lang-dropdown.open { display: block; }
         .lang-dropdown a {
             display: flex;
             align-items: center;
@@ -548,7 +548,7 @@
 <!-- NAV -->
 <nav class="navbar" role="navigation" aria-label="Navigation principale">
     <div class="nav-inner">
-        <a href="../index.html" class="nav-logo" aria-label="Sungen">
+        <a href="index.html" class="nav-logo" aria-label="Sungen">
             <img src="../img/Logo_Sungen_white_sans_fond.png" alt="Sungen" width="140" height="38">
         </a>
         <div class="nav-links" id="navLinks">
@@ -559,7 +559,7 @@
             <a href="optimizer-particulier.html" class="active">Mi Contador</a>
             <a href="contact.html" class="nav-cta">Contáctenos</a>
             <div class="lang-selector">
-                <div class="lang-current">🇪🇸 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+                <div class="lang-current" onclick="toggleLang(event)">🇪🇸 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
                 <div class="lang-dropdown">
                     <a href="../optimizer-particulier.html">🇫🇷 Français</a>
                     <a href="../en/optimizer-particulier.html">🇬🇧 English</a>
@@ -1190,6 +1190,23 @@ function downloadCSV() {
     link.download = 'sungen_consommation_' + (appState.usage_point_id || 'export') + '.csv';
     link.click();
 }
+
+// Language selector toggle (click-based)
+function toggleLang(e) {
+    e.stopPropagation();
+    var dd = e.currentTarget.nextElementSibling;
+    var cur = e.currentTarget;
+    dd.classList.toggle('open');
+    cur.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+    document.querySelectorAll('.lang-dropdown.open').forEach(function(d) { d.classList.remove('open'); });
+    document.querySelectorAll('.lang-current.open').forEach(function(c) { c.classList.remove('open'); });
+});
+document.querySelectorAll('.lang-dropdown').forEach(function(dd) {
+    dd.addEventListener('click', function(e) { e.stopPropagation(); });
+});
+
 </script>
 
 </body>
