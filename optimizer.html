@@ -494,7 +494,7 @@
         <!-- PRICING CARDS -->
         <div class="pricing-grid fade-up">
             <!-- FREE -->
-            <div class="pricing-card free" id="cardFree" onclick="selectPlan('free')">
+            <div class="pricing-card free" id="cardFree" onclick="selectPlan('free', true)">
                 <div class="pricing-radio">
                     <input type="radio" name="plan" id="planFree" value="free" checked>
                     <label for="planFree">Synthèse gratuite</label>
@@ -512,7 +512,7 @@
             </div>
 
             <!-- PREMIUM -->
-            <div class="pricing-card premium" id="cardPremium" onclick="selectPlan('premium')">
+            <div class="pricing-card premium" id="cardPremium" onclick="selectPlan('premium', true)">
                 <span class="pricing-badge">RECOMMANDÉ</span>
                 <div class="pricing-radio">
                     <input type="radio" name="plan" id="planPremium" value="premium">
@@ -767,7 +767,7 @@ function updateResults() {
 // ═══════════════ PLAN SELECTION ═══════════════
 let selectedPlan = 'free';
 
-function selectPlan(plan) {
+function selectPlan(plan, scroll) {
     selectedPlan = plan;
     document.getElementById('planFree').checked = (plan === 'free');
     document.getElementById('planPremium').checked = (plan === 'premium');
@@ -783,7 +783,7 @@ function selectPlan(plan) {
         document.getElementById('btnLabel').textContent = 'Recevoir la synthèse gratuite →';
         document.getElementById('btnSubmit').classList.remove('outline');
     }
-    document.getElementById('dlForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (scroll) document.getElementById('dlForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function handleSubmit() {
@@ -1033,7 +1033,7 @@ function generateFreePDF() {
 }
 
 // Init
-selectPlan('free');
+selectPlan('free', false);
 document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('open'); });
 window.addEventListener('scroll', () => { document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50); });
 const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
