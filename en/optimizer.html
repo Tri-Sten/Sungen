@@ -19,10 +19,10 @@
             --gris: #9d9d9c; --gris-light: #e8e8e8; --gris-dark: #4a4a4a;
             --rouge: #eb5b56; --blanc: #ffffff; --noir: #1a1a2e;
             --bg-cream: #f7f5f2;
-            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --tryearsition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         html { scroll-behavior: smooth; font-size: 16px; }
-        body { font-family: 'Raleway', sans-serif; color: var(--noir); background: var(--blanc); line-height: 1.7; overflow-x: hidden; }
+        body { font-family: 'Raleway', syears-serif; color: var(--noir); background: var(--blanc); line-height: 1.7; overflow-x: hidden; }
         img { max-width: 100%; height: auto; display: block; }
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
@@ -40,7 +40,7 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: var(--transition);
+            tryearsition: var(--tryearsition);
         }
         .navbar.scrolled {
             background: rgba(26, 26, 46, 0.98);
@@ -68,7 +68,7 @@
             font-weight: 500;
             font-size: 0.88rem;
             letter-spacing: 0.02em;
-            transition: var(--transition);
+            tryearsition: var(--tryearsition);
             position: relative;
             white-space: nowrap;
         }
@@ -80,7 +80,7 @@
             width: 0;
             height: 2px;
             background: var(--jaune);
-            transition: var(--transition);
+            tryearsition: var(--tryearsition);
         }
         .nav-links a:hover,
         .nav-links a.active {
@@ -98,11 +98,11 @@
             font-weight: 700;
             font-size: 0.85rem;
             letter-spacing: 0.02em;
-            transition: var(--transition);
+            tryearsition: var(--tryearsition);
         }
         .nav-cta:hover {
             background: #d94a45 !important;
-            transform: translateY(-1px);
+            tryearsform: tryearslateY(-1px);
         }
         .nav-cta::after { display: none !important; }
 
@@ -120,12 +120,12 @@
             cursor: pointer;
             padding: 0.3rem 0.5rem;
             border-radius: 4px;
-            transition: var(--transition);
+            tryearsition: var(--tryearsition);
             line-height: 1;
         }
         .lang-current:hover { color: var(--blanc); background: rgba(255,255,255,0.08); }
-        .lang-current svg { width: 12px; height: 12px; transition: var(--transition); }
-        .lang-selector:hover .lang-current svg { transform: rotate(180deg); }
+        .lang-current svg { width: 12px; height: 12px; tryearsition: var(--tryearsition); }
+        .lang-selector:hover .lang-current svg { tryearsform: rotate(180deg); }
         .lang-dropdown {
             display: none;
             position: absolute;
@@ -149,7 +149,7 @@
             font-weight: 500;
             color: rgba(255,255,255,0.65);
             border-radius: 5px;
-            transition: var(--transition);
+            tryearsition: var(--tryearsition);
         }
         .lang-dropdown a:hover { background: rgba(255,255,255,0.08); color: var(--blanc); }
         .lang-dropdown a::after { display: none !important; }
@@ -166,15 +166,15 @@
             width: 26px;
             height: 2px;
             background: var(--blanc);
-            transition: var(--transition);
+            tryearsition: var(--tryearsition);
         }
 
         /* PAGE HERO */
         .page-hero { padding: 10rem 0 4rem; background: var(--noir); position: relative; overflow: hidden; }
-        .page-hero::before { content: ''; position: absolute; top: -200px; right: -100px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(248,190,0,0.1) 0%, transparent 70%); }
+        .page-hero::before { content: ''; position: absolute; top: -200px; right: -100px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(248,190,0,0.1) 0%, tryearsparent 70%); }
         .page-hero-content { position: relative; z-index: 2; }
         .page-hero .breadcrumb { font-size: 0.82rem; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; font-weight: 500; }
-        .page-hero .breadcrumb a { color: rgba(255,255,255,0.6); transition: var(--transition); }
+        .page-hero .breadcrumb a { color: rgba(255,255,255,0.6); tryearsition: var(--tryearsition); }
         .page-hero .breadcrumb a:hover { color: var(--jaune); }
         .page-hero h1 { font-size: 2.8rem; font-weight: 800; color: var(--blanc); line-height: 1.15; margin-bottom: 1rem; max-width: 700px; }
         .page-hero h1 em { font-style: normal; color: var(--jaune); }
@@ -194,7 +194,7 @@
         input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--bleu); cursor: pointer; box-shadow: 0 2px 8px rgba(67,135,166,0.3); }
         .range-labels { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--gris); margin-top: 0.3rem; }
 
-        .zone-select { width: 100%; padding: 1rem; border: 2px solid var(--gris-light); border-radius: 10px; font-family: 'Raleway', sans-serif; font-size: 1rem; font-weight: 600; color: var(--noir); background: var(--blanc); cursor: pointer; outline: none; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234387a6' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 3rem; transition: var(--transition); }
+        .zone-select { width: 100%; padding: 1rem; border: 2px solid var(--gris-light); border-radius: 10px; font-family: 'Raleway', syears-serif; font-size: 1rem; font-weight: 600; color: var(--noir); background: var(--blanc); cursor: pointer; outline: none; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234387a6' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 3rem; tryearsition: var(--tryearsition); }
         .zone-select:focus { border-color: var(--bleu); box-shadow: 0 0 0 3px rgba(67,135,166,0.12); }
         .zone-info { display: flex; justify-content: space-between; margin-top: 1rem; padding: 0.8rem 1rem; background: rgba(67,135,166,0.06); border-radius: 8px; font-size: 0.85rem; }
         .zone-info strong { color: var(--bleu); }
@@ -213,7 +213,7 @@
         .kpi-card.yellow::before { background: var(--jaune); }
         .kpi-card.green::before { background: #22c55e; }
         .kpi-card.red::before { background: var(--rouge); }
-        .kpi-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem; }
+        .kpi-label { font-size: 0.72rem; font-weight: 600; text-tryearsform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem; }
         .kpi-value { font-size: 1.8rem; font-weight: 800; color: var(--jaune); line-height: 1.1; margin-bottom: 0.2rem; }
         .kpi-unit { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
 
@@ -223,10 +223,10 @@
         .bp-section-title .num { background: var(--bleu); color: var(--blanc); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 700; }
 
         .bp-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; font-size: 0.88rem; }
-        .bp-table thead th { background: var(--noir); color: var(--blanc); padding: 0.8rem 1rem; text-align: left; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; }
+        .bp-table thead th { background: var(--noir); color: var(--blanc); padding: 0.8rem 1rem; text-align: left; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.04em; text-tryearsform: uppercase; }
         .bp-table tbody td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--gris-light); }
         .bp-table tbody tr:hover { background: rgba(67,135,166,0.04); }
-        .bp-table .val { font-weight: 700; color: var(--noir); text-align: right; font-family: 'Raleway', sans-serif; }
+        .bp-table .val { font-weight: 700; color: var(--noir); text-align: right; font-family: 'Raleway', syears-serif; }
         .bp-table .val.green { color: #16a34a; }
         .bp-table .val.blue { color: var(--bleu); }
         .bp-table .val.gold { color: #c49600; }
@@ -236,7 +236,7 @@
         .comp-card { border-radius: 14px; padding: 2rem; }
         .comp-card.cre { background: rgba(67,135,166,0.06); border: 1px solid rgba(67,135,166,0.15); }
         .comp-card.opti { background: rgba(248,190,0,0.06); border: 2px solid rgba(248,190,0,0.3); position: relative; }
-        .comp-card.opti::after { content: '★ RECOMMANDÉ'; position: absolute; top: -10px; right: 1.5rem; background: var(--jaune); color: var(--noir); font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.8rem; border-radius: 4px; letter-spacing: 0.05em; }
+        .comp-card.opti::after { content: '★ RECOMMENDED'; position: absolute; top: -10px; right: 1.5rem; background: var(--jaune); color: var(--noir); font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.8rem; border-radius: 4px; letter-spacing: 0.05em; }
         .comp-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
         .comp-card.cre h4 { color: var(--bleu); }
         .comp-card.opti h4 { color: #c49600; }
@@ -250,14 +250,14 @@
         .download-header h2 { font-size: 2.2rem; font-weight: 800; color: var(--blanc); margin-bottom: 0.5rem; }
         .download-header p { color: rgba(255,255,255,0.5); max-width: 550px; margin: 0 auto; }
         .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 900px; margin: 0 auto; }
-        .pricing-card { border-radius: 16px; padding: 2.5rem; cursor: pointer; transition: var(--transition); position: relative; }
+        .pricing-card { border-radius: 16px; padding: 2.5rem; cursor: pointer; tryearsition: var(--tryearsition); position: relative; }
         .pricing-card.free { background: rgba(255,255,255,0.04); border: 2px solid rgba(255,255,255,0.08); }
         .pricing-card.free.selected { border-color: var(--bleu); background: rgba(67,135,166,0.08); }
         .pricing-card.premium { background: rgba(248,190,0,0.04); border: 2px solid rgba(248,190,0,0.15); }
         .pricing-card.premium.selected { border-color: var(--jaune); background: rgba(248,190,0,0.08); }
         .pricing-radio { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
         .pricing-radio input[type="radio"] { width: 20px; height: 20px; accent-color: var(--jaune); cursor: pointer; }
-        .pricing-radio label { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; }
+        .pricing-radio label { font-size: 0.82rem; font-weight: 700; text-tryearsform: uppercase; letter-spacing: 0.08em; cursor: pointer; }
         .pricing-card.free .pricing-radio label { color: var(--bleu-light); }
         .pricing-card.premium .pricing-radio label { color: var(--jaune); }
         .pricing-badge { position: absolute; top: -12px; right: 1.5rem; background: var(--jaune); color: var(--noir); font-size: 0.7rem; font-weight: 800; padding: 0.25rem 0.8rem; border-radius: 4px; letter-spacing: 0.05em; }
@@ -278,33 +278,33 @@
         .dl-form-group { display: flex; flex-direction: column; gap: 0.3rem; }
         .dl-form-group.full { grid-column: 1 / -1; }
         .dl-form-group label { font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7); }
-        .dl-form-group input { padding: 0.8rem 1rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; background: rgba(255,255,255,0.06); color: var(--blanc); font-family: 'Raleway', sans-serif; font-size: 0.9rem; outline: none; transition: var(--transition); }
+        .dl-form-group input { padding: 0.8rem 1rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; background: rgba(255,255,255,0.06); color: var(--blanc); font-family: 'Raleway', syears-serif; font-size: 0.9rem; outline: none; tryearsition: var(--tryearsition); }
         .dl-form-group input:focus { border-color: var(--jaune); box-shadow: 0 0 0 3px rgba(248,190,0,0.1); }
         .dl-form-group input::placeholder { color: rgba(255,255,255,0.3); }
-        .btn-download { width: 100%; background: var(--jaune); color: var(--noir); padding: 1.1rem; border: none; border-radius: 8px; font-family: 'Raleway', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: var(--transition); margin-top: 1rem; }
-        .btn-download:hover { background: var(--jaune-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(248,190,0,0.3); }
-        .btn-download.outline { background: transparent; border: 2px solid var(--bleu); color: var(--blanc); }
+        .btn-download { width: 100%; background: var(--jaune); color: var(--noir); padding: 1.1rem; border: none; border-radius: 8px; font-family: 'Raleway', syears-serif; font-size: 1rem; font-weight: 700; cursor: pointer; tryearsition: var(--tryearsition); margin-top: 1rem; }
+        .btn-download:hover { background: var(--jaune-light); tryearsform: tryearslateY(-1px); box-shadow: 0 6px 20px rgba(248,190,0,0.3); }
+        .btn-download.outline { background: tryearsparent; border: 2px solid var(--bleu); color: var(--blanc); }
         .btn-download.outline:hover { background: rgba(67,135,166,0.15); box-shadow: none; }
 
         /* CB FORM */
         .cb-section { display: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
         .cb-section.visible { display: block; }
         .cb-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-        .cb-label { font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+        .cb-label { font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.5); text-tryearsform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
 
         /* FOOTER */
         .footer { background: var(--noir); color: rgba(255,255,255,0.6); padding: 4rem 0 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
         .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
         .footer-brand img { height: 36px; margin-bottom: 1rem; }
         .footer-brand p { font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
-        .footer h4 { color: var(--blanc); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1.2rem; }
+        .footer h4 { color: var(--blanc); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; text-tryearsform: uppercase; margin-bottom: 1.2rem; }
         .footer ul li { margin-bottom: 0.6rem; }
-        .footer ul li a { font-size: 0.9rem; transition: var(--transition); }
+        .footer ul li a { font-size: 0.9rem; tryearsition: var(--tryearsition); }
         .footer ul li a:hover { color: var(--jaune); }
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
 
-        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .fade-up { opacity: 0; tryearsform: tryearslateY(30px); tryearsition: opacity 0.7s ease, tryearsform 0.7s ease; }
+        .fade-up.visible { opacity: 1; tryearsform: tryearslateY(0); }
 
         @media (max-width: 1024px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); } .comparison-grid { grid-template-columns: 1fr; } .config-grid { grid-template-columns: 1fr; } }
         @media (max-width: 768px) {
@@ -325,14 +325,14 @@
 <nav class="navbar" role="navigation" aria-label="Navigation principale">
     <div class="nav-inner">
         <a href="index.html" class="nav-logo" aria-label="Sungen">
-            <img src="../img/Logo_Sungen_white_sans_fond.png" alt="Sungen" width="140" height="38">
+            <img src="../img/Logo_Sungen_white_syears_fond.png" alt="Sungen" width="140" height="38">
         </a>
         <div class="nav-links" id="navLinks">
             <a href="index.html">Home</a>
             <a href="expertise.html">Our Expertise</a>
             <a href="segments.html">Our Segments</a>
             <a href="optimizer.html" class="active">Optimizer</a>
-            <a href="../optimizer-particulier.html">Mon Compteur</a>
+            <a href="../optimizer-particulier.html">My Meter</a>
             <a href="contact.html" class="nav-cta">Contact Us</a>
             <div class="lang-selector">
                 <div class="lang-current">🇬🇧 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
@@ -355,8 +355,8 @@
     <div class="container">
         <div class="page-hero-content">
             <nav class="breadcrumb"><a href="index.html">Home</a> / <span>Optimizer</span></nav>
-            <h1>Optimisez votre <em>Business Plan solaire</em></h1>
-            <p>Simulez l'optimum économique de votre centrale photovoltaïque au sol avec stockage batterie. Résultats instantanés selon votre surface et votre zone géographique.</p>
+            <h1>Optimise your ground-mounted plant<br><em>Get your complete Business Plan</em></h1>
+            <p>Simulate the economic optimum of your ground-mounted PV plant with battery storage. Instant results based on your surface area and geographical zone.</p>
         </div>
     </div>
 </header>
@@ -366,8 +366,8 @@
     <div class="container">
         <div class="config-grid fade-up">
             <div class="config-card">
-                <h3>Surface du projet</h3>
-                <p class="config-sub">Sélectionnez la surface foncière disponible</p>
+                <h3>Project area</h3>
+                <p class="config-sub">Select the available land surface</p>
                 <div class="range-wrapper">
                     <div class="range-value" id="surfaceDisplay">2 <span>hectares</span></div>
                     <input type="range" id="surfaceRange" min="1" max="10" value="2" step="1" oninput="updateResults()">
@@ -375,19 +375,19 @@
                 </div>
             </div>
             <div class="config-card">
-                <h3>Zone d'ensoleillement</h3>
-                <p class="config-sub">Sélectionnez la zone géographique du projet</p>
+                <h3>Solar irradiance zone</h3>
+                <p class="config-sub">Select the geographical zone of the project</p>
                 <select class="zone-select" id="zoneSelect" onchange="updateResults()">
-                    <option value="lille">Lille — Nord</option>
+                    <option value="lille">Lille — North</option>
                     <option value="paris" selected>Paris — Île-de-France</option>
-                    <option value="dijon">Dijon · Rennes — Centre-Ouest</option>
-                    <option value="lyon">Lyon · Bordeaux — Rhône-Atlantique</option>
-                    <option value="toulouse">Toulouse · Avignon — Sud-Ouest / Provence</option>
-                    <option value="nice">Biarritz · Nice — Grand Sud</option>
+                    <option value="dijon">Dijon · Rennes — Central-West</option>
+                    <option value="lyon">Lyon · Bordeaux — Rhône-Atlantic</option>
+                    <option value="toulouse">Toulouse · Avignon — South-West / Provence</option>
+                    <option value="nice">Biarritz · Nice — Deep South</option>
                 </select>
                 <div class="zone-info">
-                    <span>Irradiance : <strong id="irradianceDisplay">1 150</strong> kWh/m²/an</span>
-                    <span>Productible : <strong id="productibleDisplay">1 150</strong> kWh/kWc/an</span>
+                    <span>Irradiance: <strong id="irradianceDisplay">1 150</strong> kWh/m²/an</span>
+                    <span>Yield: <strong id="productibleDisplay">1 150</strong> kWh/kWp/an</span>
                 </div>
             </div>
         </div>
@@ -398,85 +398,85 @@
 <section class="results" id="results">
     <div class="container">
         <div class="results-title fade-up">
-            <h2>Résultats de votre simulation</h2>
-            <p>Configuration optimale : <strong id="configSummary">1,8 MWc PV + 1,8 MW / 3,6 MWh BESS</strong></p>
+            <h2>Your simulation results</h2>
+            <p>Optimal configuration: <strong id="configSummary">1,8 MWp PV + 1,8 MW / 3,6 MWh BESS</strong></p>
         </div>
 
         <!-- KPIs -->
         <div class="kpi-grid fade-up">
             <div class="kpi-card blue">
-                <div class="kpi-label">CAPEX Total</div>
+                <div class="kpi-label">Total CAPEX</div>
                 <div class="kpi-value" id="kpiCapex">3,4 M€</div>
-                <div class="kpi-unit">Investissement initial</div>
+                <div class="kpi-unit">Initial investment</div>
             </div>
             <div class="kpi-card yellow">
-                <div class="kpi-label">TRI Projet</div>
+                <div class="kpi-label">Project IRR</div>
                 <div class="kpi-value" id="kpiTri">10,8 %</div>
-                <div class="kpi-unit">Taux de rendement interne</div>
+                <div class="kpi-unit">Internal rate of return</div>
             </div>
             <div class="kpi-card green">
                 <div class="kpi-label">VAN @6%</div>
                 <div class="kpi-value" id="kpiVan">+1,5 M€</div>
-                <div class="kpi-unit">Valeur actuelle nette</div>
+                <div class="kpi-unit">Net present value</div>
             </div>
             <div class="kpi-card yellow">
                 <div class="kpi-label">Payback</div>
-                <div class="kpi-value" id="kpiPayback">7,2 ans</div>
-                <div class="kpi-unit">Retour sur investissement</div>
+                <div class="kpi-value" id="kpiPayback">7,2 years</div>
+                <div class="kpi-unit">Return on investment</div>
             </div>
             <div class="kpi-card blue">
-                <div class="kpi-label">Revenu An 1</div>
+                <div class="kpi-label">Year 1 Revenue</div>
                 <div class="kpi-value" id="kpiRevenu">440 k€</div>
-                <div class="kpi-unit">PV CR + Services batterie</div>
+                <div class="kpi-unit">PV CR + Battery services</div>
             </div>
         </div>
 
         <!-- COMPARISON CRE vs OPTI -->
         <div class="bp-section fade-up">
-            <div class="bp-section-title"><span class="num">1</span> Préconisation CRE vs Optimisation Sungen</div>
+            <div class="bp-section-title"><span class="num">1</span> CRE Recommendation vs Sungen Optimisation</div>
             <div class="comparison-grid">
                 <div class="comp-card cre">
-                    <h4>Préconisation CRE — 50% P_PV / 2h</h4>
-                    <div class="comp-line"><span>Puissance PV</span><span class="comp-val" id="crePv">1,80 MWc</span></div>
-                    <div class="comp-line"><span>Batterie</span><span class="comp-val" id="creBat">0,90 MW / 1,80 MWh</span></div>
+                    <h4>CRE Recommendation — 50% P_PV / 2h</h4>
+                    <div class="comp-line"><span>PV Power</span><span class="comp-val" id="crePv">1,80 MWp</span></div>
+                    <div class="comp-line"><span>Battery</span><span class="comp-val" id="creBat">0,90 MW / 1,80 MWh</span></div>
                     <div class="comp-line"><span>CAPEX</span><span class="comp-val" id="creCapex">2,85 M€</span></div>
                     <div class="comp-line"><span>TRI</span><span class="comp-val" id="creTri">9,1 %</span></div>
                     <div class="comp-line"><span>VAN @6%</span><span class="comp-val" id="creVan">+0,95 M€</span></div>
-                    <div class="comp-line"><span>Payback</span><span class="comp-val" id="crePayback">8,5 ans</span></div>
+                    <div class="comp-line"><span>Payback</span><span class="comp-val" id="crePayback">8,5 years</span></div>
                 </div>
                 <div class="comp-card opti">
-                    <h4>Optimisation Sungen — 100% P_PV / 2h</h4>
-                    <div class="comp-line"><span>Puissance PV</span><span class="comp-val" id="optiPv">1,80 MWc</span></div>
-                    <div class="comp-line"><span>Batterie</span><span class="comp-val" id="optiBat">1,80 MW / 3,60 MWh</span></div>
+                    <h4>Sungen Optimisation — 100% P_PV / 2h</h4>
+                    <div class="comp-line"><span>PV Power</span><span class="comp-val" id="optiPv">1,80 MWp</span></div>
+                    <div class="comp-line"><span>Battery</span><span class="comp-val" id="optiBat">1,80 MW / 3,60 MWh</span></div>
                     <div class="comp-line"><span>CAPEX</span><span class="comp-val" id="optiCapex">3,40 M€</span></div>
                     <div class="comp-line"><span>TRI</span><span class="comp-val" id="optiTri">11,7 %</span></div>
                     <div class="comp-line"><span>VAN @6%</span><span class="comp-val" id="optiVan">+1,47 M€</span></div>
-                    <div class="comp-line"><span>Payback</span><span class="comp-val" id="optiPayback">7,2 ans</span></div>
+                    <div class="comp-line"><span>Payback</span><span class="comp-val" id="optiPayback">7,2 years</span></div>
                 </div>
             </div>
         </div>
 
         <!-- BP DETAILS -->
         <div class="bp-section fade-up">
-            <div class="bp-section-title"><span class="num">2</span> Détail du Business Plan — Configuration optimale</div>
+            <div class="bp-section-title"><span class="num">2</span> Business Plan Detail — Optimal configuration</div>
             <table class="bp-table">
-                <thead><tr><th>Poste</th><th>Détail</th><th style="text-align:right">Montant</th></tr></thead>
+                <thead><tr><th>Item</th><th>Detail</th><th style="text-align:right">Amount</th></tr></thead>
                 <tbody id="bpCapexBody"></tbody>
             </table>
         </div>
 
         <div class="bp-section fade-up">
-            <div class="bp-section-title"><span class="num">3</span> Revenus annuels estimés — Année 1</div>
+            <div class="bp-section-title"><span class="num">3</span> Estimated annual revenue — Year 1</div>
             <table class="bp-table">
-                <thead><tr><th>Source de revenu</th><th>Hypothèse</th><th style="text-align:right">Montant / an</th></tr></thead>
+                <thead><tr><th>Revenue source</th><th>Assumption</th><th style="text-align:right">Amount / year</th></tr></thead>
                 <tbody id="bpRevenusBody"></tbody>
             </table>
         </div>
 
         <div class="bp-section fade-up">
-            <div class="bp-section-title"><span class="num">4</span> Projection sur 25 ans — Middle Case</div>
+            <div class="bp-section-title"><span class="num">4</span> 25-year projection — Middle Case</div>
             <table class="bp-table">
-                <thead><tr><th>Métrique</th><th style="text-align:right">Valeur</th></tr></thead>
+                <thead><tr><th>Metric</th><th style="text-align:right">Value</th></tr></thead>
                 <tbody id="bpProjectionBody"></tbody>
             </table>
         </div>
@@ -487,8 +487,8 @@
 <section class="download-section" id="download">
     <div class="container">
         <div class="download-header fade-up">
-            <h2>Obtenez votre rapport</h2>
-            <p>Choisissez la formule adaptée à votre besoin et recevez votre analyse personnalisée.</p>
+            <h2>Get your report</h2>
+            <p>Choose the formula suited to your needs and receive your personalised analysis.</p>
         </div>
 
         <!-- PRICING CARDS -->
@@ -497,39 +497,39 @@
             <div class="pricing-card free" id="cardFree" onclick="selectPlan('free', true)">
                 <div class="pricing-radio">
                     <input type="radio" name="plan" id="planFree" value="free" checked>
-                    <label for="planFree">Synthèse gratuite</label>
+                    <label for="planFree">Free summary</label>
                 </div>
                 <div class="pricing-price">
-                    <span class="amount free-price">Gratuit</span>
+                    <span class="amount free-price">Free</span>
                 </div>
-                <p class="pricing-desc">PDF de synthèse avec les résultats clés de votre simulation. Envoyé par email.</p>
+                <p class="pricing-desc">Summary PDF with the key results of your simulation. Sent by email.</p>
                 <div class="pricing-features">
-                    <div class="pricing-feat"><svg class="check-blue" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>KPIs du projet (CAPEX, TRI, VAN, Payback)</div>
-                    <div class="pricing-feat"><svg class="check-blue" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Comparatif CRE vs Optimisation Sungen</div>
-                    <div class="pricing-feat"><svg class="check-blue" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Synthèse CAPEX et revenus An 1</div>
-                    <div class="pricing-feat"><svg class="check-blue" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>PDF envoyé par email</div>
+                    <div class="pricing-feat"><svg class="check-blue" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Project KPIs (CAPEX, IRR, NPV, Payback)</div>
+                    <div class="pricing-feat"><svg class="check-blue" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>CRE vs Sungen Optimisation comparison</div>
+                    <div class="pricing-feat"><svg class="check-blue" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>CAPEX and Year 1 revenue summary</div>
+                    <div class="pricing-feat"><svg class="check-blue" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>PDF sent by email</div>
                 </div>
             </div>
 
             <!-- PREMIUM -->
             <div class="pricing-card premium" id="cardPremium" onclick="selectPlan('premium', true)">
-                <span class="pricing-badge">RECOMMANDÉ</span>
+                <span class="pricing-badge">RECOMMENDED</span>
                 <div class="pricing-radio">
                     <input type="radio" name="plan" id="planPremium" value="premium">
-                    <label for="planPremium">Business Plan complet</label>
+                    <label for="planPremium">Complete Business Plan</label>
                 </div>
                 <div class="pricing-price">
                     <span class="amount">495 €</span> <span class="ht">HT</span>
                 </div>
-                <p class="pricing-desc">Package complet incluant le modèle financier Excel, toutes les projections et la documentation opérationnelle.</p>
+                <p class="pricing-desc">Complete package including the Excel financial model, all projections and operational documentation.</p>
                 <div class="pricing-features">
-                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Business Plan financier complet (Excel)</div>
-                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Planning & milestones ordonnancés</div>
-                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Coûts de développement détaillés</div>
-                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Liste des contrats à établir</div>
-                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Risk scenario & sensibilité du modèle</div>
-                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Notice complète d'utilisation</div>
-                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Fichier : BP_PV_Stockage_[surface]_Optimisation_CRE.xlsx</div>
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Complete financial Business Plan (Excel)</div>
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Scheduled planning & milestones</div>
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Detailed development costs</div>
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>List of contracts to establish</div>
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Risk scenario & model sensitivity</div>
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Complete user guide</div>
+                    <div class="pricing-feat"><svg class="check-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>File: BP_PV_Stockage_[surface]_Optimisation_CRE.xlsx</div>
                 </div>
             </div>
         </div>
@@ -537,32 +537,32 @@
         <!-- FORM -->
         <div class="dl-form" id="dlForm">
             <div class="dl-form-row">
-                <div class="dl-form-group"><label>Nom *</label><input type="text" id="dlNom" placeholder="Votre nom" required></div>
-                <div class="dl-form-group"><label>Prénom *</label><input type="text" id="dlPrenom" placeholder="Votre prénom" required></div>
+                <div class="dl-form-group"><label>Last name *</label><input type="text" id="dlNom" placeholder="Your last name" required></div>
+                <div class="dl-form-group"><label>First name *</label><input type="text" id="dlPrenom" placeholder="Your first name" required></div>
             </div>
             <div class="dl-form-row">
-                <div class="dl-form-group"><label>Email professionnel *</label><input type="email" id="dlEmail" placeholder="vous@entreprise.com" required></div>
-                <div class="dl-form-group"><label>Téléphone *</label><input type="tel" id="dlTel" placeholder="+33 6 00 00 00 00" required></div>
+                <div class="dl-form-group"><label>Professional email *</label><input type="email" id="dlEmail" placeholder="vous@entreprise.com" required></div>
+                <div class="dl-form-group"><label>Phone *</label><input type="tel" id="dlTel" placeholder="+33 6 00 00 00 00" required></div>
             </div>
             <div class="dl-form-row">
-                <div class="dl-form-group full"><label>Société / Organisation</label><input type="text" id="dlSociete" placeholder="Nom de votre entreprise"></div>
+                <div class="dl-form-group full"><label>Company / Organisation</label><input type="text" id="dlSociete" placeholder="Your company name"></div>
             </div>
 
             <!-- CB SECTION (premium only) -->
             <div class="cb-section" id="cbSection">
-                <p class="cb-label">💳 Paiement sécurisé — 495 € HT (594 € TTC)</p>
+                <p class="cb-label">💳 Secure payment — 495 € HT (594 € TTC)</p>
                 <div class="dl-form-row">
-                    <div class="dl-form-group full"><label>Numéro de carte</label><input type="text" id="cbNumber" placeholder="4242 4242 4242 4242" maxlength="19"></div>
+                    <div class="dl-form-group full"><label>Card number</label><input type="text" id="cbNumber" placeholder="4242 4242 4242 4242" maxlength="19"></div>
                 </div>
                 <div class="cb-row">
-                    <div class="dl-form-group"><label>Expiration</label><input type="text" id="cbExpiry" placeholder="MM / AA" maxlength="7"></div>
+                    <div class="dl-form-group"><label>Expiry</label><input type="text" id="cbExpiry" placeholder="MM / AA" maxlength="7"></div>
                     <div class="dl-form-group"><label>CVC</label><input type="text" id="cbCvc" placeholder="123" maxlength="4"></div>
-                    <div class="dl-form-group"><label>Pays</label><input type="text" id="cbCountry" placeholder="France" value="France"></div>
+                    <div class="dl-form-group"><label>Country</label><input type="text" id="cbCountry" placeholder="France" value="France"></div>
                 </div>
             </div>
 
             <button class="btn-download" id="btnSubmit" onclick="handleSubmit()">
-                <span id="btnLabel">Recevoir la synthèse gratuite →</span>
+                <span id="btnLabel">Receive the free summary →</span>
             </button>
         </div>
     </div>
@@ -573,15 +573,15 @@
     <div class="container">
         <div class="footer-grid">
             <div class="footer-brand">
-                <img src="../img/Logo_Sungen_white_sans_fond.png" alt="Logo Sungen" width="140" height="38" loading="lazy">
-                <p>Cabinet de conseil en Photovoltaïque. Conception, dimensionnement et AMO de centrales solaires pour donneurs d'ordre.</p>
+                <img src="../img/Logo_Sungen_white_syears_fond.png" alt="Logo Sungen" width="140" height="38" loading="lazy">
+                <p>Photovoltaic Consulting Firm. Design, sizing and project management of solar plants for project owners.</p>
             </div>
-            <div><h4>Expertise</h4><ul><li><a href="expertise.html">Étude & Conception</a></li><li><a href="expertise.html">Dimensionnement</a></li><li><a href="expertise.html">Assistance à Consultation</a></li><li><a href="expertise.html">Assistance à Maîtrise d'Ouvrage (AMO)</a></li></ul></div>
-            <div><h4>Segments</h4><ul><li><a href="segments.html">C&I 100 kWc — 1 MWc</a></li><li><a href="segments.html">Optimisation des rendements avec Batterie 36 — 100 kWc</a></li><li><a href="segments.html">Centrales au sol < 1 MWc</a></li></ul></div>
-            <div><h4>Contact</h4><ul><li><a href="contact.html">Formulaire de contact</a></li><li><a href="mailto:contact@sungen.fr">contact@sungen.fr</a></li></ul></div>
+            <div><h4>Expertise</h4><ul><li><a href="expertise.html">Study & Design</a></li><li><a href="expertise.html">Sizing</a></li><li><a href="expertise.html">Tender Assistance</a></li><li><a href="expertise.html">Owner's Representative (AMO)</a></li></ul></div>
+            <div><h4>Segments</h4><ul><li><a href="segments.html">C&I 100 kWp — 1 MWp</a></li><li><a href="segments.html">Battery Yield Optimisation 36 — 100 kWp</a></li><li><a href="segments.html">Ground-mounted < 1 MWp</a></li></ul></div>
+            <div><h4>Contact</h4><ul><li><a href="contact.html">Contact form</a></li><li><a href="mailto:contact@sungen.fr">contact@sungen.fr</a></li></ul></div>
         </div>
         <div class="footer-bottom">
-            <span>© 2026 Sungen — Tous droits réservés. <a href="#" style="color:var(--jaune);">Mentions légales</a> · <a href="#" style="color:var(--jaune);">Politique de confidentialité</a></span>
+            <span>© 2026 Sungen — All rights reserved. <a href="#" style="color:var(--jaune);">Legal notice</a> · <a href="#" style="color:var(--jaune);">Privacy policy</a></span>
         </div>
     </div>
 </footer>
@@ -589,23 +589,23 @@
 <script>
 // ═══════════════ DATA MODEL ═══════════════
 const ZONES = {
-    lille:    { label: 'Lille — Nord',                    irr: 1020, prod: 1000 },
+    lille:    { label: 'Lille — North',                    irr: 1020, prod: 1000 },
     paris:   { label: 'Paris — Île-de-France',            irr: 1150, prod: 1100 },
-    dijon:   { label: 'Dijon · Rennes — Centre-Ouest',   irr: 1200, prod: 1150 },
-    lyon:    { label: 'Lyon · Bordeaux — Rhône-Atlantique', irr: 1350, prod: 1280 },
+    dijon:   { label: 'Dijon · Rennes — Central-West',   irr: 1200, prod: 1150 },
+    lyon:    { label: 'Lyon · Bordeaux — Rhône-Atlantic', irr: 1350, prod: 1280 },
     toulouse:{ label: 'Toulouse · Avignon — Sud-Ouest',   irr: 1500, prod: 1400 },
-    nice:    { label: 'Biarritz · Nice — Grand Sud',      irr: 1650, prod: 1530 }
+    nice:    { label: 'Biarritz · Nice — Deep South',      irr: 1650, prod: 1530 }
 };
 
-const PV_PER_HA = 0.9;     // MWc/ha
+const PV_PER_HA = 0.9;     // MWp/ha
 const BAT_RATIO_CRE = 0.5; // 50% P_PV
 const BAT_RATIO_OPTI = 1.0; // 100% P_PV
 const BAT_HOURS = 2;        // h
 
-const CAPEX_PV = 750;       // €/kWc
+const CAPEX_PV = 750;       // €/kWp
 const CAPEX_BAT = 350;      // €/kWh
-const CAPEX_BOS = 80;       // k€/MWc (raccordement, GC, etc.)
-const OPEX_PV = 12;         // €/kWc/an
+const CAPEX_BOS = 80;       // k€/MWp (raccordement, GC, etc.)
+const OPEX_PV = 12;         // €/kWp/an
 const OPEX_BAT = 8;         // €/kW/an
 
 const TARIF_CR = 90;        // €/MWh (AO CRE target)
@@ -621,16 +621,16 @@ function fmtI(n) { return n.toLocaleString('fr-FR', {maximumFractionDigits:0}); 
 
 function calc(ha, zone, batRatio) {
     const z = ZONES[zone];
-    const pvMWc = ha * PV_PER_HA;
-    const pvKWc = pvMWc * 1000;
-    const batMW = pvMWc * batRatio;
+    const pvMWp = ha * PV_PER_HA;
+    const pvKWc = pvMWp * 1000;
+    const batMW = pvMWp * batRatio;
     const batMWh = batMW * BAT_HOURS;
     const batKWh = batMWh * 1000;
 
     // CAPEX
     const capexPV = pvKWc * CAPEX_PV;
     const capexBat = batKWh * CAPEX_BAT;
-    const capexBOS = pvMWc * CAPEX_BOS * 1000;
+    const capexBOS = pvMWp * CAPEX_BOS * 1000;
     const capexDev = 110000 + ha * 15000; // études + foncier
     const capexTotal = capexPV + capexBat + capexBOS + capexDev;
 
@@ -684,7 +684,7 @@ function calc(ha, zone, batRatio) {
     }
 
     return {
-        pvMWc, pvKWc, batMW, batMWh, batKWh,
+        pvMWp, pvKWc, batMW, batMWh, batKWh,
         capexPV, capexBat, capexBOS, capexDev, capexTotal,
         opexPV, opexBat, opexAssurance, opexFoncier, opexTotal,
         prodKWh, revPV, revBat, revTotal,
@@ -707,60 +707,60 @@ function updateResults() {
 
     // Config summary
     document.getElementById('configSummary').textContent =
-        `${fmt(opti.pvMWc)} MWc PV + ${fmt(opti.batMW)} MW / ${fmt(opti.batMWh)} MWh BESS`;
+        `${fmt(opti.pvMWp)} MWp PV + ${fmt(opti.batMW)} MW / ${fmt(opti.batMWh)} MWh BESS`;
 
     // KPIs
     document.getElementById('kpiCapex').textContent = opti.capexTotal >= 1e6 ? fmt(opti.capexTotal / 1e6) + ' M€' : fmtI(opti.capexTotal / 1000) + ' k€';
     document.getElementById('kpiTri').textContent = fmt(opti.tri) + ' %';
     document.getElementById('kpiVan').textContent = '+' + fmt(opti.van / 1e6) + ' M€';
-    document.getElementById('kpiPayback').textContent = fmt(opti.payback) + ' ans';
+    document.getElementById('kpiPayback').textContent = fmt(opti.payback) + ' years';
     document.getElementById('kpiRevenu').textContent = fmtI(opti.revTotal / 1000) + ' k€';
 
     // CRE card
-    document.getElementById('crePv').textContent = fmt(cre.pvMWc, 2) + ' MWc';
+    document.getElementById('crePv').textContent = fmt(cre.pvMWp, 2) + ' MWp';
     document.getElementById('creBat').textContent = fmt(cre.batMW, 2) + ' MW / ' + fmt(cre.batMWh, 2) + ' MWh';
     document.getElementById('creCapex').textContent = fmt(cre.capexTotal / 1e6, 2) + ' M€';
     document.getElementById('creTri').textContent = fmt(cre.tri) + ' %';
     document.getElementById('creVan').textContent = '+' + fmt(cre.van / 1e6, 2) + ' M€';
-    document.getElementById('crePayback').textContent = fmt(cre.payback) + ' ans';
+    document.getElementById('crePayback').textContent = fmt(cre.payback) + ' years';
 
     // Opti card
-    document.getElementById('optiPv').textContent = fmt(opti.pvMWc, 2) + ' MWc';
+    document.getElementById('optiPv').textContent = fmt(opti.pvMWp, 2) + ' MWp';
     document.getElementById('optiBat').textContent = fmt(opti.batMW, 2) + ' MW / ' + fmt(opti.batMWh, 2) + ' MWh';
     document.getElementById('optiCapex').textContent = fmt(opti.capexTotal / 1e6, 2) + ' M€';
     document.getElementById('optiTri').textContent = fmt(opti.tri) + ' %';
     document.getElementById('optiVan').textContent = '+' + fmt(opti.van / 1e6, 2) + ' M€';
-    document.getElementById('optiPayback').textContent = fmt(opti.payback) + ' ans';
+    document.getElementById('optiPayback').textContent = fmt(opti.payback) + ' years';
 
     // BP CAPEX table
     const o = opti;
     document.getElementById('bpCapexBody').innerHTML = `
-        <tr><td>Modules PV (${fmt(o.pvMWc)} MWc)</td><td>${fmtI(o.pvKWc)} kWc × ${CAPEX_PV} €/kWc</td><td class="val blue">${fmtI(o.capexPV / 1000)} k€</td></tr>
-        <tr><td>Batterie BESS LFP</td><td>${fmtI(o.batKWh)} kWh × ${CAPEX_BAT} €/kWh</td><td class="val blue">${fmtI(o.capexBat / 1000)} k€</td></tr>
-        <tr><td>BOS, raccordement, GC</td><td>${fmt(o.pvMWc)} MWc × ${CAPEX_BOS} k€/MWc</td><td class="val blue">${fmtI(o.capexBOS / 1000)} k€</td></tr>
-        <tr><td>Développement & études</td><td>Foncier, permis, études techniques</td><td class="val blue">${fmtI(o.capexDev / 1000)} k€</td></tr>
-        <tr style="background:rgba(67,135,166,0.06);font-weight:700;"><td>CAPEX TOTAL</td><td></td><td class="val" style="color:var(--noir);font-size:1rem;">${fmt(o.capexTotal / 1e6, 2)} M€</td></tr>
+        <tr><td>PV Modules (${fmt(o.pvMWp)} MWp)</td><td>${fmtI(o.pvKWc)} kWp × ${CAPEX_PV} €/kWp</td><td class="val blue">${fmtI(o.capexPV / 1000)} k€</td></tr>
+        <tr><td>BESS LFP Battery</td><td>${fmtI(o.batKWh)} kWh × ${CAPEX_BAT} €/kWh</td><td class="val blue">${fmtI(o.capexBat / 1000)} k€</td></tr>
+        <tr><td>BOS, grid connection, civil works</td><td>${fmt(o.pvMWp)} MWp × ${CAPEX_BOS} k€/MWp</td><td class="val blue">${fmtI(o.capexBOS / 1000)} k€</td></tr>
+        <tr><td>Development & studies</td><td>Land, permits, technical studies</td><td class="val blue">${fmtI(o.capexDev / 1000)} k€</td></tr>
+        <tr style="background:rgba(67,135,166,0.06);font-weight:700;"><td>TOTAL CAPEX</td><td></td><td class="val" style="color:var(--noir);font-size:1rem;">${fmt(o.capexTotal / 1e6, 2)} M€</td></tr>
     `;
 
     // Revenus table
     document.getElementById('bpRevenusBody').innerHTML = `
-        <tr><td>Vente PV — Contrat CRE</td><td>${fmtI(o.prodKWh / 1000)} MWh × ${TARIF_CR} €/MWh</td><td class="val green">${fmtI(o.revPV / 1000)} k€</td></tr>
-        <tr><td>Services système batterie (aFRR, capacité)</td><td>${fmt(o.batMW)} MW × ${REV_BAT_BASE} k€/MW/an</td><td class="val green">${fmtI(o.revBat / 1000)} k€</td></tr>
-        <tr style="background:rgba(34,197,94,0.06);font-weight:700;"><td>REVENU TOTAL AN 1</td><td></td><td class="val green" style="font-size:1rem;">${fmtI(o.revTotal / 1000)} k€</td></tr>
-        <tr><td>OPEX annuel</td><td>Maintenance, assurance, foncier</td><td class="val" style="color:var(--rouge);">-${fmtI(o.opexTotal / 1000)} k€</td></tr>
-        <tr style="background:rgba(248,190,0,0.06);font-weight:700;"><td>EBITDA AN 1</td><td></td><td class="val gold" style="font-size:1rem;">${fmtI((o.revTotal - o.opexTotal) / 1000)} k€</td></tr>
+        <tr><td>PV Sale — CRE Contract</td><td>${fmtI(o.prodKWh / 1000)} MWh × ${TARIF_CR} €/MWh</td><td class="val green">${fmtI(o.revPV / 1000)} k€</td></tr>
+        <tr><td>Battery system services (aFRR, capacity)</td><td>${fmt(o.batMW)} MW × ${REV_BAT_BASE} k€/MW/an</td><td class="val green">${fmtI(o.revBat / 1000)} k€</td></tr>
+        <tr style="background:rgba(34,197,94,0.06);font-weight:700;"><td>TOTAL YEAR 1 REVENUE</td><td></td><td class="val green" style="font-size:1rem;">${fmtI(o.revTotal / 1000)} k€</td></tr>
+        <tr><td>Annual OPEX</td><td>Maintenance, insurance, land</td><td class="val" style="color:var(--rouge);">-${fmtI(o.opexTotal / 1000)} k€</td></tr>
+        <tr style="background:rgba(248,190,0,0.06);font-weight:700;"><td>YEAR 1 EBITDA</td><td></td><td class="val gold" style="font-size:1rem;">${fmtI((o.revTotal - o.opexTotal) / 1000)} k€</td></tr>
     `;
 
     // Projection table
     document.getElementById('bpProjectionBody').innerHTML = `
-        <tr><td>Durée du projet</td><td class="val">${PROJECT_YEARS} ans</td></tr>
+        <tr><td>Project duration</td><td class="val">${PROJECT_YEARS} years</td></tr>
         <tr><td>TRI projet</td><td class="val green">${fmt(o.tri)} %</td></tr>
         <tr><td>VAN @6%</td><td class="val green">+${fmt(o.van / 1e6, 2)} M€</td></tr>
-        <tr><td>Payback simple</td><td class="val blue">${fmt(o.payback)} ans</td></tr>
-        <tr><td>Revenus cumulés 25 ans</td><td class="val gold">${fmt(o.totalRev / 1e6)} M€</td></tr>
-        <tr><td>Remplacement batterie (année ${BAT_REPLACE_Y})</td><td class="val" style="color:var(--rouge);">${fmtI(o.batKWh * BAT_REPLACE_COST / 1000)} k€</td></tr>
-        <tr><td>Dégradation PV annuelle</td><td class="val">0,5 % / an</td></tr>
-        <tr><td>Revenus batterie post-Y10</td><td class="val">85 % du nominal</td></tr>
+        <tr><td>Simple payback</td><td class="val blue">${fmt(o.payback)} years</td></tr>
+        <tr><td>Cumulated revenue 25 years</td><td class="val gold">${fmt(o.totalRev / 1e6)} M€</td></tr>
+        <tr><td>Battery replacement (year ${BAT_REPLACE_Y})</td><td class="val" style="color:var(--rouge);">${fmtI(o.batKWh * BAT_REPLACE_COST / 1000)} k€</td></tr>
+        <tr><td>Annual PV degradation</td><td class="val">0,5 % / an</td></tr>
+        <tr><td>Battery revenue post-Y10</td><td class="val">85 % of nominal</td></tr>
     `;
 }
 
@@ -777,10 +777,10 @@ function selectPlan(plan, scroll) {
     document.getElementById('dlForm').classList.add('visible');
 
     if (plan === 'premium') {
-        document.getElementById('btnLabel').textContent = 'Payer 495 € HT et recevoir le package complet →';
+        document.getElementById('btnLabel').textContent = 'Pay €495 excl. VAT and receive the complete package →';
         document.getElementById('btnSubmit').classList.remove('outline');
     } else {
-        document.getElementById('btnLabel').textContent = 'Recevoir la synthèse gratuite →';
+        document.getElementById('btnLabel').textContent = 'Receive the free summary →';
         document.getElementById('btnSubmit').classList.remove('outline');
     }
     if (scroll) document.getElementById('dlForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -792,7 +792,7 @@ function handleSubmit() {
     const email = document.getElementById('dlEmail').value;
     const tel = document.getElementById('dlTel').value;
     if (!nom || !prenom || !email || !tel) {
-        alert('Veuillez remplir tous les champs obligatoires.');
+        alert('Please fill in all required fields.');
         return;
     }
 
@@ -801,15 +801,15 @@ function handleSubmit() {
         const cbExp = document.getElementById('cbExpiry').value;
         const cbCvc = document.getElementById('cbCvc').value;
         if (!cbNum || !cbExp || !cbCvc) {
-            alert('Veuillez remplir les informations de paiement.');
+            alert('Please fill in the payment information.');
             return;
         }
         // Simulate payment processing
-        document.getElementById('btnLabel').textContent = 'Traitement du paiement...';
+        document.getElementById('btnLabel').textContent = 'Processing payment...';
         document.getElementById('btnSubmit').disabled = true;
         setTimeout(() => {
-            alert(`✅ Paiement de 495 € HT confirmé.\n\nLe fichier BP_PV_Stockage_${document.getElementById('surfaceRange').value}ha_Optimisation_CRE_March2026.xlsx sera envoyé à ${email} dans les prochaines minutes.\n\nMerci ${prenom} !`);
-            document.getElementById('btnLabel').textContent = '✓ Package envoyé par email';
+            alert(`✅ Payment of €495 excl. VAT confirmed.\n\nLe fichier BP_PV_Stockage_${document.getElementById('surfaceRange').value}ha_Optimisation_CRE_March2026.xlsx will be sent to ${email} in the next few minutes.\n\nMerci ${prenom} !`);
+            document.getElementById('btnLabel').textContent = '✓ Package sent by email';
             document.getElementById('btnSubmit').style.background = '#22c55e';
         }, 2000);
     } else {
@@ -865,12 +865,12 @@ function generateFreePDF() {
     doc.setTextColor(60, 60, 60);
     doc.setFontSize(9);
     const rows1 = [
-        ['Puissance PV', fmt(o.pvMWc) + ' MWc  (' + fmtI(o.pvKWc) + ' kWc)'],
-        ['Batterie BESS LFP', fmt(o.batMW) + ' MW / ' + fmt(o.batMWh) + ' MWh'],
+        ['PV Power', fmt(o.pvMWp) + ' MWp  (' + fmtI(o.pvKWc) + ' kWp)'],
+        ['BESS LFP Battery', fmt(o.batMW) + ' MW / ' + fmt(o.batMWh) + ' MWh'],
         ['Surface foncière', ha + ' hectare(s)'],
         ['Zone géographique', z.label],
         ['Irradiance', fmtI(z.irr) + ' kWh/m²/an'],
-        ['Productible estimé', fmtI(z.prod) + ' kWh/kWc/an'],
+        ['Productible estimé', fmtI(z.prod) + ' kWh/kWp/an'],
     ];
     rows1.forEach(r => {
         doc.setFont('helvetica', 'normal');
@@ -892,11 +892,11 @@ function generateFreePDF() {
     doc.setTextColor(60, 60, 60);
     doc.setFontSize(9);
     const kpis = [
-        ['CAPEX Total', fmt(o.capexTotal / 1e6, 2) + ' M€'],
-        ['TRI Projet', fmt(o.tri) + ' %'],
+        ['Total CAPEX', fmt(o.capexTotal / 1e6, 2) + ' M€'],
+        ['Project IRR', fmt(o.tri) + ' %'],
         ['VAN @6%', '+' + fmt(o.van / 1e6, 2) + ' M€'],
-        ['Payback simple', fmt(o.payback) + ' ans'],
-        ['Revenu An 1', fmtI(o.revTotal / 1000) + ' k€'],
+        ['Simple payback', fmt(o.payback) + ' years'],
+        ['Year 1 Revenue', fmtI(o.revTotal / 1000) + ' k€'],
         ['EBITDA An 1', fmtI((o.revTotal - o.opexTotal) / 1000) + ' k€'],
     ];
     kpis.forEach(r => {
@@ -931,8 +931,8 @@ function generateFreePDF() {
         ['CAPEX', fmt(c.capexTotal/1e6,2)+' M€', fmt(o.capexTotal/1e6,2)+' M€', '+'+fmtI((o.capexTotal-c.capexTotal)/1000)+' k€'],
         ['TRI', fmt(c.tri)+' %', fmt(o.tri)+' %', '+'+fmt(o.tri-c.tri)+' pts'],
         ['VAN @6%', '+'+fmt(c.van/1e6,2)+' M€', '+'+fmt(o.van/1e6,2)+' M€', '+'+fmtI((o.van-c.van)/1000)+' k€'],
-        ['Payback', fmt(c.payback)+' ans', fmt(o.payback)+' ans', '-'+fmt(c.payback-o.payback)+' ans'],
-        ['Revenu An 1', fmtI(c.revTotal/1000)+' k€', fmtI(o.revTotal/1000)+' k€', '+'+fmtI((o.revTotal-c.revTotal)/1000)+' k€'],
+        ['Payback', fmt(c.payback)+' years', fmt(o.payback)+' years', '-'+fmt(c.payback-o.payback)+' years'],
+        ['Year 1 Revenue', fmtI(c.revTotal/1000)+' k€', fmtI(o.revTotal/1000)+' k€', '+'+fmtI((o.revTotal-c.revTotal)/1000)+' k€'],
     ];
     compRows.forEach(r => {
         doc.setFont('helvetica', 'normal');
@@ -959,10 +959,10 @@ function generateFreePDF() {
     doc.setTextColor(60, 60, 60);
     doc.setFontSize(9);
     [
-        ['Modules PV (' + fmtI(o.pvKWc) + ' kWc × ' + CAPEX_PV + ' €/kWc)', fmtI(o.capexPV/1000)+' k€'],
-        ['Batterie BESS LFP (' + fmtI(o.batKWh) + ' kWh × ' + CAPEX_BAT + ' €/kWh)', fmtI(o.capexBat/1000)+' k€'],
-        ['BOS, raccordement, GC', fmtI(o.capexBOS/1000)+' k€'],
-        ['Développement & études', fmtI(o.capexDev/1000)+' k€'],
+        ['PV Modules (' + fmtI(o.pvKWc) + ' kWp × ' + CAPEX_PV + ' €/kWp)', fmtI(o.capexPV/1000)+' k€'],
+        ['BESS LFP Battery (' + fmtI(o.batKWh) + ' kWh × ' + CAPEX_BAT + ' €/kWh)', fmtI(o.capexBat/1000)+' k€'],
+        ['BOS, grid connection, civil works', fmtI(o.capexBOS/1000)+' k€'],
+        ['Development & studies', fmtI(o.capexDev/1000)+' k€'],
     ].forEach(l => {
         doc.setFont('helvetica', 'normal');
         doc.text(l[0], lm + 2, y);
@@ -971,7 +971,7 @@ function generateFreePDF() {
     });
     doc.setDrawColor(67, 135, 166); doc.line(lm + 2, y - 1, 180, y - 1);
     doc.setFont('helvetica', 'bold');
-    doc.text('CAPEX TOTAL', lm + 2, y + 4);
+    doc.text('TOTAL CAPEX', lm + 2, y + 4);
     doc.setTextColor(26, 26, 46);
     doc.text(fmt(o.capexTotal/1e6, 2) + ' M€', 165, y + 4, { align: 'right' });
     y += 12;
@@ -987,8 +987,8 @@ function generateFreePDF() {
     doc.setTextColor(60, 60, 60);
     doc.setFontSize(9);
     [
-        ['Vente PV — Contrat CRE (' + TARIF_CR + ' €/MWh)', fmtI(o.revPV/1000)+' k€'],
-        ['Services système batterie (aFRR, capacité)', fmtI(o.revBat/1000)+' k€'],
+        ['PV Sale — CRE Contract (' + TARIF_CR + ' €/MWh)', fmtI(o.revPV/1000)+' k€'],
+        ['Battery system services (aFRR, capacity)', fmtI(o.revBat/1000)+' k€'],
     ].forEach(l => {
         doc.setFont('helvetica', 'normal');
         doc.text(l[0], lm + 2, y);
@@ -999,19 +999,19 @@ function generateFreePDF() {
     });
     doc.setDrawColor(34, 197, 94); doc.line(lm + 2, y - 1, 180, y - 1);
     doc.setFont('helvetica', 'bold');
-    doc.text('REVENU TOTAL AN 1', lm + 2, y + 4);
+    doc.text('TOTAL YEAR 1 REVENUE', lm + 2, y + 4);
     doc.setTextColor(34, 197, 94);
     doc.text(fmtI(o.revTotal/1000) + ' k€', 165, y + 4, { align: 'right' });
     y += 10;
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(60, 60, 60);
-    doc.text('OPEX annuel (maintenance, assurance, foncier)', lm + 2, y);
+    doc.text('Annual OPEX (maintenance, assurance, foncier)', lm + 2, y);
     doc.setTextColor(235, 91, 86);
     doc.text('-' + fmtI(o.opexTotal/1000) + ' k€', 165, y, { align: 'right' });
     y += 6;
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(196, 150, 0);
-    doc.text('EBITDA AN 1', lm + 2, y);
+    doc.text('YEAR 1 EBITDA', lm + 2, y);
     doc.text(fmtI((o.revTotal-o.opexTotal)/1000) + ' k€', 165, y, { align: 'right' });
 
     // ── FOOTER ──
@@ -1020,12 +1020,12 @@ function generateFreePDF() {
     doc.setTextColor(150, 170, 200);
     doc.setFontSize(7);
     doc.setFont('helvetica', 'normal');
-    doc.text('SUNGEN — Cabinet de conseil en Photovoltaïque  |  sungen.fr  |  Résultats indicatifs — Hypothèses Note CRE 05/03/2026', lm, 285);
+    doc.text('SUNGEN — Cabinet de conseil en Photovoltaïque  |  sungen.fr  |  Résultats indicatifs — Assumptions Note CRE 05/03/2026', lm, 285);
     doc.text(`Document préparé pour ${prenom} ${nom}  |  ${email}  |  ${tel}`, lm, 290);
     doc.setTextColor(248, 190, 0);
     doc.setFontSize(8);
     doc.setFont('helvetica', 'bold');
-    doc.text('Pour le Business Plan complet (Excel, planning, contrats, risques) : sungen.fr/optimizer', lm, 295);
+    doc.text('Pour le Complete Business Plan (Excel, planning, contrats, risques) : sungen.fr/optimizer', lm, 295);
 
     doc.save(`Sungen_Synthese_${ha}ha_${zone}.pdf`);
     
